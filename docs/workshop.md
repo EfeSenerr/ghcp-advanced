@@ -1959,15 +1959,392 @@ Pick one. They build directly on the lab above.
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 9 (coming soon) - Security, Sandboxing & Guardrails
+# Chapter 9 — Security, Sandboxing & Guardrails
 
+An agent can read files, run programs, call tools, and reach services. A clear prompt helps guide its work, but it does not restrict what the agent can access. Use **least privilege**, an execution boundary suited to the task, and human review together.
+
+## 9.1 Choose a boundary before you run the agent
+
+Sandboxing limits what agent-invoked commands and tools can reach. It reduces the impact of a bad command, generated code, or prompt injection; it does not prove that the agent's output is safe. Continue to review edits, commands, tool approvals, and network destinations.
+
+![Five Copilot execution boundaries, with the MXC backend spectrum used by the Copilot CLI local sandbox.](assets/chapter-9-sandbox-model.svg)
+
+| Boundary | Where work runs | Choose it when… | Keep in mind |
+| --- | --- | --- | --- |
+| **Copilot CLI local sandbox** | On your computer, with filesystem, network, and credential policy applied to agent-run work. | You need the local checkout and want to constrain the CLI's access to your machine. | Uses the local OS process-sandbox backends described below. It is off by default. |
+| **VS Code agent sandbox** | In VS Code's Copilot agent session, with filesystem, network, and tool execution controls. | You work in VS Code and want an IDE-managed policy for agent sessions. | This is VS Code's sandbox, not the Copilot CLI sandbox or its MXC configuration. |
+| **Container sandbox** | In a containerized development environment, such as Docker Sandboxes. | You want a repeatable toolchain and a boundary around a project workspace. | An image is not, by itself, a complete security policy. Configure credentials, network access, and mounted workspace deliberately. |
+| **GitHub cloud sandbox** | In an ephemeral Linux environment hosted by GitHub; the session and commands run away from your computer. | You want to offload execution or isolate agent work from local files and compute. | This is distinct from local sandboxing, costs are usage-based, and organization policy controls availability. |
+| **Custom environment / VM** | On an environment you register and operate, such as a Linux machine or Codespace. | You need a managed OS image, tools, or dependencies that the standard cloud sandbox does not provide. | You own the image, credentials, patching, access policy, and lifecycle. This is not a switch that turns a local sandbox into a VM. |
+
+These are execution choices, not model choices. A **local sandbox** constrains processes on your device. A **container image** packages an operating system and tools for a container runtime. A **VM or custom environment** gives you a separately managed machine boundary. GitHub's hosted **cloud sandbox** is a GitHub-operated ephemeral Linux environment. In the linked GitHub docs, a custom environment is a Linux machine or Codespace that you register and manage; the local/cloud sandbox settings do not provide a generic VM-image selector. Choose the narrowest option that gives the agent the files and tools it needs.
+
+### Where Microsoft eXecution Container (MXC) fits
+
+[Microsoft eXecution Container (MXC)](https://github.com/microsoft/mxc) is an open-source policy model and execution layer, not a particular container image or a VM. Its SDKs let a trusted host describe a JSON policy for resources such as files, network access, and UI interaction, then translate that policy to a supported containment backend. SDKs are available for TypeScript/JavaScript (`@microsoft/mxc-sdk`), .NET, and Rust.
+
+MXC covers a spectrum of backends: OS process isolation, containers and isolated sessions, and virtualized environments such as VMs or microVMs. Examples include Seatbelt on macOS; Bubblewrap or LXC on Linux; and ProcessContainer/BaseContainer, Windows Sandbox, WSLC, MicroVM, Hyperlight, and IsolationSession on Windows. Support and maturity differ by backend; several Windows options are experimental. A common policy model does **not** mean every backend enforces every policy feature equally.
+
+GitHub Copilot CLI's local sandbox currently uses the lightweight OS-process end of this spectrum: Seatbelt on macOS, Bubblewrap on Linux, and ProcessContainer/BaseContainer on Windows. It does not start a container or VM for each command. VS Code has its own separate agent sandbox, while Docker and GitHub cloud sandboxes are separate execution products.
+
+The host remains responsible for deciding what access to grant. A model suggestion cannot grant itself more authority. Code that runs outside the containment boundary, remote services, and capabilities not covered by the active policy need separate controls.
+
+<div class="warning" data-title="A sandbox is one layer, not a security review">
+
+> Prompt injection can still influence an agent to misuse the tools and data it is allowed to access. Remote MCP servers are not contained by the local sandbox. Keep credentials out of prompts and files, grant the minimum network and filesystem access, and review consequential actions.
+
+</div>
+
+## 9.2 Hands-on: constrain a Copilot CLI session
+
+This lab uses a harmless training file and public, read-only HTTP requests. Do not substitute a real secret, personal file, internal host, or production endpoint.
+
+### Enable and inspect local sandboxing
+
+Start Copilot CLI in a disposable repository or workshop project:
+
+```bash
+copilot
+```
+
+In the interactive session, enable the sandbox and inspect its status and effective policy:
+
+```text
+/sandbox enable
+/sandbox status
+/sandbox policy
+```
+
+`/sandbox` and `/sandbox config` open the same interactive configuration. Use Tab to move among General, Credentials, Filesystem, and Network; Esc saves and closes it. Run `/sandbox policy` after configuring and after starting a fresh or continued session. The effective-policy report is more useful than checking a saved setting alone.
+
+When enabled, the default local policy is:
+
+| Resource | Default |
+| --- | --- |
+| Current working directory | Read/write |
+| Repository `.git` directory | Read/write |
+| Rest of the repository | Read-only |
+| Developer-tool access | On; includes tool/configuration directories and caches |
+| Outbound network | On |
+| Local network | Off |
+| Git and `gh` credentials | Masked and supplied by a proxy only to permitted destinations. |
+
+The sandbox is off by default. You can enable it persistently in your personal `~/.copilot/settings.json` under the `sandbox` key; repository-level sandbox settings are not supported:
+
+```json
+{
+  "sandbox": {
+    "enabled": true
+  }
+}
+```
+
+To pass a masked environment variable only to a trusted destination, configure its name and allowed host; never put the secret value in the settings file:
+
+```json
+{
+  "sandbox": {
+    "enabled": true,
+    "credentials": {
+      "envVars": {
+        "EXAMPLE_API_TOKEN": {
+          "injectHosts": ["api.example.com"]
+        }
+      }
+    }
+  }
+}
+```
+
+Do not also pass the same variable through `--secret-env-vars`. On macOS, system keychain access is off by default; the advanced setting `sandbox.userPolicy.seatbelt.keychainAccess` controls it in personal settings.
+
+The General tab includes **Allow sandbox bypass** (on by default), **Sandbox MCP servers**, and **Sandbox LSP servers** (on by default). A bypassed command runs outside the sandbox and can see real environment values, bypassing credential masking. Remote MCP servers are never sandboxed. Managed settings can enforce `sandbox.enabled`, `sandbox.allowBypass`, and `sandbox.failIfUnavailable`; the last setting makes a command fail if its sandbox cannot start. Managed entries are marked `(managed)` and cannot be changed in the CLI. Organizations can distribute local policy through Intune or other MDM.
+
+The Git credential proxy matches the original request's host, port, and repository path. The `gh` credential proxy supplies credentials only to GitHub's documented domains: `github.com`, `api.github.com`, and `uploads.github.com`. Do not put credentials in prompts or pass them as ordinary environment variables.
+
+### Exercise A: deny a file outside the workspace
+
+1. Create a file outside the repository with a fake marker such as `TRAINING_ONLY_NOT_A_SECRET`. Keep it out of your home configuration and never use a real secret. On macOS or Linux:
+
+   ```bash
+   mkdir -p "$HOME/copilot-sandbox-lab"
+   printf '%s\n' 'TRAINING_ONLY_NOT_A_SECRET' > "$HOME/copilot-sandbox-lab/private-note.txt"
+   ```
+
+   On Windows PowerShell:
+
+   ```powershell
+   $lab = Join-Path $env:TEMP 'copilot-sandbox-lab'
+   New-Item -ItemType Directory -Force $lab | Out-Null
+   Set-Content (Join-Path $lab 'private-note.txt') 'TRAINING_ONLY_NOT_A_SECRET'
+   ```
+
+2. In `/sandbox`, add the file's **absolute path** to the denied filesystem paths. Confirm it appears in `/sandbox policy`.
+3. Ask the agent to read the path twice: first through a shell command (`cat` on macOS/Linux or `Get-Content` in PowerShell), then with its built-in file-reading tool.
+4. Compare the outcomes. Shell commands and search tools such as `grep` and `glob` are subject to OS enforcement. The CLI's in-process view/edit tools check the policy in software, so treat that result as best-effort rather than the same hard boundary.
+5. If the shell can read the denied path, stop and inspect the canonical path, platform support, and active policy. Keep the fixture for the VS Code exercise; the cleanup steps follow both labs.
+
+<div class="warning" data-title="Create the file before denying it">
+
+> In Copilot CLI, denying a path that does not exist can make the sandbox create a **directory** at that path. Create the training file first, then add its exact absolute path to the deny list.
+
+</div>
+
+The workspace itself remains available. The point is to deny one unrelated path, not to make the repository unusable.
+
+### Exercise B: restrict an outbound request
+
+1. Leave outbound access on. Add an **Allow** host rule for `api.github.com` (enter the host only; no scheme, path, or port).
+2. Ask the agent to run `curl -sI https://api.github.com`, then `curl -sI https://example.com`. On Windows, use `curl.exe` if `curl` resolves to a PowerShell alias. The first request should succeed; once an allow rule exists, the non-matching host should be blocked. A matching **Deny** rule always wins.
+3. Ask the agent's `web_fetch` tool to fetch `https://api.github.com` and `https://example.com` as well. Compare its results with the shell requests.
+4. Turn outbound access off and retry the allowed `api.github.com` request. It should now be blocked too.
+5. Turn outbound access back on and remove the temporary host rule, or restore your previous network settings.
+
+On Windows, enable **Allow local network** for domain rules, the credential proxy, and credential masking; this also permits private-network access. Ordinary built-in web requests to public endpoints do not by themselves require that setting. Host rules still apply to permitted local connections when outbound access is off. Windows enforcement relies on programs honoring proxy settings, so it is weaker than macOS/Linux OS network filtering. Keep local-network access off unless this exercise requires it, and do not access internal hosts.
+
+### Clean up the CLI lab
+
+Remove the temporary deny rule from the CLI filesystem policy and restore any other settings you changed. After completing the VS Code lab, delete the fixture:
+
+```bash
+rm "$HOME/copilot-sandbox-lab/private-note.txt"
+rmdir "$HOME/copilot-sandbox-lab"
+```
+
+In Windows PowerShell:
+
+```powershell
+Remove-Item (Join-Path $env:TEMP 'copilot-sandbox-lab\private-note.txt')
+Remove-Item (Join-Path $env:TEMP 'copilot-sandbox-lab')
+```
+
+### CLI sandbox commands at a glance
+
+| Command | Use |
+| --- | --- |
+| `/sandbox` or `/sandbox config` | Open configuration; Tab switches among General, Credentials, Filesystem, and Network; Esc saves and closes. |
+| `/sandbox policy [COMMAND]` | Show effective policy, or preview how it applies to a command without running it; for example, `/sandbox policy npm install`. |
+| `/sandbox status` | Show whether the current session is sandboxed. |
+| `/sandbox enable` / `/sandbox disable` | Enable or disable local sandboxing, subject to managed policy and bypass rules. |
+| `copilot --sandbox` | Start a session with sandboxing. |
+| `copilot --sandbox -p "..."` | Run a prompt with the single-session sandbox option. |
+| `copilot --no-sandbox` | Disable sandboxing for a session only when policy permits; it cannot override a managed requirement. |
+| `copilot --continue` | Continue the previous conversation after enabling sandboxing, so the session restarts with the updated policy. |
+| `/add-dir PATH` | Grant a path read/write access for the current session only, subject to managed policy. |
+| `/statusline` | Configure the status line; it can show whether sandboxing is active. |
+| `copilot --cloud` | Start an interactive GitHub cloud-sandbox session; this is a different execution target. |
+
+### Check local sandbox platform support
+
+Copilot CLI's local sandbox relies on platform-specific OS features. Check the support requirements before enabling it; do not treat an unsandboxed fallback as equivalent.
+
+| Platform | Requirements and limitations |
+| --- | --- |
+| macOS | macOS 15 or later; Seatbelt. |
+| Linux | glibc Linux, Bubblewrap 0.5 or later, `slirp4netns`, `util-linux` 2.35 or later, and `iptables`. On Debian/Ubuntu, install them with `sudo apt-get install bubblewrap slirp4netns util-linux iptables`. |
+| Windows | Windows 11 25H2 with KB5124010 or Windows 11 26H1 with KB5124006; ProcessContainer/BaseContainer. |
+| Unsupported | Alpine/musl Linux and WSL1. |
+
+## 9.3 Hands-on: repeat the policy check in VS Code
+
+VS Code has its **own agent sandbox**. Do not configure it through Copilot CLI's `/sandbox` command or assume that MXC's CLI policy carries over.
+
+Open a Copilot-harness Agent session in a local workspace. Use the permissions picker to enable **Sandboxing for terminal** for this session. This control is for the Copilot harness; Claude and Codex harnesses have their own sandbox controls. **Allow all** tool approvals do not disable the sandbox.
+
+Enter `/sandbox policy` in the chat input to open the session's effective-policy report in the editor. For new sessions, configure the default with `chat.agent.sandbox.enabled` (`"on"` or `"off"`, default `"off"`).
+
+### Exercise: deny the lab file and allow one domain
+
+Add these settings to your VS Code `settings.json`. Replace the placeholder with the **same absolute path** to `private-note.txt` that you created in Exercise A. Paths in settings are literal: do not leave placeholders or use `$HOME`/environment-variable expansion.
+
+```jsonc
+{
+  "chat.agent.sandbox.enabled": "on",
+  "chat.agent.sandbox.fileSystem.userConfiguredPaths": {
+    "deniedPaths": [
+      "/Users/YOUR_NAME/copilot-sandbox-lab/private-note.txt"
+      // Linux example: "/home/YOUR_NAME/copilot-sandbox-lab/private-note.txt"
+      // Windows example: "C:\\Users\\you\\AppData\\Local\\Temp\\copilot-sandbox-lab\\private-note.txt"
+    ]
+  },
+  "chat.agent.sandbox.network.allowNetwork": true,
+  "chat.agent.sandbox.network.allowLocalNetwork": false,
+  "chat.agent.sandbox.network.allowedDomains": ["api.github.com"],
+  "chat.agent.sandbox.network.deniedDomains": [],
+  "chat.agent.sandbox.allowUnsandboxedCommands": false,
+  "chat.agent.sandbox.mcpServers": true,
+  "chat.agent.sandbox.lspServers": true
+}
+```
+
+The Windows example escapes backslashes as JSON requires. On Windows, set `chat.agent.sandbox.network.allowLocalNetwork` to `true` when using domain rules or credential masking; that widens access to local and private networks. Keep it `false` elsewhere unless your task needs it.
+
+The filesystem setting accepts `readwritePaths`, `readonlyPaths`, and `deniedPaths` with absolute paths. If rules overlap, **denied wins, then read-only, then read/write**. `allowDevToolAccess` defaults to `true`; this lab leaves that default in place so `curl` and other developer tools remain available. Turning it off can prevent tools from running; if you do, grant the required tool and supporting paths explicitly through `readonlyPaths`.
+
+In the Network settings, `allowNetwork` defaults to `true`; setting it to `false` also blocks the integrated browser. `allowLocalNetwork` defaults to `false`. A non-empty `allowedDomains` list restricts outbound access to those domains; `deniedDomains` blocks matching domains and takes precedence. Restart VS Code after changing domain rules.
+
+VS Code can also sandbox MCP and LSP servers with `chat.agent.sandbox.mcpServers` and `chat.agent.sandbox.lspServers` (LSP sandboxing defaults to `true`). Credential settings include `chat.agent.sandbox.credentials.authenticategit`, `authenticategh`, and `envVars`; each environment-variable entry can use `injectHosts` to scope credential injection.
+
+By default, `chat.agent.sandbox.allowUnsandboxedCommands` is `true`: if a command cannot run inside the sandbox, VS Code can show an **Allow Outside Sandbox** prompt. Set it to `false` to fail closed. For filesystem permission prompts, choose the narrowest approval scope: **Allow for This Session**, **Workspace**, or **User**, or choose **Skip**.
+
+1. Restart VS Code after changing domain rules. Open a new Copilot-harness Agent session, enable **Sandboxing for terminal** in the permissions picker, and run `/sandbox policy`. Confirm the denied path and `api.github.com` allow rule.
+2. Ask the agent to read the denied file with a shell command and with its file-reading tool; both should be denied. Then ask it to fetch `https://api.github.com` and `https://example.com` and compare the results with the allow list.
+3. Give this prompt: **“Create `sandbox-lab-output.md` in the workspace with exactly the sentence `VS Code sandbox write test.` Do not edit any other files.”**
+4. Open the new file and inspect the workspace changes in VS Code. Confirm that only this file changed, then discard the test by deleting it yourself. Restore your original settings. After the exercise, remove the shared fixture using the platform-appropriate cleanup commands above.
+
+To scope an environment credential, use a variable name and its permitted hosts; never add a secret value to `settings.json`:
+
+```json
+{
+  "chat.agent.sandbox.credentials.envVars": {
+    "EXAMPLE_API_TOKEN": {
+      "injectHosts": ["api.github.com"]
+    }
+  }
+}
+```
+
+<div class="warning" data-title="Sandboxing inside a Dev Container">
+
+> Running the VS Code sandbox inside a Dev Container requires relaxing container isolation with `seccomp=unconfined`, `apparmor=unconfined`, and `systempaths=unconfined`, plus access to `/dev/net/tun`. That weakens the outer container boundary. Do this only in a disposable, trusted development environment and understand that you are trading away part of the container's protection.
+
+</div>
+
+### VS Code platform requirements
+
+| Platform | Requirements and limitations |
+| --- | --- |
+| macOS | macOS 15 or later. |
+| Linux / WSL2 | glibc Linux or WSL2, Bubblewrap 0.5 or later, `slirp4netns`, `util-linux` 2.35 or later, and `iptables`. For Debian/Ubuntu, install the packages with `sudo apt-get install bubblewrap slirp4netns util-linux iptables`. |
+| Windows | Windows 11 25H2 with KB5124010 or Windows 11 26H1 with KB5124006. Support is experimental in VS Code. |
+| Unsupported | Alpine/musl Linux and WSL1. |
+
+## 9.4 Run Copilot in a Docker Sandbox
+
+Docker Sandboxes provide a containerized workspace and a reproducible starting point; they are separate from Copilot CLI's MXC sandbox and GitHub's cloud sandbox. Current Docker guidance recommends v3 kits: built-in agent names resolve to Debian-based kits, while `docker/sandbox-templates` images are older, separately published Ubuntu images.
+
+For the built-in Copilot workload, store authentication as a Docker Sandbox secret rather than baking a token into an image. The token must have Copilot access:
+
+```bash
+sbx secret set github --command 'gh auth token'
+sbx run copilot ~/my-project
+```
+
+The path is optional when you have already changed into the project directory. A directly mounted workspace is read/write, and changes appear on the host immediately. For a Git repository, use clone mode to keep agent edits in an in-sandbox clone until you fetch or push them:
+
+```bash
+sbx run --clone copilot ~/my-project
+```
+
+Copilot starts as `copilot --yolo` by default, which allows broad automatic approval. Treat this as a high-risk mode: use only a project you trust, prefer clone mode, and review all changes. You can append Copilot arguments after `--`:
+
+```bash
+sbx run copilot -- -p "review this PR"
+```
+
+To add a project toolchain, first create a v3 **mixin** with its Dockerfile and YAML descriptor, then attach it to the built-in Copilot workload. This is the current documented customization path; the workload retains its launch behavior and credentials:
+
+```bash
+sbx run copilot --kit ./node-toolchain ~/my-project
+```
+
+To publish the mixin, use Docker Buildx as shown in the [current tool-mixin authoring guide](https://docs.docker.com/ai/sandboxes/customize/author/tool-mixins/). Then use the same published reference with `--kit`:
+
+```console
+docker login
+docker buildx build ./node-toolchain -f ./node-toolchain/node-toolchain.yaml \
+  -t docker.io/my-org/node-toolchain:v1 --push
+sbx run copilot --kit docker.io/my-org/node-toolchain:v1 ~/my-project
+```
+
+### Conceptual: build a custom Copilot workload image
+
+If you specifically need to change the Copilot base image, author a v3 **workload** kit with a Dockerfile and YAML descriptor. The following illustrates the image layer only; it is **not a complete runnable kit**. The descriptor must declare the Copilot launch contract, network policy, and credential capability. Current Docker docs do not provide a complete custom Copilot v3 descriptor, so do not publish or run this example without supplying and validating that configuration against the [base-image workload guide](https://docs.docker.com/ai/sandboxes/customize/author/base-images/), [kit capabilities](https://docs.docker.com/ai/sandboxes/customize/author/capabilities/), and [credential guidance](https://docs.docker.com/ai/sandboxes/configuration/credentials/).
+
+```dockerfile
+FROM docker/sandbox-templates:copilot
+USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends jq \
+    && rm -rf /var/lib/apt/lists/*
+USER agent
+ENTRYPOINT ["copilot"]
+CMD []
+```
+
+The base image is an older, previously published Copilot image, not the current built-in v3 workload. In a v3 kit, capabilities from a published base kit do not carry over; declare the policy and credentials in your own descriptor. When the descriptor is complete and verified, publish and run the **same** image reference:
+
+```console
+docker login
+docker buildx build ./copilot-node -f ./copilot-node/copilot-node.yaml \
+  -t docker.io/my-org/copilot-node:v1 --push
+sbx run docker.io/my-org/copilot-node:v1 ~/my-project
+```
+
+To snapshot a configured sandbox, current Docker usage docs still document `sbx template save <sandbox> <name>:v1 --output <file>`. A snapshot captures the container filesystem, not mounted workspace files; secrets written into that filesystem are captured too. Treat a snapshot as an image, not a v3 kit with its own policy.
+
+Docker Sandboxes do not inherit user-level host configuration; only project-level configuration is available inside the sandbox. Never store credentials in the Dockerfile, image, workspace, or snapshot.
+
+## 9.5 Use GitHub cloud sandboxes
+
+GitHub cloud sandboxes run the **whole Copilot session** in an ephemeral, GitHub-hosted Linux environment. The session does not use your local checkout or compute; repositories are cloned into the remote environment. Sessions can be stopped and resumed across supported clients, restoring their snapshot and in-progress work.
+
+You can start cloud sessions from GitHub.com chat, GitHub Mobile, Slack, Microsoft Teams, the GitHub Copilot app, VS Code, JetBrains (preview), or the Copilot SDK. In Copilot CLI, start a single interactive session with:
+
+```bash
+copilot --cloud
+```
+
+This option is interactive only; do not combine it with `-p` or `-i`. In clients that let you choose between **Cloud** and **Actions**, choose at session start; you cannot change the execution environment afterward. Choose Actions when you need `copilot-setup-steps.yml` (including OIDC), a larger or self-hosted runner, or Windows. Otherwise, Cloud provides the standard managed Linux environment.
+
+Cloud session network access follows the cloud agent firewall allowlist. Changes to the allowlist apply to new sessions, not sessions already running. You can personalize cloud sandboxes through [Copilot customization](https://github.com/copilot/customize) and a dotfiles repository with a root `.copilot` directory for instructions, skills, and custom agents. Dotfiles are copied when a sandbox is created or resumed; install scripts do not run, and this personalization does not apply to Actions sessions.
+
+For an organization or enterprise, cloud access is governed by the **Copilot in the cloud** policy, enabled by default, and spending is controlled through budgets per SKU. Review both before enabling the capability. Billing meters are **$0.000024 per vCPU-second**, **$0.000003 per GiB-second of memory**, and **$0.005 per GiB-month of storage**. Local sandboxing is included in the Copilot seat.
+
+## 9.6 Which model should you use?
+
+Model choice affects the quality, speed, and cost of reasoning; it does **not** change what files, network destinations, or credentials a sandbox permits. Start with **Auto** unless you have a reason to select a model yourself.
+
+| Task | Model choice |
+| --- | --- |
+| A bounded edit, test fix, or routine command | Auto or a fast, capable coding model is usually sufficient. Keep the task narrow and review the diff. |
+| Multi-step implementation or unfamiliar code | Choose a stronger reasoning/coding model when the task benefits from planning across files and tests. |
+| Threat modeling or security-sensitive review | Use a strong reasoning model to help identify cases and propose tests, but independently verify its claims. Model output is not an audit or an access-control decision. |
+| Repetitive work with known steps | Use a fast model with explicit acceptance criteria and restricted tools; a deterministic script may be safer and cheaper. |
+| Unattended work, `--yolo`, or cloud batch tasks | Prefer a stronger model for better planning, but tighten the sandbox, network, credentials, and allowed tools because nobody is reviewing each step as it runs. |
+
+Choose from models available under your Copilot plan and organization policy. Re-evaluate the choice as the model catalog changes. For every model, keep the same least-privilege policy, credential hygiene, approval discipline, and human review.
+
+## 9.7 Security checklist
+
+- **Know where the session runs:** local, Docker Sandbox, GitHub cloud sandbox, Actions runner, or your custom environment.
+- **Check the effective policy:** confirm denied and allowed paths, outbound and local-network access, and credential handling.
+- **Minimize what tools can reach:** remove temporary grants and host allow rules after the task.
+- **Protect secrets:** do not place secrets in prompts, source files, images, or example fixtures; expose a credential only to the hosts that need it.
+- **Remember the boundary:** remote MCP servers and external services need their own controls; a local process sandbox does not contain them.
+- **Review before execution or merge:** sandboxing reduces blast radius; it does not make generated commands or code trustworthy.
+
+### References
+
+- [About cloud and local sandboxes](https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/about-cloud-and-local-sandboxes)
+- [Configure local sandbox settings](https://docs.github.com/en/copilot/how-tos/cloud-and-local-sandboxes/configuring-local-sandbox-settings)
+- [Manage cloud sandboxes for an organization or enterprise](https://docs.github.com/en/copilot/how-tos/cloud-and-local-sandboxes/enabling-or-disabling-cloud-sandboxes-for-your-organization)
+- [VS Code agent sandbox](https://code.visualstudio.com/docs/agents/run/agent-sandboxing)
+- [Cloud and local sandboxes public preview announcement](https://github.blog/changelog/2026-06-02-cloud-and-local-sandboxes-for-github-copilot-now-in-public-preview/)
+- [Use GitHub Copilot in Docker Sandboxes](https://docs.docker.com/ai/sandboxes/agents/copilot/)
+- [Docker Sandboxes kits](https://docs.docker.com/ai/sandboxes/customize/)
+- [Docker Sandboxes base images](https://docs.docker.com/ai/sandboxes/customize/author/base-images/)
+- [Build a Docker Sandboxes tool mixin](https://docs.docker.com/ai/sandboxes/customize/author/tool-mixins/)
+- [Use Docker Sandboxes kits](https://docs.docker.com/ai/sandboxes/customize/use-kits/)
+- [Docker Sandboxes usage and workspace modes](https://docs.docker.com/ai/sandboxes/usage/)
+- [Microsoft MXC](https://github.com/microsoft/mxc)
 
 
 # Wrap-up
 
 You (hopefully :D) have learned:
 
-- The full surface area of GitHub Copilot: IDE, CLI, agent harnesses, instructions, prompts, custom agents, skills, MCP.
+- The full surface area of GitHub Copilot: IDE, CLI, agent harnesses, instructions, prompts, custom agents, skills, MCP, and security boundaries.
 - A repeatable, reviewable, agent-friendly development loop: **Spec → Plan → Tasks → Implement.**
 - How to apply that loop with a raw agent, and (optionally) with spec-kit as a dedicated tool.
 
