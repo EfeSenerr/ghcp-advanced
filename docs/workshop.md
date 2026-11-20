@@ -3,7 +3,7 @@ published: true
 type: workshop
 title: "GitHub Copilot Advanced"
 short_title: "GitHub Copilot Advanced"
-description: Learn the fundamentals of GitHub Copilot and then go deep advanced concepts like Spec-Driven Development (SDD), Context Engineering, Squad, App Modernization Agentic Workflows, the GitHub Copilot SDK, Security, Sandboxing and Guardrails.
+description: Learn the fundamentals of GitHub Copilot and then go deep advanced concepts like Spec-Driven Development (SDD), Context Engineering, Squad, App Modernization Agentic Workflows, Microsoft Copilot SDK 2.0, Security, Sandboxing and Guardrails.
 level: intermediate
 authors:
   - "Lead: Julia Kordick"
@@ -31,7 +31,7 @@ Welcome! This workshop has the following parts:
 5. **App modernization**: a dedicated chapter on how to use GitHub Copilot to modernize legacy apps, with two hands-on tracks (spec-kit-driven and GitHub Copilot-native custom agents + prompts), plus the off-the-shelf GitHub Copilot modernization agents (VS Code extension and the Modernize CLI).
 6. **Context Engineering**: Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules, and skills to a pre-built project.
 7. (soon) **Agentic Workflows**
-8. **The GitHub Copilot SDK**: Embed Copilot directly into your own apps — open sessions, stream responses, and let Copilot call custom tools you define in TypeScript/Node.
+8. **Microsoft Copilot SDK 2.0**: Embed the Copilot agent harness into your own apps — open sessions, stream responses, and let Copilot call custom tools you define in TypeScript/Node.
 9. **Security, Sandboxing and Guardrails**: How to use Copilot safely in your organization, and how to build your own guardrails for your own agentic AI.
 
 <div class="info" data-title="Who is this for?">
@@ -1547,55 +1547,53 @@ For teams scaling context engineering across repositories:
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 8 — The GitHub Copilot SDK
+# Chapter 8 — Microsoft Copilot SDK 2.0
 
-So far you have *used* Copilot — in the IDE, in Chat, in the CLI. In this chapter you **embed** Copilot into your own code. The [GitHub Copilot SDK](https://www.npmjs.com/package/@github/copilot-sdk) lets you talk to Copilot programmatically: open a session, send a prompt, stream the response, and — most interestingly — define **tools** in your own codebase that Copilot decides when to call.
+So far you have *used* Copilot — in the IDE, in Chat, and in the CLI. In this chapter you **embed** the Copilot agent harness into your own code. The SDK was previously called the GitHub Copilot SDK; version 2.0 is the **Microsoft Copilot SDK**, published for Node.js as [`@microsoft/copilot-sdk`](https://www.npmjs.com/package/@microsoft/copilot-sdk). You create sessions, send prompts, stream events, and define tools that the agent can call.
+
+Version 2.0 changes more than the package name. The runtime is a lightweight native Rust component that runs **in your application process by default**, and one runtime can host many independent sessions. You configure each session with its own conversation history and scoped identity, tools, and files; your app decides who can create or resume it. You also choose where its tools act: through app-owned APIs, in a sandbox, or through workers. A shared runtime is **not** itself a security sandbox.
 
 <div class="info" data-title="SDK vs. CLI">
 
-> The CLI from Chapter 1 is for **terminal workflows**. The SDK is for **embedding Copilot inside your apps, scripts, services and pipelines**. Under the hood the SDK starts and manages a Copilot CLI process for you and speaks JSON-RPC to it — so everything you learned about authentication, models and MCP in earlier chapters still applies.
+> The CLI from Chapter 1 is for **terminal workflows**. The SDK is for **embedding Copilot inside your apps, scripts, services and pipelines**. In SDK 2.0, the runtime is separate from the CLI and normally runs in-process; you do not need to install or launch the CLI to use the SDK. Signing in with the CLI remains one way to provide credentials, alongside app-supplied tokens and bring-your-own-key (BYOK) providers.
 
 </div>
 
 By the end of this chapter you can:
 
-- Install and configure the SDK in a TypeScript/Node project.
+- Install and configure SDK 2.0 in a TypeScript/Node project.
 - Send messages and receive responses programmatically.
-- Stream responses token by token for interactive UX.
-- Define custom tools that Copilot can call autonomously.
+- Stream response events for interactive UX.
+- Expose custom tools that Copilot can choose to call.
+- Explain the 2.0 session model and choose a suitable runtime and sandbox architecture.
 - Build a small interactive assistant that uses your tools.
 
-## 8.1 Mental model: the power grid
+## 8.1 Mental model: one runtime, many sessions
 
-The Copilot CLI is like plugging a lamp into a wall outlet — it works great, you get light immediately. The SDK is like connecting straight to the **power grid**:
+Think of the runtime as a shared engine and each session as a separately scoped conversation running on it. A session keeps its conversation state and can be configured with scoped identity, tools, and files. Your app decides which user may create or resume it and enforces authorization.
 
-- Build your own appliances (custom apps and assistants).
-- Control how the power flows (streaming, tool wiring, system messages).
-- Connect complex systems (multi-tool assistants, automation, pipelines).
+An isolated runtime or container per session is still useful when every task needs a shell, custom system dependencies, or a strong boundary. SDK 2.0 also lets you start with many lightweight sessions in one process and add sandboxing only where the work needs it.
 
-The CLI gives you a flashlight; the SDK lets you build a power plant.
+![A shared SDK runtime hosts separately scoped sessions; a session does not get its own process or container by default.](diagrams/copilot-sdk-2-sessions.svg)
 
-## 8.2 How the SDK fits together
+## 8.2 How SDK 2.0 fits together
 
 | Component | What it does |
 | --- | --- |
-| **Client** | Starts and manages the connection to the Copilot CLI process. |
-| **Session** | A conversation context — like a single Chat thread. |
+| **Client** | Connects your app to the native Copilot runtime. In-process hosting is the default; a spawned process or shared runtime server is also possible. |
+| **Runtime** | Runs the agent loop and manages sessions. The default Rust runtime is loaded in-process through a native interface; it is not an embedded Node.js interpreter. |
+| **Session** | A conversation and execution context with session-specific history and configured identity, tools and files. Its durable state can outlive a client connection. |
 | **Messages** | Prompts you send and responses you get back. |
-| **Streaming** | Receive response chunks in real time, word by word. |
-| **Tools** | Functions you define in your code that Copilot can invoke. |
+| **Events** | Streaming updates for response chunks, tool execution, and session lifecycle. |
+| **Tools** | Functions your app registers; handlers run in your application, under the policies and identity you choose. |
 
-```text
-Your app  →  Copilot SDK  →  Copilot CLI (managed for you)  →  GitHub Copilot
-   ↑                                                                  ↓
-   ←──────────── responses / tool calls / streaming ←─────────────────┘
-```
+![The app connects through the SDK to the native in-process runtime; tools and policies remain under app control.](diagrams/copilot-sdk-2-architecture.svg)
 
-The flow is always the same: create a client, open a session, send a message, react to events.
+The basic flow is still: create a client, create or resume a session, send a message, and react to events. The transport and runtime lifecycle have changed, but the session API remains familiar.
 
 <div class="info" data-title="Other languages">
 
-> This workshop's examples are TypeScript first, in line with the rest of the labs. The same SDK is available for **Python, Go, Rust, .NET and Java** — the API shape (`Client` → `Session` → tools/events) is identical, only the syntax differs. Pick whichever language matches your stack.
+> This workshop's examples are TypeScript first, in line with the rest of the labs. SDKs are also available for **Python, Go, Rust, .NET and Java**. Their setup and syntax differ, and each language has its own minimum runtime version; follow the current language-specific README before porting an example.
 
 </div>
 
@@ -1603,24 +1601,25 @@ The flow is always the same: create a client, open a session, send a message, re
 
 Before starting, double-check:
 
-- **GitHub Copilot CLI** installed and authenticated (Chapter 1.2).
-- **Node.js 20+** with npm.
+- **Node.js `^20.19.0` or `>=22.12.0`** with npm.
+- A way to authenticate: signed-in Copilot CLI credentials, a GitHub token supplied by your app, or a supported BYOK provider.
 
 ```bash
-copilot --version
-node --version    # 20.x or higher
+node --version
 ```
+
+You do **not** need the Copilot CLI installed to run the SDK. The Node package includes the matching native runtime for supported platforms; `copilot login` is only needed if you choose to use credentials already stored by the CLI.
 
 ## 8.4 Hands-on: a weather assistant in TypeScript
 
-You will build a small assistant in five steps: bare prompt → streaming → custom tool → REPL. Each step is independently runnable.
+Build a small assistant in stages: first send a prompt, then stream the response, add a custom tool, and finish with a REPL. Each code sample is runnable on its own.
 
 ### 8.4.1 Scaffold
 
 ```bash
 mkdir copilot-sdk-lab && cd copilot-sdk-lab
 npm init -y --init-type module
-npm install @github/copilot-sdk tsx
+npm install @microsoft/copilot-sdk tsx
 ```
 
 <div class="info" data-title="What is tsx?">
@@ -1634,9 +1633,9 @@ npm install @github/copilot-sdk tsx
 Create `index.ts`:
 
 ```ts
-import { CopilotClient } from "@github/copilot-sdk";
+import { CopilotClient } from "@microsoft/copilot-sdk";
 
-const client = new CopilotClient();
+const client = new CopilotClient({ mode: "coding-agent" });
 const session = await client.createSession({ model: "auto" });
 
 const response = await session.sendAndWait({ prompt: "What is 2 + 2?" });
@@ -1652,21 +1651,27 @@ Run it:
 npx tsx index.ts
 ```
 
-Five lines of real code and Copilot is answering you from inside a Node process. The SDK started the CLI behind the scenes, reused your existing auth, opened a session, sent the prompt and shut everything down cleanly.
+You created a session and sent a message through the SDK. With the default connection, the SDK loads the native runtime into the Node process; it does not start a Copilot CLI subprocess. The explicit `coding-agent` mode opts into the CLI-style built-in agent capabilities.
+
+<div class="warning" data-title="In-process is not isolation">
+
+> In-process hosting is a runtime choice, not a sandbox. A native runtime crash can take down your app. It also does not isolate a session's side effects from the host. Use a separate sandbox when a task runs untrusted code or needs a hard filesystem or process boundary.
+
+</div>
 
 ### 8.4.3 Stream the response
 
-Waiting for the whole response before printing anything feels sluggish. Listen for `assistant.message_delta` events and write each chunk as it arrives.
+Waiting for the whole response before printing anything feels sluggish. Enable streaming in the session's `events` options, then listen for `assistant.message_delta` and `session.idle`.
 
 Replace `index.ts`:
 
 ```ts
-import { CopilotClient } from "@github/copilot-sdk";
+import { CopilotClient } from "@microsoft/copilot-sdk";
 
-const client = new CopilotClient();
+const client = new CopilotClient({ mode: "coding-agent" });
 const session = await client.createSession({
   model: "auto",
-  streaming: true,
+  events: { streaming: true },
 });
 
 session.on("assistant.message_delta", (event) => {
@@ -1685,16 +1690,16 @@ await client.stop();
 process.exit(0);
 ```
 
-Run it again — the answer now appears word by word, like a real chat.
+Run it again — the answer now appears in chunks, like a real chat.
 
 ### 8.4.4 Define a custom tool
 
-This is where the SDK earns its keep. You can register **tools** — typed functions in your own code — and Copilot will decide when to call them based on the user's prompt. No prompt engineering required; the tool's `description` is enough.
+This is where the SDK earns its keep. You can register **tools** — typed functions in your own code — and the model may choose them when they fit the user's prompt. A clear description helps it choose, but neither a description nor a prompt guarantees a tool call; validate important actions in your own code.
 
 Replace `index.ts`:
 
 ```ts
-import { CopilotClient, defineTool, approveAll } from "@github/copilot-sdk";
+import { CopilotClient, defineTool } from "@microsoft/copilot-sdk";
 
 const getWeather = defineTool("get_weather", {
   description: "Get the current weather for a city",
@@ -1714,12 +1719,28 @@ const getWeather = defineTool("get_weather", {
   },
 });
 
-const client = new CopilotClient();
+const client = new CopilotClient({ mode: "coding-agent" });
 const session = await client.createSession({
   model: "auto",
-  streaming: true,
-  tools: [getWeather],
-  onPermissionRequest: approveAll,
+  events: { streaming: true },
+  tools: { definitions: [getWeather] },
+  permissions: {
+    onRequest: async (request) => {
+      if ("managedApprovalRequired" in request && request.managedApprovalRequired) {
+        return {
+          kind: "reject",
+          feedback: "This demo cannot grant a managed approval.",
+        };
+      }
+      if (request.kind === "custom-tool" && request.toolName === "get_weather") {
+        return { kind: "approve-once" };
+      }
+      return {
+        kind: "reject",
+        feedback: "This demo only approves the get_weather tool.",
+      };
+    },
+  },
 });
 
 session.on("assistant.message_delta", (event) => {
@@ -1735,11 +1756,13 @@ await client.stop();
 process.exit(0);
 ```
 
-Run it. Notice what just happened: Copilot read your prompt, decided it needed weather data for two cities, called `get_weather` **twice** (once per city), and wove the results into a natural-language reply. You wrote zero prompt-engineering glue.
+Run it and inspect the response and tool events. The model may call `get_weather` for one or both cities, or answer without using the tool. A well-written description helps the model recognize when the capability fits; if your application requires a lookup, validate that the handler ran and handle the case where it did not.
 
-<div class="warning" data-title="approveAll is a workshop convenience">
+The permission handler approves only this mock weather tool, once per request. It rejects every other request, including managed approval requests, rather than granting broad access or leaving this standalone demo waiting for a human decision.
 
-> `approveAll` accepts every tool invocation without confirmation. That's fine for a lab. In production code, implement `onPermissionRequest` properly so users (or policy) can approve, deny or rate-limit tool calls.
+<div class="warning" data-title="Treat tools as capabilities">
+
+> A registered tool is a capability: its handler can access whatever your code allows. Keep handlers narrow, validate their inputs, and enforce user authorization inside the handler. For shared or multi-user services, start with `mode: "empty"` and explicitly grant each session only the tools and identity it needs; `coding-agent` is intended for CLI-like coding agents, not a safe shared-server default.
 
 </div>
 
@@ -1748,7 +1771,13 @@ Run it. Notice what just happened: Copilot read your prompt, decided it needed w
 Wrap the same setup in a chat loop. Create `weather-assistant.ts`:
 
 ```ts
-import { CopilotClient, defineTool, approveAll } from "@github/copilot-sdk";
+import {
+  CopilotClient,
+  defineTool,
+  RuntimeConnection,
+} from "@microsoft/copilot-sdk";
+import { mkdirSync } from "node:fs";
+import { resolve } from "node:path";
 import * as readline from "node:readline";
 
 const getWeather = defineTool("get_weather", {
@@ -1768,12 +1797,28 @@ const getWeather = defineTool("get_weather", {
   },
 });
 
-const client = new CopilotClient();
+const client = new CopilotClient({ mode: "coding-agent" });
 const session = await client.createSession({
   model: "auto",
-  streaming: true,
-  tools: [getWeather],
-  onPermissionRequest: approveAll,
+  events: { streaming: true },
+  tools: { definitions: [getWeather] },
+  permissions: {
+    onRequest: async (request) => {
+      if ("managedApprovalRequired" in request && request.managedApprovalRequired) {
+        return {
+          kind: "reject",
+          feedback: "This demo cannot grant a managed approval.",
+        };
+      }
+      if (request.kind === "custom-tool" && request.toolName === "get_weather") {
+        return { kind: "approve-once" };
+      }
+      return {
+        kind: "reject",
+        feedback: "This demo only approves the get_weather tool.",
+      };
+    },
+  },
 });
 
 session.on("assistant.message_delta", (event) => {
@@ -1785,7 +1830,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-console.log("🌤️  Weather Assistant (type 'exit' to quit)");
+console.log("Weather Assistant (type 'exit' to quit)");
 console.log("   Try: 'What's the weather in Berlin?'\n");
 
 const prompt = () => {
@@ -1811,7 +1856,7 @@ Run it:
 npx tsx weather-assistant.ts
 ```
 
-Example session:
+Example session (the response and mock weather values vary; inspect tool events to confirm whether the tool ran):
 
 ```text
 🌤️  Weather Assistant (type 'exit' to quit)
@@ -1840,7 +1885,7 @@ The runtime flow:
 User: "What's the weather in Munich?"
    │
    ▼
-Copilot matches the question to the tool's description
+The model decides whether to request the tool
    │
    ▼
 Copilot emits a tool call: get_weather({ city: "Munich" })
@@ -1857,79 +1902,175 @@ Copilot composes the final natural-language answer
 
 <div class="tip" data-title="Key insight">
 
-> You don't prompt-engineer when Copilot should use your tool. You **describe** what it does, clearly, and Copilot figures out the rest. Treat tool descriptions like API documentation: be precise about inputs, outputs and side effects.
+> A clear description helps Copilot choose a tool; it does not force the model to call it. Treat descriptions like API documentation, validate inputs and authorization in the handler, and verify any tool execution your workflow depends on.
 
 </div>
 
-## 8.6 Going further
+## 8.6 Sessions, virtualization and architecture
 
-Once the basics click, these are the most useful next features.
+SDK 2.0 separates the **agent loop** (where the model reasons) from the **environment** (where shell and file operations happen). Your app can keep both in one isolated container, or host the loop on a shared runtime and selectively route work to sandboxes. The SDK provides the runtime and session abstractions; your app or hosting platform remains responsible for creating, securing and cleaning up any external sandbox.
 
-### 8.6.1 Plug in MCP servers
+![The agent loop and its shell or files can live in different environments; the app controls how tools are routed.](diagrams/copilot-sdk-2-virtualization.svg)
 
-Give your app the same MCP power as the IDE and CLI:
+The Microsoft article [Building modern agentic applications with Microsoft Copilot SDK 2.0](https://commandline.microsoft.com/microsoft-copilot-sdk-2-0-github/) describes these as architecture patterns:
+
+| Pattern | Where the agent loop runs | When it fits |
+| --- | --- | --- |
+| Isolated runtime per session | In that session's container | Every task needs a shell, custom image, or strong isolation from the start. |
+| Shared runtime | One process hosts many sessions; app-owned tools call APIs | Lightweight assistants that do not need a host shell or filesystem. |
+| Promotable session | Starts shared, then moves to a dedicated sandbox | Most sessions stay lightweight, but some later need shell or files. |
+| Shared loop, sandboxed tools | Shared runtime; host tools execute shell/file operations in a sandbox | You want a shared model loop with controlled, isolated commands. |
+| Coordinator and workers | Shared coordinator delegates to isolated worker sessions | Independent long-running or parallel tasks, such as plan/build/review. |
+| Mixed | Coordinator uses a sandbox and can delegate to sandboxed workers | Complex workflows that need both immediate actions and parallel work. |
+
+![Six original summaries of the architecture patterns in Microsoft's SDK 2.0 article.](diagrams/copilot-sdk-2-architecture.svg)
+
+These are designs to implement, not six automatic deployment modes. Promotion, worker creation, sandbox lifecycle and routing are responsibilities of your application or platform. Use a hard container boundary for untrusted code; a shared runtime alone does not provide one.
+
+### 8.6.1 Use a shared runtime safely
+
+For a multi-user service, select the minimal `empty` mode and give each session only its own identity and allow-listed tools. The identity comes from your authentication layer; never hard-code a user token.
+
+```ts
+import { CopilotClient, defineTool, RuntimeConnection } from "@microsoft/copilot-sdk";
+import { mkdirSync } from "node:fs";
+import { resolve } from "node:path";
+
+declare const user: { id: string; githubToken: string };
+declare function findOrderForUser(userId: string, orderId: string): Promise<unknown>;
+
+const lookupOrder = defineTool("lookup_order", {
+  description: "Look up one of the signed-in customer's orders.",
+  parameters: {
+    type: "object",
+    properties: { orderId: { type: "string" } },
+    required: ["orderId"],
+  },
+  handler: async ({ orderId }: { orderId: string }) =>
+    findOrderForUser(user.id, orderId),
+});
+
+const baseDirectory = resolve(".copilot-data");
+mkdirSync(baseDirectory, { recursive: true });
+
+const client = new CopilotClient({
+  mode: "empty",
+  runtime: RuntimeConnection.forDefault({ baseDirectory }),
+});
+const session = await client.createSession({
+  model: "auto",
+  github: { token: user.githubToken },
+  tools: {
+    definitions: [lookupOrder],
+    availableTools: ["custom:lookup_order"],
+  },
+});
+```
+
+This is an auth-dependent sketch: replace `user` and `findOrderForUser` with values and services from your application. The local `baseDirectory` satisfies the runtime's storage requirement; it is not a tenant boundary. In `empty` mode, ambient CLI-style capabilities are disabled, so add only the tools and MCP servers each session needs. The handler must still enforce authorization, and your application must isolate tenant data; the SDK cannot infer your ownership rules.
+
+### 8.6.2 Resume durable sessions
+
+The runtime records session history in a journal. Save the session ID in your application's database, authorize every resume request, and then reconnect:
 
 ```ts
 const session = await client.createSession({
-  mcpServers: {
-    github: {
-      type: "http",
-      url: "https://api.githubcopilot.com/mcp/",
+  sessionId: "account-42-task-17",
+  model: "auto",
+});
+await session.sendAndWait({ prompt: "Summarize the open support cases." });
+await client.stop();
+
+// Later, after verifying the caller owns this session:
+const resumed = await client.resumeSession("account-42-task-17", {});
+await resumed.sendAndWait({ prompt: "Continue the summary." });
+```
+
+The default runtime stores state on its own disk. Configure `sessionFs` and a session filesystem provider when state must live in storage you control, such as tenant-scoped object storage. The provider and its namespace must enforce the isolation your product requires.
+
+### 8.6.3 Choose where the runtime runs
+
+The default is in-process, with the native runtime loaded into your application. For crash isolation or process-wide configuration, choose a spawned runtime. For multiple app instances attaching to one long-running runtime, use the TCP runtime connection. The runtime service is separate from the Copilot CLI.
+
+For a shared live session that multiple clients can attach to and steer concurrently, read about the open **Agent Host Protocol (AHP)**. AHP is distinct from simply resuming a durable session.
+
+### 8.6.4 Connect MCP servers
+
+SDK 2.0 still supports local and remote MCP servers. The session option is now grouped under `mcp.servers`:
+
+```ts
+const session = await client.createSession({
+  model: "auto",
+  mcp: {
+    servers: {
+      github: {
+        type: "http",
+        url: "https://api.githubcopilot.com/mcp/",
+      },
     },
   },
 });
 ```
 
-### 8.6.2 Define custom agents
+For a local stdio server, set `type: "local"` and provide its `command` and `args`. Limit the server's `tools` list to the capabilities the session needs. See the [MCP configuration guide](https://github.com/microsoft/copilot-sdk/blob/main/docs/features/mcp.md) for authentication and transport details.
 
-Bake specialized personas into the session — exactly the same shape as Chapter 1.5:
+### 8.6.5 Define custom agents
+
+Custom agents remain supported. SDK 2.0 groups definitions and selection under `agents` instead of the earlier top-level `customAgents` array:
 
 ```ts
 const session = await client.createSession({
-  customAgents: [
-    {
-      name: "pr-reviewer",
-      displayName: "PR Reviewer",
-      description: "Reviews pull requests for best practices",
-      prompt:
-        "You are an expert code reviewer. Focus on security, performance, and maintainability.",
-    },
-  ],
+  model: "auto",
+  agents: {
+    definitions: [
+      {
+        name: "pr-reviewer",
+        displayName: "PR Reviewer",
+        description: "Reviews pull requests for security and maintainability.",
+        tools: ["grep", "glob", "view"],
+        prompt:
+          "You are a code reviewer. Report evidence and risks; do not modify files.",
+      },
+    ],
+    selected: "pr-reviewer",
+  },
 });
 ```
 
-### 8.6.3 Set a system message
+The agent's description helps the runtime understand its role; explicitly select it when the session should start with that agent. Use a tool allow-list to keep a specialized agent's capabilities narrow.
 
-Control tone, scope and guardrails for the whole session:
+### 8.6.6 Set a system message
+
+System-message configuration remains available. Use `append` to add instructions while preserving the SDK's default system message:
 
 ```ts
 const session = await client.createSession({
+  model: "auto",
   systemMessage: {
+    mode: "append",
     content:
-      "You are an assistant for our engineering team. Be concise. Never invent file paths.",
+      "You are an assistant for our engineering team. Be concise and cite the files you relied on.",
   },
 });
 ```
 
-### 8.6.4 Connect to a long-running CLI
-
-For debugging, multi-process setups or sharing a session across consumers, run the CLI headless and connect to it:
-
-```bash
-copilot --headless --port 4321
-```
-
-```ts
-const client = new CopilotClient({ cliUrl: "localhost:4321" });
-```
+`replace` is also supported, but replaces the SDK-managed system message and its default guidance. Prefer `append` unless you deliberately intend to own the complete system message.
 
 ## 8.7 Do this now — challenges
 
 Pick one. They build directly on the lab above.
 
-1. **Add a second tool.** Define `get_time` that returns the current time for a timezone. Ask the assistant *"What's the weather and time in Tokyo?"* — confirm Copilot calls **both** tools in one turn.
-2. **Tighten permissions.** Replace `approveAll` with an `onPermissionRequest` handler that logs each tool call and prompts on stdin before approving. Notice how the agent waits politely.
-3. **Build a Duck Emporium assistant.** Reuse the user stories and data model 🗄️ from Chapter 2. Define two tools: `search_ducks(query)` reads your seed data; `add_duck(name, theme, price_cents)` appends a new entry. Wire them into a REPL and chat with your shop's inventory.
+1. **Add a second tool.** Define `get_time` with a timezone parameter. Ask for both weather and time in Tokyo, then log which handlers actually ran. A description helps routing but does not guarantee a call; handle a missing result.
+2. **Inspect permission callbacks.** Replace the REPL's fixed handler with an interactive approval prompt. Log the request kind and tool name, then test a weather-tool call, benign built-in shell/read/write operations, and an MCP call when configured. Mark one harmless lookup with `skipPermission: true` and confirm it bypasses `onRequest`. For complete tool-execution auditing, compare with `hooks.handlers.onPreToolUse`. Hand requests marked `managedApprovalRequired` to the host's human approval flow.
+3. **Build a multi-user assistant.** Switch the client to `mode: "empty"` and configure its required storage. Create a `lookup_order` tool whose handler scopes every query to the authenticated user, pass that user's token through the session's `github` options, and set `tools.availableTools` to an explicit allow-list. Verify a session cannot access another user's orders.
+4. **Build a Duck Emporium assistant.** Reuse the user stories and data model 🗄️ from Chapter 2. Define `search_ducks(query)` over seed data and `add_duck(name, theme, price_cents)` with input validation. Register the definitions in `tools.definitions`, allow-list only the tools each session needs, and build a REPL.
+5. **Resume a conversation.** Give a session a stable `sessionId`, send a message, stop the client and resume the session. Store the ID outside the process and add an ownership check before resuming; then sketch how a tenant-scoped `sessionFs` provider would keep state off local disk.
+
+<div class="info" data-title="Permission callbacks">
+
+> An ordinary custom-tool request can arrive as `request.kind === "custom-tool"`; `skipPermission: true` bypasses the permission callback. The callback handles permission requests, not every tool execution, so use `onPreToolUse` for tool auditing. Without `onRequest`, generated requests surface as events and remain pending; if you omit `permissions.mode`, the runtime's default applies. Route requests marked `managedApprovalRequired` through the host's human approval flow.
+
+</div>
 
 <div class="tip" data-title="Combine with SDD">
 
@@ -1941,19 +2082,24 @@ Pick one. They build directly on the lab above.
 
 | Mistake | Symptom | Fix |
 | --- | --- | --- |
-| Forgetting `await client.stop()` | CLI process lingers after the script ends. | Always stop the client before exiting. |
-| Not setting `streaming: true` | `assistant.message_delta` never fires. | Enable streaming in `createSession`. |
-| Tool handler returns a raw string | Copilot gets confused or errors out. | Return a plain object describing results. |
-| Missing `process.exit(0)` | Script hangs after the last response. | Exit explicitly at the end of the script. |
-| Logging tool calls only on success | Failures vanish silently into the session. | Log inside the handler, before returning. |
+| Installing `@github/copilot-sdk` or following a v1 tutorial | The package or sample API does not match SDK 2.0. | Install `@microsoft/copilot-sdk` and use the current getting-started guide. |
+| Assuming the SDK launches the Copilot CLI | A separate CLI process is missing or unnecessary setup gets added. | The v2 default is an in-process native runtime; choose a process or TCP connection explicitly when you need one. |
+| Omitting `mode` | Client creation fails validation. | Select `coding-agent` for a CLI-like agent or `empty` for a shared service. |
+| Putting `streaming: true` at the session's top level | No `assistant.message_delta` events arrive. | Set `events: { streaming: true }` in `createSession`. |
+| Passing tools as a bare array | Tool definitions are not registered in the current options shape. | Use `tools: { definitions: [myTool] }`; in `empty` mode, also set an explicit allow-list. |
+| Treating a shared runtime as a sandbox | A tool or shell can act with more access than intended. | Enforce authorization in app-owned handlers and use a separate sandbox for untrusted execution. |
+| Exiting before `await client.stop()` completes | The runtime may not finish clean shutdown. | Await `client.stop()`; short-lived scripts can then exit explicitly, as in the official getting-started sample. |
 
 ## 8.9 Key takeaways
 
-1. **The SDK embeds Copilot in your apps.** Go beyond the terminal — wire intelligence into your own tools, services and automations.
-2. **Five lines to start.** Create a client, open a session, send a message. That's the minimum viable program.
-3. **Streaming makes it feel alive.** Subscribe to `assistant.message_delta` and write as chunks arrive.
-4. **Tools are the superpower.** Describe what your code can do; let Copilot decide when to call it.
-5. **Same patterns, any language.** TypeScript, Python, Go, Rust, .NET, Java — same shape, same mental model.
+1. **The product and package were renamed.** SDK 2.0 is the Microsoft Copilot SDK; Node.js uses `@microsoft/copilot-sdk`.
+2. **One runtime can host many sessions.** Each session has its own history and can be configured with scoped identity and tools; you can resume it by ID.
+3. **The runtime is in-process by default.** Choose a spawned process or shared runtime service when deployment needs call for it.
+4. **You choose where the agent acts.** Shared sessions, sandboxes, workers and hybrid patterns solve different isolation and cost needs.
+5. **The app still owns security.** Scope identities and tool allow-lists per session; use hard isolation when executing untrusted code.
+6. **Same building blocks across languages.** TypeScript, Python, Go, Rust, .NET and Java have SDKs with language-specific setup.
+
+For implementation details, use the [SDK 2.0 getting-started guide](https://github.com/microsoft/copilot-sdk/blob/main/docs/getting-started.md), [MCP guide](https://github.com/microsoft/copilot-sdk/blob/main/docs/features/mcp.md), [custom-agent guide](https://github.com/microsoft/copilot-sdk/blob/main/docs/features/custom-agents.md), [hooks guide](https://github.com/microsoft/copilot-sdk/blob/main/docs/features/hooks.md), Node.js [permission handling](https://github.com/microsoft/copilot-sdk/blob/main/nodejs/README.md#permission-handling), the [multi-tenancy guide](https://github.com/microsoft/copilot-sdk/blob/main/docs/setup/multi-tenancy.md), and the Microsoft article [Building modern agentic applications with Microsoft Copilot SDK 2.0](https://commandline.microsoft.com/microsoft-copilot-sdk-2-0-github/). The diagrams above are original summaries of the article's session, virtualization and architecture concepts.
 
 ---
 

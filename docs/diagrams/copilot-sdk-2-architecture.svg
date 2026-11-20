@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="600" viewBox="0 0 1080 600" role="img" aria-labelledby="title desc">
+  <title id="title">Six Copilot SDK agent architectures</title>
+  <desc id="desc">Six patterns range from an isolated runtime per session to shared sessions, promotion, sandboxed tools, delegated workers, and a mixed coordinator.</desc>
+  <rect width="1080" height="600" rx="18" fill="#0d1117"/>
+  <text x="40" y="50" fill="#f0f6fc" font-family="Arial, sans-serif" font-size="27" font-weight="700">Choose an architecture for the work</text>
+  <text x="40" y="80" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">Where the agent thinks · where tools act · when to isolate</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="40" y="112" width="320" height="190" rx="12" fill="#161b22" stroke="#8b949e" stroke-width="2"/>
+    <text x="60" y="146" fill="#f0f6fc" font-size="18" font-weight="700">1 · Isolated from the start</text>
+    <text x="60" y="180" fill="#c9d1d9" font-size="15">Runtime + agent in a container</text>
+    <text x="60" y="209" fill="#c9d1d9" font-size="15">Strong boundary for every task</text>
+    <text x="60" y="266" fill="#ffdf5d" font-size="14">More startup time and cost</text>
+
+    <rect x="380" y="112" width="320" height="190" rx="12" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+    <text x="400" y="146" fill="#7ee787" font-size="18" font-weight="700">2 · Shared runtime</text>
+    <text x="400" y="180" fill="#c9d1d9" font-size="15">Many sessions, app-owned tools</text>
+    <text x="400" y="209" fill="#c9d1d9" font-size="15">Fast, lightweight conversations</text>
+    <text x="400" y="266" fill="#ffdf5d" font-size="14">No host shell or filesystem</text>
+
+    <rect x="720" y="112" width="320" height="190" rx="12" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <text x="740" y="146" fill="#79c0ff" font-size="18" font-weight="700">3 · Promote on demand</text>
+    <text x="740" y="180" fill="#c9d1d9" font-size="15">Start shared; move when needed</text>
+    <text x="740" y="209" fill="#c9d1d9" font-size="15">Keep session ID and conversation</text>
+    <text x="740" y="266" fill="#ffdf5d" font-size="14">Sandbox startup at promotion</text>
+
+    <rect x="40" y="324" width="320" height="190" rx="12" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+    <text x="60" y="358" fill="#d2a8ff" font-size="18" font-weight="700">4 · Shared loop, sandboxed tools</text>
+    <text x="60" y="392" fill="#c9d1d9" font-size="15">Model loop stays shared</text>
+    <text x="60" y="421" fill="#c9d1d9" font-size="15">Host tools run commands in sandbox</text>
+    <text x="60" y="478" fill="#ffdf5d" font-size="14">Command-level control required</text>
+
+    <rect x="380" y="324" width="320" height="190" rx="12" fill="#161b22" stroke="#f78166" stroke-width="2"/>
+    <text x="400" y="358" fill="#ffa198" font-size="18" font-weight="700">5 · Coordinator + workers</text>
+    <text x="400" y="392" fill="#c9d1d9" font-size="15">Coordinator delegates to agents</text>
+    <text x="400" y="421" fill="#c9d1d9" font-size="15">Parallel, isolated work units</text>
+    <text x="400" y="478" fill="#ffdf5d" font-size="14">Workers need separate tasks</text>
+
+    <rect x="720" y="324" width="320" height="190" rx="12" fill="#161b22" stroke="#ffdf5d" stroke-width="2"/>
+    <text x="740" y="358" fill="#ffdf5d" font-size="18" font-weight="700">6 · Mixed coordinator</text>
+    <text x="740" y="392" fill="#c9d1d9" font-size="15">Direct sandbox work + workers</text>
+    <text x="740" y="421" fill="#c9d1d9" font-size="15">Flexible for complex workflows</text>
+    <text x="740" y="478" fill="#ffdf5d" font-size="14">Most orchestration to operate</text>
+  </g>
+  <text x="540" y="562" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="14">Patterns summarized from Microsoft’s SDK 2.0 architecture article; the app/platform implements routing and sandbox lifecycle.</text>
+</svg>
