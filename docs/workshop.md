@@ -2103,7 +2103,7 @@ Pick one. They build directly on the lab above.
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 9 — Security, Sandboxing & Guardrails
+# Chapter 9 - Security, Sandboxing & Guardrails
 
 An agent can read files, run programs, call tools, and reach services. A clear prompt helps guide its work, but it does not restrict what the agent can access. Use **least privilege**, an execution boundary suited to the task, and human review together.
 
