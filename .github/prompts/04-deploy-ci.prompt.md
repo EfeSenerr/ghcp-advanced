@@ -1,6 +1,6 @@
 ---
 agent: 'deployment-engineer'
-description: Phase 4 — Emit the CI pipeline for the modernized system. Files only, no live runs.
+description: Phase 4 - Emit the CI pipeline for the modernized system. Files only, no live runs.
 ---
 
 Emit a CI pipeline that builds, tests and scans the modernized code. Read `docs/modernization/03a-architecture/target-architecture.md` for the runtime and platform.

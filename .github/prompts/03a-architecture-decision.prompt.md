@@ -1,6 +1,6 @@
 ---
 agent: 'target-architect'
-description: Phase 3a — Make ONE architectural decision, cited and reviewable in isolation.
+description: Phase 3a - Make ONE architectural decision, cited and reviewable in isolation.
 ---
 
 Make **one** target-architecture decision. Ask which one if it is not obvious. Candidates:
@@ -25,6 +25,6 @@ Append to `docs/modernization/03a-architecture/target-architecture.md` under a h
 - A mermaid diagram if it clarifies boundaries or data flow.
 - Explicit consequences (what this decision forces or forbids in later phases).
 
-If the choice is genuinely open, list two options with trade-offs and **stop without picking**. Never write implementation code or per-module rewrite tasks — that is phase 3b.
+If the choice is genuinely open, list two options with trade-offs and **stop without picking**. Never write implementation code or per-module rewrite tasks - that is phase 3b.
 
 Print the decision heading and the rediscovery/audit rows it consumed. Stop.

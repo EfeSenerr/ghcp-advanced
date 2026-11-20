@@ -17,7 +17,7 @@ Or read the raw markdown: [`docs/workshop.md`](docs/workshop.md).
 5. **App modernization**: a dedicated chapter on how to use GitHub Copilot to modernize legacy apps, with two hands-on tracks (spec-kit-driven and GitHub Copilot-native custom agents + prompts), plus the off-the-shelf GitHub Copilot modernization agents (VS Code extension and the Modernize CLI).
 6. **Context Engineering**: Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules, and skills to a pre-built project.
 7. (soon) **Agentic Workflows**
-8. **The GitHub Copilot SDK**: Embed Copilot directly into your own apps — open sessions, stream responses, and let Copilot call custom tools you define in TypeScript/Node.
+8. **The GitHub Copilot SDK**: Embed Copilot directly into your own apps - open sessions, stream responses, and let Copilot call custom tools you define in TypeScript/Node.
 9. **Security, Sandboxing and Guardrails**: How to use Copilot safely in your organization, and how to build your own guardrails for your own agentic AI.
 
 ## Pre-reqs
@@ -31,7 +31,7 @@ See [the Pre-requisites section of the workshop](docs/workshop.md#pre-requisites
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).
 
 ## Credits
 

@@ -1,6 +1,6 @@
 ---
 agent: 'substitution-auditor'
-description: Phase 2 — Walk one category or subsystem of the rediscovery and produce audit rows.
+description: Phase 2 - Walk one category or subsystem of the rediscovery and produce audit rows.
 ---
 
 Do one pass of the substitution audit. Ask which **category** or **subsystem** to cover if it is not obvious from the conversation. Suggested categories:

@@ -1,4 +1,4 @@
-# Story 4 — Check out with a mocked payment
+# Story 4 - Check out with a mocked payment
 
 **ID:** `checkout`
 **Persona:** Quincy Quacker (customer)
@@ -13,7 +13,7 @@
 
 ## Acceptance criteria
 
-- Checkout collects a shipping name, email and address, plus mocked card details (any string accepted — this is a workshop, not a payment processor).
+- Checkout collects a shipping name, email and address, plus mocked card details (any string accepted - this is a workshop, not a payment processor).
 - On submit, the system:
   - Validates required fields (rejects empty/invalid email).
   - Re-validates stock for every line item (rejects checkout if any line item is now out of stock).
