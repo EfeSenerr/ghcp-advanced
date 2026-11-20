@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="430" viewBox="0 0 1080 430" role="img" aria-labelledby="title desc">
+  <title id="title">One runtime, many isolated sessions</title>
+  <desc id="desc">An application connects to one native Copilot runtime that hosts separate sessions with their own identity, tools, files, and history.</desc>
+  <rect width="1080" height="430" rx="18" fill="#0d1117"/>
+  <text x="40" y="52" fill="#f0f6fc" font-family="Arial, sans-serif" font-size="27" font-weight="700">One runtime, many sessions</text>
+  <rect x="42" y="155" width="170" height="115" rx="12" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="127" y="203" text-anchor="middle" fill="#f0f6fc" font-family="Arial, sans-serif" font-size="20" font-weight="700">Your app</text>
+  <text x="127" y="232" text-anchor="middle" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">SDK client</text>
+  <path d="M212 212 H290" stroke="#58a6ff" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="298" y="110" width="738" height="258" rx="15" fill="#111820" stroke="#3fb950" stroke-width="2"/>
+  <text x="330" y="145" fill="#7ee787" font-family="Arial, sans-serif" font-size="19" font-weight="700">Native Copilot runtime · one process</text>
+  <rect x="330" y="174" width="210" height="150" rx="10" fill="#161b22" stroke="#8b949e"/>
+  <text x="350" y="205" fill="#f0f6fc" font-family="Arial, sans-serif" font-size="17" font-weight="700">Session A</text>
+  <text x="350" y="238" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">User A identity</text>
+  <text x="350" y="265" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">Allowed tools</text>
+  <text x="350" y="292" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">Files + history</text>
+  <rect x="562" y="174" width="210" height="150" rx="10" fill="#161b22" stroke="#8b949e"/>
+  <text x="582" y="205" fill="#f0f6fc" font-family="Arial, sans-serif" font-size="17" font-weight="700">Session B</text>
+  <text x="582" y="238" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">User B identity</text>
+  <text x="582" y="265" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">Allowed tools</text>
+  <text x="582" y="292" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">Files + history</text>
+  <rect x="794" y="174" width="210" height="150" rx="10" fill="#161b22" stroke="#8b949e"/>
+  <text x="814" y="205" fill="#f0f6fc" font-family="Arial, sans-serif" font-size="17" font-weight="700">Session C</text>
+  <text x="814" y="238" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">User C identity</text>
+  <text x="814" y="265" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">Allowed tools</text>
+  <text x="814" y="292" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="15">Files + history</text>
+  <text x="540" y="399" text-anchor="middle" fill="#d2a8ff" font-family="Arial, sans-serif" font-size="16">Many lightweight sessions · no process or container per session by default</text>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+</svg>
