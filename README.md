@@ -4,7 +4,7 @@
 
 This is a [MoaW](https://moaw.dev) workshop. The best way to read it is rendered:
 
-👉 **[Open the workshop on MoaW](https://moaw.dev/workshop/gh:aspeth/ghcp-advanced/main/docs/)**
+👉 **[Open the workshop on MoaW](https://moaw.dev/workshop/gh:artspe/ghcp-advanced/main/docs/)**
 
 Or read the raw markdown: [`docs/workshop.md`](docs/workshop.md).
 
