@@ -2,7 +2,7 @@
 
 > "*Where every bug meets its match.*"
 
-This folder contains the user stories for the hands-on exercise in [Chapter 2](../docs/workshop.md#chapter-2--spec-driven-development-the-main-course) of the workshop. You will use them as **raw input** for Spec-Driven Development - the whole point is that user stories are *not yet specs*. Your job, together with your agentic AI, is to turn them into specs, plans, tasks and code.
+This folder contains the user stories for the hands-on exercise in [Chapter 3](../docs/workshop.md#chapter-3---spec-driven-development) of the workshop. You will use them as **raw input** for Spec-Driven Development - the whole point is that user stories are *not yet specs*. Your job, together with your agentic AI, is to turn them into specs, plans, tasks and code.
 
 ## The product
 

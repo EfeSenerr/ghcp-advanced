@@ -1,6 +1,6 @@
 # Skills lab material
 
-Supporting files for **section 6.7 – Hands-on lab: build your first Agent Skill** in [`docs/workshop.md`](../docs/workshop.md). Follow the steps there; this folder only holds the inputs.
+Supporting files for **section 2.7 – Hands-on lab: build your first Agent Skill** in [`docs/workshop.md`](../docs/workshop.md). Follow the steps there; this folder only holds the inputs.
 
 | Folder | Contents |
 | --- | --- |
