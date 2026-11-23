@@ -438,11 +438,10 @@ Every loop iteration grows the context. The LLM is stateless: so the harness res
 
 As the context window fills up, two effects kick in:
 
-![Diagram of lost-in-the-middle: information in the middle of a long context is harder to recall than information at the beginning or end](assets/cr-st50.webp)
-
-Models tend to recall information near the beginning and end of the context window more reliably than information in the middle.
-
-![Diagram of recency bias: older information becomes harder to recall as the context fills](assets/cr-gt50.webp)
+| Lost in the middle | Recency bias |
+| --- | --- |
+| [![Diagram of lost-in-the-middle: information in the middle of a long context is harder to recall than information at the beginning or end](assets/cr-st50-thumb.webp)](assets/cr-st50.webp) | [![Diagram of recency bias: older information becomes harder to recall as the context fills](assets/cr-gt50-thumb.webp)](assets/cr-gt50.webp) |
+| Models tend to recall information near the beginning and end of the context window more reliably than information in the middle. | As the context fills, models tend to favor the most recent information over older information. |
 
 This is why long, unfocused agent sessions degrade in quality. Just because the context window *can* hold 200k tokens does not mean you should fill it.
 
