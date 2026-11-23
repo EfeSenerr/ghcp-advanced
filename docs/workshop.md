@@ -3,7 +3,7 @@ published: true
 type: workshop
 title: "GitHub Copilot Advanced"
 short_title: "GitHub Copilot Advanced"
-description: Learn GitHub Copilot fundamentals, then practice advanced workflows in Spec-Driven Development (SDD), app modernization, context engineering and the GitHub Copilot SDK. Upcoming chapters cover Squad, Agentic Workflows, and security, sandboxing and guardrails.
+description: Learn GitHub Copilot fundamentals, then practice advanced workflows in Spec-Driven Development (SDD), app modernization, context engineering (including a hands-on Agent Skills lab), the GitHub Copilot SDK, and security, sandboxing and guardrails. Upcoming chapters cover Squad and Agentic Workflows.
 level: intermediate
 authors:
   - "Lead: Julia Kordick"
@@ -32,7 +32,7 @@ Welcome! This workshop takes you from Copilot fundamentals to hands-on engineeri
 6. **Context Engineering** - Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules and skills to a pre-built project.
 7. **Agentic Workflows** *(coming soon)*.
 8. **The GitHub Copilot SDK** - Embed Copilot directly into your own apps: open sessions, stream responses and let Copilot call custom tools you define in TypeScript/Node.
-9. **Security, Sandboxing and Guardrails** *(coming soon)* - Use Copilot safely in your organization and build your own guardrails for your own agentic AI.
+9. **Security, Sandboxing and Guardrails** - Use Copilot safely in your organization and build your own guardrails for your own agentic AI.
 
 <div class="info" data-title="Who is this for?">
 
@@ -42,7 +42,7 @@ Welcome! This workshop takes you from Copilot fundamentals to hands-on engineeri
 
 <div class="tip" data-title="Where to start">
 
-> New to Copilot? Start with Chapter 1. Already comfortable with the basics? Start with the SDD exercise in Chapter 2. Chapters 4, 7 and 9 are coming soon.
+> New to Copilot? Start with Chapter 1. Already comfortable with the basics? Start with the SDD exercise in Chapter 2. Chapters 4 and 7 are coming soon.
 
 </div>
 
@@ -2015,6 +2015,8 @@ const session = await client.createSession({
 
 For a local stdio server, set `type: "local"` and provide its `command` and `args`. Limit the server's `tools` list to the capabilities the session needs. See the [MCP configuration guide](https://github.com/microsoft/copilot-sdk/blob/main/docs/features/mcp.md) for authentication and transport details.
 
+### 8.6.5 Define custom agents
+
 Bake specialized personas into the session - exactly the same shape as Chapter 1.5:
 
 ```ts
@@ -2053,7 +2055,7 @@ const session = await client.createSession({
 });
 ```
 
-### 8.6.4 Connect to a long-running CLI
+### 8.6.7 Connect to a long-running CLI
 
 For debugging, multi-process setups or sharing a session across consumers, run the CLI headless and connect to it:
 

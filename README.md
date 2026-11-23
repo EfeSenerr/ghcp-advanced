@@ -4,7 +4,7 @@
 
 This is a [MoaW](https://moaw.dev) workshop. The best way to read it is rendered:
 
-👉 **[Open the workshop on MoaW](https://moaw.dev/workshop/gh:artspe/ghcp-advanced/main/docs/)**
+👉 **[Open the workshop on MoaW](https://moaw.dev/workshop/gh:jkordick/ghcp-advanced/main/docs/)**
 
 Or read the raw markdown: [`docs/workshop.md`](docs/workshop.md).
 
@@ -38,7 +38,8 @@ MIT - see [LICENSE](LICENSE).
 Inspired by the excellent [GitHub Copilot HoL by @Philess](https://moaw.dev/workshop/gh:Philess/GHCopilotHoL/main/docs/).
 
 
-### Artur's to do list
+### Julia's to do list
 - optional: before creating the spec, ask GHCP to break down the user-stories into reasonable sized github issues, and then generate the spec based on the issues; would need github access + github mcp
 - add squad section
 - add agentic workflows section
+- save the world
