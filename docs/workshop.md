@@ -18,7 +18,7 @@ navigation_numbering: false
 
 # GitHub Copilot Advanced
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 *Version 3.7 - Oct 2026*
 
@@ -60,7 +60,7 @@ Welcome! This workshop takes you from Copilot fundamentals to hands-on engineeri
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 ## Pre-requisites
 
@@ -93,7 +93,7 @@ You need the following before starting:
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 # Chapter 1 - Getting Started with GitHub Copilot
 
@@ -393,7 +393,7 @@ You now have the full toolbox. The rest of the workshop is about **using it**.
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 # Chapter 2 - Context Engineering
 
@@ -940,7 +940,7 @@ Make sure your Chapter 2 work is committed on `context-engineering-start` (see 2
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 # Chapter 3 - Spec-Driven Development 
 
@@ -1216,7 +1216,7 @@ Use `Shift+Tab` to switch into plan mode if you want to talk through a decision 
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 # Chapter 4 spec-kit by GitHub
 
@@ -1280,7 +1280,7 @@ Compare what spec-kit does and what it generates against the hand-rolled `sdd-*`
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 # Chapter 5 (coming soon) - Squad
 
@@ -1288,7 +1288,7 @@ A dedicated chapter on [squad](https://github.com/bradygaster/squad): an open-so
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 # Chapter 6 - App Modernization
 
@@ -1774,13 +1774,13 @@ After GitHub Copilot done, review the executed changes, iterate further via the 
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 # Chapter 7 (coming soon) - Agentic Workflows
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 # Chapter 8 - The GitHub Copilot SDK
 
@@ -2345,7 +2345,7 @@ Pick one. They build directly on the lab above.
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 # Chapter 9 - Security, Sandboxing & Guardrails
 
@@ -2754,7 +2754,7 @@ Happy spec-driving! 🚀
 
 ---
 
-<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22}:not(pre)>code{background:#21262d;color:#79c0ff}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
+<style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}@media (prefers-color-scheme:dark){:root{--background:#0d1117;--text:#e6edf3;--text-medium:#9da7b3;--task-text:#e6edf3;--border-color:#30363d;--primary-light:#11263b;--accent-light:#3a1220;--accent-2-light:#0f2a31;--accent-3-light:#0f2b2b;--primary-dark:#58a6ff;--neutral-light:#161b22}body{background:var(--background);color:var(--text)}nav.sidebar{background:#161b22!important}code:not(pre>code),blockquote code:not(pre>code){background:#21262d!important;color:#79c0ff;border-color:var(--border-color)}tr:nth-child(2n){background:#161b22}th,td{border-color:var(--border-color)}img{background:#fff}}</style>
 
 ## Cheat sheet - when to use what
 
