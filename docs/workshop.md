@@ -1570,7 +1570,7 @@ In 6.3.6 you wrote a skill by hand. In this lab you build one the way it works b
    ```
 
 2. Open the **repository root** in VS Code (not `duck-emporium/`), so the new skill lands in this repo's `.github/skills/`.
-3. Open a new Chat and set **Session Target** to **Local**. Type `/` and check that `/create-skill` appears. Do not run it yet.
+3. Open a new Chat with **Session Target** set to **Copilot** (the default, same as the rest of Chapter 6). Type `/` and check whether `/create-skill` appears. Do not run it yet.
 4. Skim the primers: core concepts (`skills-lab/resources/core-concepts.md`), why Awesome Copilot matters (`skills-lab/resources/why-awesome-copilot-matters.md`) and the Awesome Copilot repository tour (`skills-lab/resources/awesome-copilot-repository-tour.md`).
 
 | Component | Role |
@@ -1579,9 +1579,9 @@ In 6.3.6 you wrote a skill by hand. In this lab you build one the way it works b
 | `/create-skill` | A built-in Chat workflow that packages a demonstrated process as a skill |
 | [Awesome Copilot](https://github.com/github/awesome-copilot) | A public collection of community-created Copilot customizations. You **browse** it, you do not clone it |
 
-<div class="info" data-title="No /create-skill in your harness?">
+<div class="info" data-title="No /create-skill in your menu?">
 
-> `/create-skill` is a Local-harness shortcut (see 1.6). In the **Copilot** harness or the Copilot CLI, use the same Chat conversation and ask instead: *"Create a project skill named `incident-handoff` in `.github/skills/` from the workflow we just completed."* Everything else in the lab stays the same.
+> The command is a convenience, not a requirement. What matters is that the skill is created **in the same Chat** in which you worked through the task. If `/create-skill` isn't offered in your harness or the Copilot CLI, ask instead: *"Create a project skill named `incident-handoff` in `.github/skills/` from the workflow we just completed."* Everything else in the lab stays the same. Avoid the **Local** harness for this lab: it is deprecated (see the [VS Code skills docs](https://code.visualstudio.com/docs/agent-customization/agent-skills)).
 
 </div>
 
@@ -1650,7 +1650,7 @@ Check these high-risk details by hand. The incident is still **active**. The con
 
 ### 6.7.4 Create the skill
 
-In the **same** Chat, run:
+In the **same** Chat, run (or send the equivalent plain request from the 6.7.1 callout):
 
 ```text
 /create-skill Create a reusable workspace skill named incident-handoff from the workflow we just completed. It should produce a concise active-incident shift handoff from supplied notes without inventing facts.
