@@ -3,11 +3,11 @@ published: true
 type: workshop
 title: "GitHub Copilot Advanced"
 short_title: "GitHub Copilot Advanced"
-description: Learn the fundamentals of GitHub Copilot and then go deep advanced concepts like Spec-Driven Development (SDD), Context Engineering, Squad, App Modernization Agentic Workflows, the GitHub Copilot SDK, Security, Sandboxing and Guardrails.
+description: Learn GitHub Copilot fundamentals, then practice advanced workflows in Spec-Driven Development (SDD), app modernization, context engineering (including a hands-on Agent Skills lab), the GitHub Copilot SDK, and security, sandboxing and guardrails. Upcoming chapters cover Squad and Agentic Workflows.
 level: intermediate
 authors:
   - "Lead: Julia Kordick"
-  - "Contributors: Artur Speth, Laetitia Maar, Taja Ly, Diaa Radwan"
+  - "Contributors: Artur Speth, Laetitia Maar, Taja Ly, Diaa Radwan, Anna Wiewer, Efe Sener"
 contacts:
   - "@jkordick"
 duration_minutes: 300
@@ -20,35 +20,41 @@ navigation_numbering: false
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-*Version 3.7 — Oct 2026*
+*Version 3.7 - Oct 2026*
 
-Welcome! This workshop has the following parts:
+Welcome! This workshop takes you from Copilot fundamentals to hands-on engineering workflows:
 
-1. **Getting Started with GitHub Copilot**: a single broad chapter for anyone who has never (or barely) used GitHub Copilot. It covers inline completions, Chat, Agent mode, agent harnesses, the Copilot CLI, custom instructions, prompt files, custom agents, skills, tools and MCP servers.
-2. **Spec-Driven Development (SDD)**: You will learn how to make specifications, drive what GitHub Copilot builds for you, and you will do it end-to-end on a small TypeScript/Node feature.
-3. **Introduction of** [**spec-kit**](https://github.com/github/spec-kit) as a tool to use spec driven development conveniently with most agentic coding tools.
-4. (soon) **How to use** [**squad**](https://github.com/bradygaster/squad) open-source framework for orchestrating multi-agent development teams.
-5. **App modernization**: a dedicated chapter on how to use GitHub Copilot to modernize legacy apps, with two hands-on tracks (spec-kit-driven and GitHub Copilot-native custom agents + prompts), plus the off-the-shelf GitHub Copilot modernization agents (VS Code extension and the Modernize CLI).
-6. **Context Engineering**: Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules, and skills to a pre-built project.
-7. (soon) **Agentic Workflows**
-8. **The GitHub Copilot SDK**: Embed Copilot directly into your own apps — open sessions, stream responses, and let Copilot call custom tools you define in TypeScript/Node.
-9. **Security, Sandboxing and Guardrails**: How to use Copilot safely in your organization, and how to build your own guardrails for your own agentic AI.
+1. **Getting Started with GitHub Copilot** - A broad chapter for anyone who has never (or barely) used GitHub Copilot. It covers inline completions, Chat, Agent mode, agent harnesses, the Copilot CLI, custom instructions, prompt files, custom agents, skills, tools and MCP servers.
+2. **Spec-Driven Development (SDD)** - Learn how to make specifications and guide what GitHub Copilot builds, end to end on a small TypeScript/Node feature.
+3. **[spec-kit](https://github.com/github/spec-kit)** - Use spec-driven development conveniently with most agentic coding tools.
+4. **[Squad](https://github.com/bradygaster/squad)** *(coming soon)* - Use the open-source framework for orchestrating multi-agent development teams.
+5. **App modernization** - Use GitHub Copilot to modernize legacy apps, with two hands-on tracks (spec-kit-driven and GitHub Copilot-native custom agents + prompts), plus the off-the-shelf GitHub Copilot modernization agents (VS Code extension and the Modernize CLI).
+6. **Context Engineering** - Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules and skills to a pre-built project, plus a hands-on lab where you build, test and peer-review your own Agent Skill.
+7. **Agentic Workflows** *(coming soon)*.
+8. **The GitHub Copilot SDK** - Embed Copilot directly into your own apps: open sessions, stream responses and let Copilot call custom tools you define in TypeScript/Node.
+9. **Security, Sandboxing and Guardrails** - Use Copilot safely in your organization and build your own guardrails for your own agentic AI.
 
 <div class="info" data-title="Who is this for?">
 
-> Developers, tech leads and architects who want bring their agentic AI and GitHub Copilot skills to the next level to make it also suitable for more complex scenarios. No prior Copilot experience is required, but recommended. Chapter 1 is designed to help you catch up fast.
+> Developers, tech leads and architects who want to apply agentic AI and GitHub Copilot to more complex scenarios. Prior Copilot experience is helpful but not required.
+
+</div>
+
+<div class="tip" data-title="Where to start">
+
+> New to Copilot? Start with Chapter 1. Already comfortable with the basics? Start with the SDD exercise in Chapter 2. Chapters 4 and 7 are coming soon.
 
 </div>
 
 <div class="warning" data-title="Heads up">
 
-> GitHub Copilot evolves quickly. UI labels, menu locations and feature names may shift between releases. If something looks slightly different in your VS Code, search the Command Palette (`Cmd/Ctrl+Shift+P`) — the feature is almost certainly still there.
+> GitHub Copilot evolves quickly. UI labels, menu locations and feature names may shift between releases. If something looks slightly different in your VS Code, search the Command Palette (`Cmd/Ctrl+Shift+P`) - the feature is almost certainly still there.
 
 </div>
 
 <div class="info" data-title="🗄️ Database marker">
 
-> Wherever you see the 🗄️ marker in this workshop, the database is in play — a data model, data store, or migration decision worth pausing on. Treat it as a "stop and think about the database" cue.
+> Wherever you see the 🗄️ marker in this workshop, the database is in play - a data model, data store, or migration decision worth pausing on. Treat it as a "stop and think about the database" cue.
 
 </div>
 
@@ -63,16 +69,16 @@ You need the following before starting:
 |  |  |
 | --- | --- |
 | A GitHub account | [Create free GitHub account](https://github.com/join) |
-| GitHub Copilot access | Free, Pro, Business or Enterprise — see below |
+| GitHub Copilot access | Free, Pro, Business or Enterprise - see below |
 | Visual Studio Code | [Download](https://code.visualstudio.com/) |
 | GitHub Copilot extension(s) | [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) and [Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) |
 | Node.js 20+ and npm | [Install](https://nodejs.org) |
 | GitHub CLI | [Install](https://cli.github.com/) |
 | GitHub Copilot CLI | [Install](https://github.com/github/copilot-cli) |
 | A terminal | Any modern shell (bash, zsh, pwsh) |
-| A fork of this repo | [Fork `jkordick/ghcp-advanced`](https://github.com/jkordick/ghcp-advanced/fork) and clone your fork locally — you will need the `user-stories/`, `.github/skills/` and `.github/copilot-instructions.md` files for the hands-on exercises |
+| A fork of this repo | [Fork `jkordick/ghcp-advanced`](https://github.com/jkordick/ghcp-advanced/fork) and clone your fork locally - you will need the `user-stories/`, `.github/skills/` and `.github/copilot-instructions.md` files for the hands-on exercises |
 
-![Fork repository](assets/fork.png)
+![The repository's Fork menu, with Create a new fork highlighted](assets/fork.png)
 
 ### Getting Copilot access
 
@@ -89,13 +95,13 @@ You need the following before starting:
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 1 — Getting Started with GitHub Copilot
+# Chapter 1 - Getting Started with GitHub Copilot
 
-> If you have never (or only barely) used GitHub Copilot, **start here**. This chapter is intentionally broad. Skip (parts of) it if you are already familiar and comfortable.
+> New to GitHub Copilot? **Start here.** This chapter covers the essentials. If you already know the basics, skip ahead to Chapter 2.
 
 ## 1.1 Copilot in VS Code
 
-Open any folder in VS Code with the Copilot extensions installed. You will use four surfaces, and you will learn what an *agent harness* is, because it decides which customizations from this chapter are loaded:
+Open a folder in VS Code with the Copilot extensions installed. You will try inline completions, inline chat, the Chat view and Agent mode. You will also learn what an *agent harness* is: it determines which customizations from this chapter are loaded.
 
 ### Inline completions
 
@@ -110,7 +116,7 @@ Start typing and Copilot suggests grey inline completions. Accept with `Tab`, di
 function fib(n: number): number {
 ```
 
-Let Copilot complete the body. Now add a second comment `// returns the nth prime` above a new function and watch how *prior context in the file* guiding the suggestion.
+Let Copilot complete the function body. Then add `// returns the nth prime` above a second function and notice how the earlier code and comments in the file guide the suggestion.
 
 ### Inline chat (`Cmd/Ctrl + I`)
 
@@ -126,7 +132,7 @@ With the **Ask** agent selected, chat is for conversation about your code. Use `
 #file:src/auth.ts /explain why does login() throw on empty passwords?
 ```
 
-> **In the Copilot CLI:** attach files with `@` (not `#`) and just ask in plain language — there is no `/explain` or `/fix`. Slash commands in the CLI are for the session itself (`/agent`, `/mcp`, `/context`, `/compact`, `/usage`, `/resume`, `/cwd`, `/add-dir`). Prefix a line with `!` to run a raw shell command without invoking the model.
+> **In the Copilot CLI:** attach files with `@` (not `#`) and just ask in plain language - there is no `/explain` or `/fix`. Slash commands in the CLI are for the session itself (`/agent`, `/mcp`, `/context`, `/compact`, `/usage`, `/resume`, `/cwd`, `/add-dir`). Prefix a line with `!` to run a raw shell command without invoking the model.
 
 ### Agent mode
 
@@ -134,13 +140,13 @@ In the Chat view, switch the agent picker from **Ask** to **Agent**. Agent mode 
 
 <div class="tip" data-title="Pick the right built-in agent">
 
-> - **Ask** — questions, explanations, information gathering (read-only tools)
-> - **Plan** — research a task and produce an implementation plan for you to review (also via `/plan`)
-> - **Agent** — autonomous task execution, coding, execution
+> - **Ask** - questions, explanations, information gathering (read-only tools)
+> - **Plan** - research a task and produce an implementation plan for you to review (also via `/plan`)
+> - **Agent** - autonomous task execution, coding, execution
 
 </div>
 
-> **In the Copilot CLI:** there is no Ask/Agent toggle — the CLI is always agentic. Cycle into *plan mode* with `Shift+Tab` to design before changes are made, and use `--allow-all` (or `--yolo`) for unattended runs where you accept the risk of skipping approval prompts.
+> **In the Copilot CLI:** there is no Ask/Agent toggle - the CLI is always agentic. Cycle into *plan mode* with `Shift+Tab` to design before changes are made, and use `--allow-all` (or `--yolo`) for unattended runs where you accept the risk of skipping approval prompts.
 
 ### Agent harnesses
 
@@ -164,10 +170,10 @@ The active harness shows as a prefix in the chat title.
 ## 1.2 GitHub Copilot CLI
 ![GitHub Copilot CLI](assets/cli.png)
 
-GitHub Copilot is IDE independent available via the CLI. It gives you an agent setup in your terminal. The CLI runs the same Copilot runtime as the **Copilot** harness in VS Code, so the customizations you build for one (instructions, custom agents, skills, MCP servers) work in the other.
+You can use GitHub Copilot from your terminal with the CLI, without opening an IDE. It runs the same Copilot runtime as the **Copilot** harness in VS Code, so the same instructions, custom agents, skills and MCP servers work in both.
 
 
-**Try it.** After the installation, open a terminal, navigate to any folder or repo, run `copilot --banner` and ask "what is this repository about?"
+**Try it.** After installing the CLI, open a terminal in a folder or repository, run `copilot --banner`, and ask: “What is this repository about?”
 
 <div class="warning" data-title="Command line tool execution">
 
@@ -194,7 +200,7 @@ This repo ships with one [`.github/copilot-instructions.md`](https://github.com/
 
 </div>
 
-> **In the Copilot CLI:** the same files are picked up automatically — `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md` and `AGENTS.md` — when you launch `copilot` inside the repo. No additional configuration needed.
+> **In the Copilot CLI:** the same files are picked up automatically - `.github/copilot-instructions.md`, `.github/instructions/**/*.instructions.md` and `AGENTS.md` - when you launch `copilot` inside the repo. No additional configuration needed.
 
 ## 1.4 Prompt files
 
@@ -245,7 +251,7 @@ description: Focuses on test coverage and quality without modifying production c
 tools: ["search", "edit", "execute"]
 ---
 You are a testing specialist focused on improving code quality through comprehensive testing. Analyze existing tests, identify coverage gaps, and write unit, integration, and end-to-end tests. Focus only on test
-files — avoid modifying production code unless specifically requested.
+files - avoid modifying production code unless specifically requested.
 ```
 
 Pick the agent from the agent picker in VS Code Chat (it works in both the **Copilot** and **Local** harness), or use it in the Copilot CLI with the `/agent` command. Personal agents for the Copilot harness and the CLI live in `~/.copilot/agents/`. Set `user-invocable: false` to hide an agent from the picker but keep it available as a subagent. *Handoffs* (buttons that pass control to the next agent) are a Local-harness feature. See [Custom agents in VS Code](https://code.visualstudio.com/docs/agent-customization/custom-agents) and [Creating custom agents](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/create-custom-agents) for full configuration options.
@@ -263,19 +269,20 @@ Skills are folders with a `SKILL.md` file plus optional scripts, templates and e
 | Project (committed) | `.github/skills/<name>/SKILL.md` | `.agents/skills/`, `.claude/skills/` |
 | Personal | `~/.copilot/skills/<name>/SKILL.md` | `~/.agents/skills/`, `~/.claude/skills/` |
 
-To create one in VS Code, run **Chat: Open Customizations** -> **Skills** -> **New Skill**. In any harness you can also just ask the agent: *"Create a project skill named `test-changes` in `.github/skills/` that …"*. With **Local** selected, `/create-skill` and `/skills` are available as shortcuts. You can also install skills from **Browse** in the Agent Customizations editor (Customization Marketplace, preview; not available in Local sessions) or with `gh skill`.
+To create one in VS Code, run **Chat: Open Customizations** -> **Skills** -> **New Skill**. In any harness you can also just ask the agent: *"Create a project skill named `test-changes` in `.github/skills/` that …"*. With **Local** selected, `/create-skill` and `/skills` are built-in shortcuts. The Copilot harness has no built-in `/create-skill`, so this repo ships its own as a project skill (see below). You can also install skills from **Browse** in the Agent Customizations editor (Customization Marketplace, preview; not available in Local sessions) or with `gh skill`.
 
-This repo ships with three example skills in [`.github/skills/`](https://github.com/jkordick/ghcp-advanced/tree/main/.github/skills):
+This repo ships with four example skills in [`.github/skills/`](https://github.com/jkordick/ghcp-advanced/tree/main/.github/skills):
 
 | Skill | What it does |
 | --- | --- |
 | `run-tests` | Runs `npm test`, reads failures, fixes the code (not the test), re-runs until green. |
 | `lint-and-typecheck` | Runs `tsc --noEmit` then `eslint`, fixes issues in the right order. |
 | `convert-svg-to-png` | Wraps a shell script that converts SVG → PNG using whichever tool is available. Shows how a skill can include **scripts** alongside instructions. |
+| `create-skill` | Turns the workflow in the current conversation into a new `SKILL.md`. User-invoked only (`disable-model-invocation: true`), so it works like `/create-skill` in every harness. Used in the 6.7 lab. |
 
 Open [`.github/skills/run-tests/SKILL.md`](https://github.com/jkordick/ghcp-advanced/tree/main/.github/skills/run-tests/SKILL.md) to see a minimal example.
 
-Copilot auto-loads a matching skill when it detects a relevant task, or you invoke it explicitly with `/run-tests`. Skills are an [open standard](https://agentskills.io/) — they work across VS Code (Copilot, Local, and with matching folders Claude and Codex), the Copilot CLI, the GitHub Copilot app and other skills-compatible agents.
+Copilot auto-loads a matching skill when it detects a relevant task, or you invoke it explicitly with `/run-tests`. Skills are an [open standard](https://agentskills.io/) - they work across VS Code (Copilot, Local, and with matching folders Claude and Codex), the Copilot CLI, the GitHub Copilot app and other skills-compatible agents.
 
 The `SKILL.md` frontmatter controls how a skill is discovered and invoked:
 
@@ -288,7 +295,7 @@ The `SKILL.md` frontmatter controls how a skill is discovered and invoked:
 | `disable-model-invocation` | No | `true` means the agent never loads the skill on its own. It runs only when you type `/name`. Default `false`. |
 | `context` | No | `fork` runs the skill in its own subagent context instead of inline (experimental). |
 
-> **In the Copilot CLI:** the same `.github/skills/` and `~/.copilot/skills/` locations are honored — no per-tool config required. Use `/skills list` to see what is loaded, `/skills reload` after adding one mid-session, and `/skills info <name>` to check where it came from.
+> **In the Copilot CLI:** the same `.github/skills/` and `~/.copilot/skills/` locations are honored - no per-tool config required. Use `/skills list` to see what is loaded, `/skills reload` after adding one mid-session, and `/skills info <name>` to check where it came from.
 
 ### Skills as reusable prompts in the Copilot harness
 
@@ -323,7 +330,7 @@ Open a new chat with **Session Target** set to **Copilot** and run `/add-test sr
 
 ## 1.7 MCP servers
 
-The [Model Context Protocol](https://modelcontextprotocol.io) lets GitHub Copilot connect to external tools — issue trackers, databases 🗄️, browsers, your own services and knowledge bases. 
+The [Model Context Protocol](https://modelcontextprotocol.io) lets GitHub Copilot connect to external tools - issue trackers, databases 🗄️, browsers, your own services and knowledge bases. 
 
 In VS Code, open the `Extensions` view and type `@mcp` to browse the MCP server gallery. You can also run **MCP: Add Server** for a guided setup, or go to **Chat: Open Customizations** -> **MCP Servers** -> **Add Server**.
 
@@ -373,13 +380,13 @@ Once connected, Agent mode can call those tools by name.
 | Inline chat | Targeted edits to a selection |
 | Chat (Ask) | Questions, explanations |
 | Chat (Plan) | A reviewable implementation plan before any edits |
-| Chat (Agent) | Autonomous tasks — the SDD workhorse |
-| Agent harness (Session Target) | Picks the runtime: **Copilot** (shared with CLI & app) or **Local** (VS Code built-in) — determines which customizations load |
+| Chat (Agent) | Autonomous tasks - the SDD workhorse |
+| Agent harness (Session Target) | Picks the runtime: **Copilot** (shared with CLI & app) or **Local** (VS Code built-in) - determines which customizations load |
 | Copilot CLI | Same power, in the terminal / CI |
 | copilot-instructions.md<br>/AGENTS.md | Durable, project-wide rules |
-| Prompt files | Reusable, parameterizable workflows — **Local harness only** |
+| Prompt files | Reusable, parameterizable workflows - **Local harness only** |
 | Custom agents | Specialized personas + tool scoping |
-| Agent skills | Packaged multi-step capabilities, loaded on demand — or invoked as `/name`, the portable replacement for prompt files |
+| Agent skills | Packaged multi-step capabilities, loaded on demand - or invoked as `/name`, the portable replacement for prompt files |
 | MCP servers | Real-world tools and data the agent can use |
 
 You now have the full toolbox. The rest of the workshop is about **using it**.
@@ -388,7 +395,7 @@ You now have the full toolbox. The rest of the workshop is about **using it**.
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 2 — Spec-Driven Development 
+# Chapter 2 - Spec-Driven Development 
 
 ## 2.1 Why spec-driven?
 
@@ -412,15 +419,15 @@ You gain three things:
 
 <div class="tip" data-title="Important">
 
-> If you struggle to break down the task at hand into a reasonably sized spec, you probably need to break the task at hand into smaller pieces. SDD is not a silver bullet for complexity — it is a discipline that helps you manage it, but it does not replace good judgment in scope definition.
+> If you struggle to break down the task at hand into a reasonably sized spec, you probably need to break the task at hand into smaller pieces. SDD is not a silver bullet for complexity - it is a discipline that helps you manage it, but it does not replace good judgment in scope definition.
 
 </div>
 
 ## 2.2 Hands-on: build The Rubber Duck Emporium with SDD
 
-You will build a small e-commerce application for **The Rubber Duck Emporium** — a shop that sells specialty rubber ducks for every possible occasion: Debugging Ducks, Philosopher Ducks, Maritime Ducks, Wellness Ducks, and Limited Editions.
+You will build a small e-commerce application for **The Rubber Duck Emporium** - a shop that sells specialty rubber ducks for every possible occasion: Debugging Ducks, Philosopher Ducks, Maritime Ducks, Wellness Ducks, and Limited Editions.
 
-The user stories live in the [`user-stories/`](https://github.com/jkordick/ghcp-advanced/tree/main/user-stories) folder of this repo. **Read** [**`user-stories/README.md`**](https://github.com/jkordick/ghcp-advanced/blob/main/user-stories/README.md) **first** — it describes the product, personas (Quincy Quacker the customer, Dr. Mallard the curator), shared constraints, and the dependency graph between stories.
+The user stories live in the [`user-stories/`](https://github.com/jkordick/ghcp-advanced/tree/main/user-stories) folder of this repo. **Read** [**`user-stories/README.md`**](https://github.com/jkordick/ghcp-advanced/blob/main/user-stories/README.md) **first** - it describes the product, personas (Quincy Quacker the customer, Dr. Mallard the curator), shared constraints, and the dependency graph between stories.
 
 There are 9 stories. A realistic ~90-120 minute run completes the full application.
 
@@ -575,7 +582,7 @@ Pick story 1 (`browse-catalog`) and invoke the first skill with the story id:
 /sdd-spec browse-catalog
 ```
 
-Then answer the clarifying questions. Expect to make a foundational decision here that will affect every later story — e.g., *"is this a JSON API or a server-rendered web app?"*, *"what fields does a `Duck` have?"*. Review `specs/browse-catalog/spec.md`. Iterate until you are happy.
+Then answer the clarifying questions. Expect to make a foundational decision here that will affect every later story - e.g., *"is this a JSON API or a server-rendered web app?"*, *"what fields does a `Duck` have?"*. Review `specs/browse-catalog/spec.md`. Iterate until you are happy.
 
 Then run the next skills in the loop, reviewing the artifact after each one. `sdd-implement` takes the task number as a second argument and is run once per task:
 
@@ -693,7 +700,7 @@ Compare what spec-kit does and what it generates against the hand-rolled `sdd-*`
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 4 (coming soon) — Squad
+# Chapter 4 (coming soon) - Squad
 
 A dedicated chapter on [squad](https://github.com/bradygaster/squad): an open-source framework for orchestrating multi-agent development teams on top of GitHub Copilot is planned for an upcoming version of this workshop.
 
@@ -701,21 +708,21 @@ A dedicated chapter on [squad](https://github.com/bradygaster/squad): an open-so
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 5 — App Modernization
+# Chapter 5 - App Modernization
 
-Chapter 2 used SDD to build something new. This chapter uses the same discipline in the opposite direction: taking an **existing** code base — usually one nobody fully understands anymore — and modernizing it without losing the business rules baked into it over the years.
+Chapter 2 used SDD to build something new. This chapter uses the same discipline in the opposite direction: taking an **existing** code base - usually one nobody fully understands anymore - and modernizing it without losing the business rules baked into it over the years.
 
-Modernization is where agentic AI actually earns its keep. A human alone can rewrite a legacy service, but the tedious parts — reading every controller, every stored procedure, every XML config, every home-grown utility — are exactly what the agent is good at, *if* you give it a framework to work in. That framework is SDD, applied backwards: first you use the agent to **rediscover** the spec that the code implicitly encodes, then you use SDD forward again to plan and rebuild against that spec.
+Modernization is where agentic AI actually earns its keep. A human alone can rewrite a legacy service, but the tedious parts - reading every controller, every stored procedure, every XML config, every home-grown utility - are exactly what the agent is good at, *if* you give it a framework to work in. That framework is SDD, applied backwards: first you use the agent to **rediscover** the spec that the code implicitly encodes, then you use SDD forward again to plan and rebuild against that spec.
 
 <div class="info" data-title="Same discipline, different starting point">
 
-> In Chapter 2 the input was a user story and the output was code. In this chapter the input is code and, over multiple SDD iterations, the output is (first) a spec, then a plan, then new code. The Spec → Plan → Tasks → Implement loop is the same — we just "misuse" it.
+> In Chapter 2 the input was a user story and the output was code. In this chapter the input is code and, over multiple SDD iterations, the output is (first) a spec, then a plan, then new code. The Spec → Plan → Tasks → Implement loop is the same - we just "misuse" it.
 
 </div>
 
 ## 5.1 Why divide and conquer matters even more here
 
-A greenfield project has one thing legacy code doesn't: a bounded scope. You know what you are building because you just wrote the story. In a legacy system, scope is whatever accumulated over 5–20 years of tickets, hotfixes, integrations and "temporary" workarounds. Trying to modernize it in one pass — even with the best agent — reliably produces two outcomes:
+A greenfield project has one thing legacy code doesn't: a bounded scope. You know what you are building because you just wrote the story. In a legacy system, scope is whatever accumulated over 5–20 years of tickets, hotfixes, integrations and "temporary" workarounds. Trying to modernize it in one pass - even with the best agent - reliably produces two outcomes:
 
 1. **Silent behavior loss.** Edge cases that were load-bearing for one specific customer disappear because nobody documented them and the agent had no reason to preserve them.
 2. **Context collapse.** The agent's context window fills up with legacy code before it gets to reason about the target architecture, and quality drops sharply.
@@ -726,26 +733,26 @@ The fix is the same discipline you already learned: **break the work into phases
 | --- | --- | --- | --- |
 | **1. Rediscovery** | Legacy source, docs, tickets | Reverse engineered business logic + curated `AGENTS.md` | *What does this system actually do?* |
 | **2. Substitution audit** (optional) | Legacy sources, rediscovered business logic | Substitution map | *What in here is no longer needed or state of the art?* |
-| **3a. Re-architecture** | Reverse engineered business logic + substitution map | Target architecture plan | *What should the new shape look like?* |
-| **3b. Re-write** | Target plan + reverse engineered business logic + substitution map | New implementation + tests (you can also apply Test Driven Development here) | *How do we rebuild the business logic without losing it?* |
+| **3a. Re-architecture** | Reverse-engineered business logic + substitution map, if phase 2 was completed | Target architecture plan | *What should the new shape look like?* |
+| **3b. Re-write** | Target plan + reverse-engineered business logic + substitution map, if phase 2 was completed | New implementation + tests (you can also apply Test Driven Development here) | *How do we rebuild the business logic without losing it?* |
 | **4. Deploy** (optional) | Working new build | CI/CD pipeline + running environment | *How does this ship, repeatably?* |
 
 <div class="warning" data-title="Agentic AI is non-deterministic">
 
-> Especially for the reverse engineering in phase 1, agentic AI is not the magic solution. In real world scenarios you will always need a combination of agentic power, human oversight and deterministic tooling to ensure that the rediscovered business logic is correct. No one with a reputation would ever promise you a one-click solution. Only believe what you can validate!
+> Agentic AI is not a magic solution, especially during phase 1. In real-world scenarios, combine agent assistance with human review and deterministic tools to verify the rediscovered business logic. Do not expect a one-click solution; validate every rule.
 
 </div>
 
-## 5.2 Phase 1 — Rediscovery/Reverse engineering
+## 5.2 Phase 1 - Rediscovery/Reverse engineering
 
-The goal of phase 1 is to produce, from the code itself, existing tests, documentation — whatever is available — a reviewable reverse engineered list of business rules, data models 🗄️, and integrations.
+In phase 1, use the source code, existing tests and documentation-whatever is available-to produce a reviewable list of business rules, data models 🗄️ and integrations.
 
 You point the agent at the repository (or, more often, a *module* of it) and ask it to produce artifacts like:
 
-- **A list of business rules** — what the system does, in plain English, with examples. This is the most important artifact: it is what you will use to validate that the new implementation preserves the old behavior.
-- **A data model summary** 🗄️ — entities, relationships, data types and encoded value domains, and invariants (including the ones only enforced by DB triggers or defensive `if`s scattered across services).
-- **An integration inventory** — every external system this module talks to: databases 🗄️, message queues, third-party APIs, filesystem paths, hard-coded IPs.
-- **A behavior open-questions list** — anything the agent could not resolve from the code alone. This becomes the interview list for the humans who still remember.
+- **A list of business rules** - what the system does, in plain English, with examples. This is the most important artifact: it is what you will use to validate that the new implementation preserves the old behavior.
+- **A data model summary** 🗄️ - entities, relationships, data types and encoded value domains, and invariants (including the ones only enforced by DB triggers or defensive `if`s scattered across services).
+- **An integration inventory** - every external system this module talks to: databases 🗄️, message queues, third-party APIs, filesystem paths, hard-coded IPs.
+- **An open-questions list** - anything the agent could not resolve from the code alone. Use it to interview people who know the system.
 
 <div class="tip" data-title="Curate an AGENTS.md before you go deep">
 
@@ -759,21 +766,21 @@ You point the agent at the repository (or, more often, a *module* of it) and ask
 
 </div>
 
-At the end of phase 1 you have something the original codebase probably never had: a human- and agent-reviewable document. That alone is often worth the exercise, even if you never proceed to phase 2 (e.g. if you want to keep a certain technology stack for a while longer, like a mainframe).
+At the end of phase 1, you have a document that people and agents can review. That may be worth the exercise on its own, even if you keep the current technology stack-for example, a mainframe-and do not proceed to phase 2.
 
-## 5.3 Phase 2 — Substitution audit (optional)
+## 5.3 Phase 2 - Substitution audit (optional)
 
 Phase 1 tells you *what* the system does. Phase 2 asks: *of the things it does, which ones should not be done that way anymore?*
 
-The pattern here is a walk through the rediscovery spec, flagging each element against today's ecosystem:
+Review each element in the rediscovery spec against today's ecosystem:
 
-- **Home-grown code that is now a library.** Custom retry loops, hand-rolled JSON parsers, bespoke connection pools, in-house auth — anything that has become a well-supported dependency (or a platform primitive) since the code was written.
+- **Home-grown code that is now a library.** Custom retry loops, hand-rolled JSON parsers, bespoke connection pools, in-house auth - anything that has become a well-supported dependency (or a platform primitive) since the code was written.
 - **Integrations that have moved on.** SOAP endpoints that now offer REST/GraphQL, on-prem message brokers with managed equivalents, batch file drops that could be event streams, custom SFTP scripts that could be a managed connector.
 - **Data stores that no longer fit.** 🗄️ A single monolithic RDBMS holding data with wildly different access patterns; a NoSQL choice that was trendy in 2015 but has no operator today; a schema shaped around a UI that no longer exists.
 - **Runtimes and frameworks past their sell-by date.** End-of-life language versions, EOL frameworks, container base images with unpatched CVEs, servers nobody ships new versions of.
 - **Operational assumptions that don't survive contact with the cloud.** Local filesystem state, background threads that must survive across requests, singleton in-memory caches, "just SSH in and restart it" runbooks.
 
-The output is a table (or a set of them) with rows like *"custom JWT verification in `src/auth/` → replace with framework middleware, reason: CVE surface + team no longer maintains it"* or *"nightly cron pushing CSVs to partner FTP → replace with event-driven pipeline, reason: latency + observability"*. Each row is a candidate change with an explicit trade-off, which is exactly what phase 3 needs to make architectural decisions.
+Record the results in a table. For example: *"custom JWT verification in `src/auth/` → replace with framework middleware; reason: CVE exposure and no active maintainer"* or *"nightly cron pushing CSVs to partner FTP → replace with an event-driven pipeline; reason: latency and observability"*. Each row proposes a change and states its trade-off, giving phase 3 evidence for architectural decisions.
 
 <div class="info" data-title="Not everything gets substituted">
 
@@ -781,38 +788,38 @@ The output is a table (or a set of them) with rows like *"custom JWT verificatio
 
 </div>
 
-## 5.4 Phase 3 — Re-architect and re-write
+## 5.4 Phase 3 - Re-architect and re-write
 
 Phase 3 is where you go from *understanding* the legacy system to *replacing* it. It splits cleanly in two, and the split matters because they answer different questions and are reviewed by different people.
 
-### 5.4.1 Phase 3a — Re-architecture
+### 5.4.1 Phase 3a - Re-architecture
 
-Input: the reverse engineered business logic (phase 1) and the substitution map (phase 2). Output: a **target architecture plan** scoped to the whole module or system rather than a single story.
+Use the reverse-engineered business logic from phase 1 and, if you completed phase 2, its substitution map. Produce a **target architecture plan** for the whole module or system, not a single story.
 
 The plan covers:
 
-- **Target runtime and platform** — language version, framework, deployment target (containers, serverless, managed app platform).
-- **Module and service boundaries** — what stays a monolith, what splits out, and *why* (each split needs a justification tied back to the behavior spec).
-- **Data model and storage choices** 🗄️ — the target store and the migration path from the legacy schema (see the database-migration note below).
-- **Integration contracts** — the concrete API/event shapes replacing each legacy integration flagged in phase 2.
-- **Cross-cutting concerns** — auth, logging, config, secrets, observability, feature flags.
-- **Migration strategy** — big-bang vs. strangler-fig vs. parallel-run, and how you keep the lights on for existing users during the transition.
-- **Risks** — the ones the agent can name from the spec plus the ones the humans add from experience.
-- and everything that might be relevant for your specific modernization scenario / tech stack.
+- **Target runtime and platform** - language version, framework, deployment target (containers, serverless, managed app platform).
+- **Module and service boundaries** - what stays a monolith, what splits out, and *why* (each split needs a justification tied back to the behavior spec).
+- **Data model and storage choices** 🗄️ - the target store and the migration path from the legacy schema (see the database-migration note below).
+- **Integration contracts** - the concrete API/event shapes replacing legacy integrations flagged in phase 2, if completed.
+- **Cross-cutting concerns** - auth, logging, config, secrets, observability, feature flags.
+- **Migration strategy** - big-bang vs. strangler-fig vs. parallel-run, and how you keep the lights on for existing users during the transition.
+- **Risks** - the ones the agent can name from the spec plus the ones the humans add from experience.
+- Other concerns specific to your modernization scenario or technology stack.
 
 <div class="info" data-title="🗄️ Database migrations have their own failure modes">
 
-> Storage is the part of a modernization most likely to lose data quietly. When the migration path crosses a **database boundary** — an engine swap (e.g. Oracle → PostgreSQL), relational → NoSQL, or a schema reshape — pin down four things the general plan does not:
-> - **Type and constraint mapping** — every source type and rule maps to a target one (e.g. Oracle `VARCHAR2`/`NUMBER`, check constraints, triggers). Flag the ones with no clean equivalent.
-> - **Data move** — one-shot backfill vs. **dual-write + backfill** while both stores run, so you can cut over without downtime.
-> - **Cutover** — the read/write switch point, tied to the strangler-fig interface from phase 3b, with a rollback path.
-> - **Parity verification** — prove old and new agree: row counts, checksums/aggregates, and behavior tests replayed against both stores.
+> Storage is the part of a modernization most likely to lose data quietly. When the migration path crosses a **database boundary** - an engine swap (e.g. Oracle → PostgreSQL), relational → NoSQL, or a schema reshape - pin down four things the general plan does not:
+> - **Type and constraint mapping** - every source type and rule maps to a target one (e.g. Oracle `VARCHAR2`/`NUMBER`, check constraints, triggers). Flag the ones with no clean equivalent.
+> - **Data move** - one-shot backfill vs. **dual-write + backfill** while both stores run, so you can cut over without downtime.
+> - **Cutover** - the read/write switch point, tied to the strangler-fig interface from phase 3b, with a rollback path.
+> - **Parity verification** - prove old and new agree: row counts, checksums/aggregates, and behavior tests replayed against both stores.
 
 </div>
 
-### 5.4.2 Phase 3b — Re-write
+### 5.4.2 Phase 3b - Re-write
 
-Once the architecture is approved, re-writing the business logic looks a lot like Chapter 2 of this course. You break the reverse engineered business logic and the architecture plan into a spec, plan, task list and then you implement them one at a time with tests.
+Once the architecture is approved, rewriting the business logic follows the workflow from Chapter 2. Turn the rediscovered rules, approved architecture and any substitution decisions into a spec, plan and task list, then implement the tasks one at a time with tests.
 
 Two techniques matter here:
 
@@ -821,95 +828,93 @@ Two techniques matter here:
 
 <div class="warning" data-title="Do not let the agent invent business rules">
 
-> When the agent hits a gap in the business rule description during phase 3b, it will be tempted to *guess* what the legacy system did. Prompt the agent so that whenever there is a white space — something that needs to be clarified — it stops and asks. Guessed business rules are the single most expensive class of modernization defects because they only surface in production, quietly, on the customers whose edge case you missed.
+> If a business rule is missing during phase 3b, the agent may guess what the legacy system did. Instruct it to stop and ask whenever a rule is unclear. Validate assumptions before they reach production, where they could affect customers with untested edge cases.
 
 </div>
 
-## 5.5 Phase 4 (optional) — CI/CD and deployment
+## 5.5 Phase 4 (optional) - CI/CD and deployment
 
-At this point the artifacts you produced in earlier phases pay off again: the architecture plan named the deployment target, the substitution map named the operational changes, and the behavior tests give you a signal you can gate a pipeline on. Phase 4 is where you:
+At this point, the earlier artifacts pay off again: the architecture plan names the deployment target, the substitution map (if you completed phase 2) names operational changes, and the behavior tests give you a signal to gate a pipeline on. In phase 4, you:
 
 - Set up (or extend) the CI pipeline to build, test and scan the new code.
 - Produce the infrastructure-as-code for the target platform (containers, managed services, whatever phase 3a picked).
 - Wire up secrets, config, observability and health checks.
-- Define the promotion path — dev → staging → production — and the rollback path.
+- Define the promotion path - dev → staging → production - and the rollback path.
 - Run the strangler-fig cutover from phase 3b behind whatever traffic-shifting mechanism your platform provides.
 
 ## 5.6 Hands-on: modernize a legacy application
 
-You have two ways to run this hands-on. Both cover the same four phases; they differ only in *how you drive the agent(s)*. Pick one — you do **not** need to do both.
+Choose one of two tracks. Both use the same four-phase framework; phases 2 and 4 are optional. The tracks differ only in how you guide the agent(s). You do **not** need to complete both.
 
-- **Track A — spec-kit driven (recommended).** You drive the loop yourself with the `/speckit-*` skills from [Chapter 3](#chapter-3-spec-kit-by-github), one full loop per phase. No bespoke assets required. This is the natural continuation of the spec-kit chapter and is stack-agnostic.
-- **Track B — GitHub Copilot-native custom agents + prompts (alternative).** You run a pre-built kit of custom agents and prompt files that productize the exact same four phases into turnkey, one-artifact-per-run commands. This track doubles as a capstone for the custom agents (1.5) and prompt files (1.4) you met earlier.
+- **Track A - spec-kit driven (recommended).** You drive the loop yourself with the `/speckit-*` skills from [Chapter 3](#chapter-3-spec-kit-by-github), one full loop per phase. No bespoke assets required. This is the natural continuation of the spec-kit chapter and is stack-agnostic.
+- **Track B - GitHub Copilot-native custom agents + prompts (alternative).** You run a pre-built kit of custom agents and prompt files that productize the exact same four phases into turnkey, one-artifact-per-run commands. This track doubles as a capstone for the custom agents (1.5) and prompt files (1.4) you met earlier.
 
-If your legacy system happens to be Java, .NET or C++, there is also a vendor-built route: [5.7](#57-off-the-shelf--the-github-copilot-modernization-agents) covers the GitHub Copilot modernization agents. Do the hands-on first — knowing what the loop *should* look like is what lets you judge whether the product's output is any good.
+If your legacy system happens to be Java, .NET or C++, there is also a vendor-built route: [5.7](#57-off-the-shelf--the-github-copilot-modernization-agents) covers the GitHub Copilot modernization agents. Do the hands-on first - knowing what the loop *should* look like is what lets you judge whether the product's output is any good.
 
 <div class="info" data-title="Why we leave the duck behind here">
 
-> Both tracks deliberately step away from the greenfield `duck-emporium` you use elsewhere in this workshop. Modernization needs *real legacy code* — a purpose-built TypeScript/Node sample would defeat the point — so each track works against an external legacy repository instead. Everything you learn transfers straight back to whatever legacy system you actually own.
+> Both tracks deliberately step away from the greenfield `duck-emporium` you use elsewhere in this workshop. Modernization needs *real legacy code* - a purpose-built TypeScript/Node sample would defeat the point - so each track works against an external legacy repository instead. Everything you learn transfers straight back to whatever legacy system you actually own.
 
 </div>
 
-### 5.6.1 Track A (recommended) — spec-kit driven
+### 5.6.1 Track A (recommended) - spec-kit driven
 
-We prepared a Java legacy application for you to modernize. You can find it [here](https://github.com/jkordick/training-java-monolith-refactor). Based on this example you will work through the phases with the help of SDD, running a separate SDD loop per phase.
+Use this [Java legacy application](https://github.com/jkordick/training-java-monolith-refactor) for the exercise. Clone it and initialize spec-kit as described in [Chapter 3](#chapter-3-spec-kit-by-github).
 
-After cloning the repository, initialize spec-kit as you did in [Chapter 3](#chapter-3-spec-kit-by-github).
-
-Then run **one full spec-kit loop per phase**. Treat each phase's *modernization activity itself* as the "feature" being built: `/speckit-specify` describes the deliverables and constraints, `/speckit-plan` designs the approach (reading order, tooling, heuristics), `/speckit-tasks` breaks it into work items, and `/speckit-implement` executes them and produces the actual artifacts. The kick-off prompts below only cover `/speckit-specify` — spec-kit prompts you for the rest.
+For each phase you choose to run, complete **one full spec-kit loop**. Treat the modernization activity as the feature: `/speckit-specify` defines its deliverables and constraints, `/speckit-plan` designs the approach, `/speckit-tasks` breaks the work into tasks, and `/speckit-implement` produces the artifacts. The prompts below cover only `/speckit-specify`; spec-kit guides you through the remaining steps.
 
 <div class="tip" data-title="Why specify the activity, not just do it">
 
-> Reverse engineering, auditing, re-architecting and deploying are all non-trivial pieces of work with their own failure modes. Specifying them first forces you (and the agent) to be explicit about *what "done" looks like* before any file is touched — which is the whole point of SDD.
+> Reverse engineering, auditing, re-architecting and deploying are all non-trivial pieces of work with their own failure modes. Specifying them first forces you (and the agent) to be explicit about *what "done" looks like* before any file is touched - which is the whole point of SDD.
 
 </div>
 
-#### Phase 1 — Rediscovery
+#### Phase 1 - Rediscovery
 
 ```text
-/speckit-specify Specify a rediscovery of this legacy Java monolith. Deliverables: (1) a business-rules document in plain English with concrete code references and examples, (2) a data-model summary — entities, relationships, invariants (including those enforced only by defensive code or DB constraints), (3) an integration inventory (every external system, filesystem path, hard-coded endpoint), (4) an open-questions list for anything the code alone cannot answer. Constraints: no code changes, no modernization proposals, stop and ask before guessing behavior. Success: a domain reviewer can validate each rule against a concrete code reference.
+/speckit-specify Specify a rediscovery of this legacy Java monolith. Deliverables: (1) a business-rules document in plain English with concrete code references and examples, (2) a data-model summary - entities, relationships, invariants (including those enforced only by defensive code or DB constraints), (3) an integration inventory (every external system, filesystem path, hard-coded endpoint), (4) an open-questions list for anything the code alone cannot answer. Constraints: no code changes, no modernization proposals, stop and ask before guessing behavior. Success: a domain reviewer can validate each rule against a concrete code reference.
 ```
 
 Then run `/speckit-plan`, `/speckit-tasks`, `/speckit-implement` to design the reading order, split by module/subsystem, and produce the artifacts. Do the same after each `/speckit-specify` in the phases below.
 
-#### Phase 2 — Substitution audit
+#### Phase 2 - Substitution audit
 
 ```text
-/speckit-specify Specify a substitution audit over the rediscovery artifacts (phase 1). Deliverables: (1) a substitution-audit table with columns *legacy element*, *proposal* (keep-as-is | replace-with-library | replace-with-platform | retire), *reason*, *trade-off*; (2) coverage spanning home-grown code with modern equivalents, dated integrations, unfit data stores, EOL runtimes/frameworks, and cloud-hostile operational assumptions. Constraint: audit only — do not design the new architecture. Success: every row links back to a specific rediscovery entry.
+/speckit-specify Specify a substitution audit over the rediscovery artifacts (phase 1). Deliverables: (1) a substitution-audit table with columns *legacy element*, *proposal* (keep-as-is | replace-with-library | replace-with-platform | retire), *reason*, *trade-off*; (2) coverage spanning home-grown code with modern equivalents, dated integrations, unfit data stores, EOL runtimes/frameworks, and cloud-hostile operational assumptions. Constraint: audit only - do not design the new architecture. Success: every row links back to a specific rediscovery entry.
 ```
 
-#### Phase 3a — Re-architecture
+#### Phase 3a - Re-architecture
 
 ```text
-/speckit-specify Specify the target architecture for the modernized system, informed by the rediscovery (phase 1) and substitution audit (phase 2). Deliverables: (1) target runtime and platform, (2) module/service boundaries, (3) data model and migration path from the legacy schema, (4) integration contracts replacing each flagged legacy integration, (5) cross-cutting concerns (auth, logging, config, secrets, observability), (6) migration strategy (default: strangler-fig), (7) risks. Constraint: architecture only — no code, no per-module rewrite tasks yet. Success: every architectural choice traces back to either a preserved business rule or a substitution-audit row.
+/speckit-specify Specify the target architecture for the modernized system, informed by the rediscovery (phase 1) and, if completed, the substitution audit (phase 2). Deliverables: (1) target runtime and platform, (2) module/service boundaries, (3) data model and migration path from the legacy schema, (4) integration contracts replacing each flagged legacy integration, (5) cross-cutting concerns (auth, logging, config, secrets, observability), (6) migration strategy (default: strangler-fig), (7) risks. Constraint: architecture only - no code, no per-module rewrite tasks yet. Success: every architectural choice traces back to a preserved business rule or, when available, a substitution-audit row.
 ```
 
-#### Phase 3b — Re-write
+#### Phase 3b - Re-write
 
 ```text
-/speckit-specify Specify the rewrite of a single module (module boundaries defined in the re-architecture, phase 3a), informed by the rediscovery (phase 1), substitution audit (phase 2) and target architecture (phase 3a). Deliverables: (1) functional requirements for the module, (2) behavior-preserving acceptance tests derived from the phase-1 business rules — every functional requirement must map to at least one, (3) an interface contract identical to the legacy code so traffic can be switched gradually. Constraint: if a business rule is ambiguous or missing, stop and ask — never invent behavior. Note: repeat this phase-3b loop module by module until the legacy code path is empty. Success: legacy and new implementation produce identical results for the acceptance tests.
+/speckit-specify Specify the rewrite of a single module (module boundaries defined in the re-architecture, phase 3a), informed by the rediscovery (phase 1), any substitution decisions (phase 2), and the target architecture (phase 3a). Deliverables: (1) functional requirements for the module, (2) behavior-preserving acceptance tests derived from the phase-1 business rules - every functional requirement must map to at least one, (3) an interface contract identical to the legacy code so traffic can be switched gradually. Constraint: if a business rule is ambiguous or missing, stop and ask - never invent behavior. Note: repeat this phase-3b loop module by module until the legacy code path is empty. Success: legacy and new implementation produce identical results for the acceptance tests.
 ```
 
-#### Phase 4 (optional) — CI/CD and deployment
+#### Phase 4 (optional) - CI/CD and deployment
 
 ```text
 /speckit-specify Specify the deployment for the modernized system, informed by the target architecture (phase 3a) and the current build/test setup. Deliverables: (1) CI pipeline (build, test, scan), (2) infrastructure-as-code for the platform chosen in the re-architecture (phase 3a), (3) secrets/config/observability wiring, (4) promotion path dev → staging → production, (5) rollback path, (6) strangler-fig traffic-shifting mechanism for modules rewritten in phase 3b. Constraint: no live deployment during specify/plan/tasks. Success: from these artifacts alone, a fresh environment can be created and a rewritten module cut over end-to-end.
 ```
 
-### 5.6.2 Track B (alternative) — Copilot-native custom agents + prompts
+### 5.6.2 Track B (alternative) - Copilot-native custom agents + prompts
 
-This track ships the same four phases as a pre-built kit of **custom agents** (personas) and **prompt files** (actions). It uses an IBM COBOL application — [Bank-of-Z](https://github.com/IBM/Bank-of-Z) — as the legacy system, so you also see how the pattern generalizes beyond Java.
+This track provides the same four phases as a pre-built kit of **custom agents** (personas) and **prompt files** (actions). It uses an IBM COBOL application - [Bank-of-Z](https://github.com/IBM/Bank-of-Z) - so you can see how the approach applies beyond Java.
 
 **Get the kit.** The agents and prompts live on the [`app-mod-ghcp-native-start`](https://github.com/jkordick/ghcp-advanced/tree/app-mod-ghcp-native-start) branch of this repo, under `.github/agents/` and `.github/prompts/`. Fork & clone [Bank-of-Z](https://github.com/IBM/Bank-of-Z), open it in VS Code (or `cd` into it), then copy the `.github/agents` and `.github/prompts` folders from that branch into the cloned repository.
 
-**How the prompts and agents work together.** The `.github/agents/*.agent.md` files are the **personas** — each one is a custom agent with a scoped mission, ownership and tool access (e.g. `cobol-archaeologist` is read-only, `module-rewriter` can edit and run tests). The `.github/prompts/*.prompt.md` files are the **actions** — small, single-purpose commands you invoke from Chat. Each prompt has an `agent:` in its frontmatter, so running the prompt automatically switches Copilot into the right persona for the job.
+**How the prompts and agents work together.** The `.github/agents/*.agent.md` files are the **personas** - each one is a custom agent with a scoped mission, ownership and tool access (e.g. `cobol-archaeologist` is read-only, `module-rewriter` can edit and run tests). The `.github/prompts/*.prompt.md` files are the **actions** - small, single-purpose commands you invoke from Chat. Each prompt has an `agent:` in its frontmatter, so running the prompt automatically switches Copilot into the right persona for the job.
 
 **How to invoke them.**
 
 - **In VS Code:** open a new chat and set **Session Target** to **Local**. The kit uses prompt files, and those run only in the Local harness. Type `/` and pick the prompt by name (they show up as `01-rediscovery-bootstrap`, `01-rediscovery-business-rules`, …). Copilot switches to the pinned agent, runs the prompt, produces the artifact, then stops.
 - **In the Copilot harness or the Copilot CLI:** prompt files are not loaded. The custom agents still work, so pick one from the agent picker (or with `/agent` in the CLI) and paste the prompt body. Or convert the kit's prompts to user-invoked skills with **Chat: Open Customizations** -> **Migrations** -> **Convert Prompt to Skills** (see [1.6](#16-agent-skills)). The conversion drops the `agent:` pin, so select the matching agent yourself before you invoke each skill.
 
-**The execution pattern is the same for every prompt.** Run one prompt → review the diff → commit → run the next. Each prompt writes to a named artifact under `docs/modernization/<phase>/`, cites `path/to/file:LINE` for anything specific, and stops. If it hits ambiguity, it appends to `docs/modernization/01-rediscovery/open-questions.md` instead of guessing. This is what makes the flow reviewable and controllable: every step is a small, git-diffable change against a persistent artifact — no big-bang generations, no invented behavior.
+**The execution pattern is the same for every prompt.** Run one prompt → review the diff → commit → run the next. Each prompt writes to a named artifact under `docs/modernization/<phase>/`, cites `path/to/file:LINE` for anything specific, and stops. If it hits ambiguity, it appends to `docs/modernization/01-rediscovery/open-questions.md` instead of guessing. This is what makes the flow reviewable and controllable: every step is a small, git-diffable change against a persistent artifact - no big-bang generations, no invented behavior.
 
 <div class="tip" data-title="One prompt at a time">
 
@@ -917,65 +922,65 @@ This track ships the same four phases as a pre-built kit of **custom agents** (p
 
 </div>
 
-#### Phase 1 — Rediscovery
+#### Phase 1 - Rediscovery
 
 Agent: `cobol-archaeologist` (read-only). Artifacts land in `docs/modernization/01-rediscovery/`. Run these prompts, in order, reviewing between each:
 
-1. **`/01-rediscovery-bootstrap`** — scans the repo, writes `repo-map.md` (programs, copybooks, JCL, DDL, config) and drafts an `AGENTS.md` at the repo root. Always run this first, on any legacy repo. Review the `AGENTS.md` carefully — it is what every subsequent agent turn will silently load.
-2. **`/01-rediscovery-business-rules`** — pick **one** module from the reading order in `repo-map.md`. Appends business rules for that module to `business-rules.md`, citing `path/to/file:LINE` with worked examples. Re-run per module — do not sweep the whole repo in one go.
-3. **`/01-rediscovery-data-model`** 🗄️ — reverse-engineers entities, keys, invariants and encoded value domains from DDL, copybooks and defensive code. Appends to `data-model.md` (include a mermaid ER diagram if it helps reviewers).
-4. **`/01-rediscovery-integrations`** — inventories every external touchpoint (DB tables 🗄️, files, MQ, sockets, CICS/IMS transactions, JCL triggers, hard-coded endpoints). Appends to `integrations.md` with direction and load-bearing flag.
-5. **`/01-rediscovery-open-questions`** — final sweep. Consolidates hedging language, unexplained codes, dead-branch guesses and cross-artifact contradictions into `open-questions.md` with blast-radius annotations. Take this list to the domain experts before you move on.
+1. **`/01-rediscovery-bootstrap`** - scans the repo, writes `repo-map.md` (programs, copybooks, JCL, DDL, config) and drafts an `AGENTS.md` at the repo root. Always run this first, on any legacy repo. Review the `AGENTS.md` carefully - it is what every subsequent agent turn will silently load.
+2. **`/01-rediscovery-business-rules`** - pick **one** module from the reading order in `repo-map.md`. Appends business rules for that module to `business-rules.md`, citing `path/to/file:LINE` with worked examples. Re-run per module - do not sweep the whole repo in one go.
+3. **`/01-rediscovery-data-model`** 🗄️ - reverse-engineers entities, keys, invariants and encoded value domains from DDL, copybooks and defensive code. Appends to `data-model.md` (include a mermaid ER diagram if it helps reviewers).
+4. **`/01-rediscovery-integrations`** - inventories every external touchpoint (DB tables 🗄️, files, MQ, sockets, CICS/IMS transactions, JCL triggers, hard-coded endpoints). Appends to `integrations.md` with direction and load-bearing flag.
+5. **`/01-rediscovery-open-questions`** - final sweep. Consolidates hedging language, unexplained codes, dead-branch guesses and cross-artifact contradictions into `open-questions.md` with blast-radius annotations. Take this list to the domain experts before you move on.
 
-#### Phase 2 — Substitution audit (optional)
+#### Phase 2 - Substitution audit (optional)
 
 Agent: `substitution-auditor`. Artifact: `docs/modernization/02-substitution-audit/audit.md`.
 
-One prompt: **`/02-substitution-audit`**. Run it once per category (home-grown code / dated integrations / unfit data stores 🗄️ / EOL runtimes / cloud-hostile ops) or once per subsystem. Each run appends rows to `audit.md` with `verdict ∈ {keep-as-is, replace-with-library, replace-with-platform, retire}`, a reason, and an explicit trade-off. Rows without a trade-off get rejected by the agent by design — that is the guardrail against "let's just rewrite it in $LANG" bias. Phase 2 is optional: some engagements stop after phase 1 (e.g. you want the docs but plan to keep the mainframe another few years).
+One prompt: **`/02-substitution-audit`**. Run it once per category (home-grown code / dated integrations / unfit data stores 🗄️ / EOL runtimes / cloud-hostile ops) or once per subsystem. Each run appends rows to `audit.md` with `verdict ∈ {keep-as-is, replace-with-library, replace-with-platform, retire}`, a reason, and an explicit trade-off. Rows without a trade-off get rejected by the agent by design - that is the guardrail against "let's just rewrite it in $LANG" bias. Phase 2 is optional: some engagements stop after phase 1 (e.g. you want the docs but plan to keep the mainframe another few years).
 
-#### Phase 3a — Re-architecture
+#### Phase 3a - Re-architecture
 
 Agent: `target-architect`. Artifact: `docs/modernization/03a-architecture/target-architecture.md`.
 
-One prompt: **`/03a-architecture-decision`**. Run it once per architectural decision (target runtime/platform, module boundaries, data model + migration path 🗄️, an integration contract, a cross-cutting concern, migration strategy, a named risk). **Why one decision per run:** architecture decisions have consequences that later ones depend on, so running them one at a time forces you to review, commit, and let the next decision cite the previous one. If the agent judges a choice genuinely open, it lists two options with trade-offs and **stops without picking** — that is your cue to bring a human architect in.
+One prompt: **`/03a-architecture-decision`**. Run it once per architectural decision (target runtime/platform, module boundaries, data model + migration path 🗄️, an integration contract, a cross-cutting concern, migration strategy, a named risk). **Why one decision per run:** architecture decisions have consequences that later ones depend on, so running them one at a time forces you to review, commit, and let the next decision cite the previous one. If the agent judges a choice genuinely open, it lists two options with trade-offs and **stops without picking** - that is your cue to bring a human architect in.
 
-#### Phase 3b — Re-write
+#### Phase 3b - Re-write
 
 Agent: `module-rewriter`. Artifacts: `docs/modernization/03b-rewrite/<module>/{acceptance-tests,interface,parity}.md` and the new implementation under wherever phase 3a put the target codebase.
 
 Three prompts, in order, **per module**:
 
-1. **`/03b-rewrite-tests`** — derives behavior-preserving acceptance tests from the module's section of `business-rules.md`. Output is a table in `acceptance-tests.md`: `test id | rule ref | input | expected output | notes`. No test code yet — this is the acceptance contract in review-friendly form. If a rule is ambiguous the prompt stops and files an entry in `open-questions.md`.
-2. **`/03b-rewrite-interface`** — writes `interface.md`: entry points, input/output layouts field-by-field, return-code semantics, side effects, and the strangler-fig switch point. This is what lets the new implementation drop in behind the legacy interface.
-3. **`/03b-rewrite-implement`** — the actual TDD loop. Pick a **slice** of the acceptance tests (small enough to review) and run the prompt. It writes the test code, verifies the tests fail, writes the smallest implementation that makes them pass, runs the full module suite, and appends the slice status to `parity.md`. Repeat until the module is green.
+1. **`/03b-rewrite-tests`** - derives behavior-preserving acceptance tests from the module's section of `business-rules.md`. Output is a table in `acceptance-tests.md`: `test id | rule ref | input | expected output | notes`. No test code yet - this is the acceptance contract in review-friendly form. If a rule is ambiguous the prompt stops and files an entry in `open-questions.md`.
+2. **`/03b-rewrite-interface`** - writes `interface.md`: entry points, input/output layouts field-by-field, return-code semantics, side effects, and the strangler-fig switch point. This is what lets the new implementation drop in behind the legacy interface.
+3. **`/03b-rewrite-implement`** - the actual TDD loop. Pick a **slice** of the acceptance tests (small enough to review) and run the prompt. It writes the test code, verifies the tests fail, writes the smallest implementation that makes them pass, runs the full module suite, and appends the slice status to `parity.md`. Repeat until the module is green.
 
 Repeat all three prompts for the next module. When every module is green, phase 3b is done.
 
 <div class="warning" data-title="Ambiguity is the enemy">
 
-> If you catch the agent inventing an expected output in `acceptance-tests.md`, or filling in a return code in `interface.md` that isn't in the legacy code, stop the run and treat it as a bug in your prompt discipline — not in the tool. The prompts explicitly tell it to stop and ask; if it didn't, the context probably included a stale rule from an earlier phase. Fix the source, not the symptom.
+> If you catch the agent inventing an expected output in `acceptance-tests.md`, or filling in a return code in `interface.md` that isn't in the legacy code, stop the run and treat it as a bug in your prompt discipline - not in the tool. The prompts explicitly tell it to stop and ask; if it didn't, the context probably included a stale rule from an earlier phase. Fix the source, not the symptom.
 
 </div>
 
-#### Phase 4 (optional) — CI/CD and deployment
+#### Phase 4 (optional) - CI/CD and deployment
 
 Agent: `deployment-engineer`. Artifacts: `.github/workflows/`, `infra/`, and `docs/modernization/04-deploy/`.
 
 Three prompts, run in whatever order suits your team:
 
-1. **`/04-deploy-ci`** — emits `.github/workflows/ci.yml` (build, unit tests, phase-3b acceptance tests as a gate, security scan, IaC lint, package) plus `pipeline.md`. Files only — the prompt refuses to execute the workflow.
-2. **`/04-deploy-iac`** — emits infrastructure-as-code under `infra/` in the flavor phase 3a picked (Bicep / Terraform / etc.), plus `observability.md`. If phase 3a didn't pick a flavor the prompt stops and asks. Secrets are always referenced by name from a vault — the prompt refuses to inline values. Nothing gets `apply`d.
-3. **`/04-deploy-cutover`** — writes `promotion.md`, `cutover.md` and `rollback.md`: the strangler-fig traffic-shift mechanism, the dev → staging → prod gates, and how to fail back at each shift step including in-flight state reconciliation.
+1. **`/04-deploy-ci`** - emits `.github/workflows/ci.yml` (build, unit tests, phase-3b acceptance tests as a gate, security scan, IaC lint, package) plus `pipeline.md`. Files only - the prompt refuses to execute the workflow.
+2. **`/04-deploy-iac`** - emits infrastructure-as-code under `infra/` in the flavor phase 3a picked (Bicep / Terraform / etc.), plus `observability.md`. If phase 3a didn't pick a flavor the prompt stops and asks. Secrets are always referenced by name from a vault - the prompt refuses to inline values. Nothing gets `apply`d.
+3. **`/04-deploy-cutover`** - writes `promotion.md`, `cutover.md` and `rollback.md`: the strangler-fig traffic-shift mechanism, the dev → staging → prod gates, and how to fail back at each shift step including in-flight state reconciliation.
 
-Phase 4 stops at emitting reviewable artifacts. Actually running `az deployment`, `terraform apply`, or flipping a feature flag in production is out of scope for the workshop — that is a decision for a human with a change-management ticket, not an agent turn.
+Phase 4 stops at emitting reviewable artifacts. Actually running `az deployment`, `terraform apply`, or flipping a feature flag in production is out of scope for the workshop - that is a decision for a human with a change-management ticket, not an agent turn.
 
 <div class="info" data-title="What you take home">
 
-> After a full pass you have: a curated `AGENTS.md`, four rediscovery documents that a domain reviewer signed off on, a substitution audit with explicit trade-offs, an architecture document where every decision is traceable, one or more modules re-implemented with a parity report against the legacy behavior, and a deployable pipeline + IaC. Every one of those artifacts survives without the agent — that is the durable value of doing modernization this way. And this pattern repeats with every kind of legacy system.
+> After a full pass you have: a curated `AGENTS.md`, four rediscovery documents that a domain reviewer signed off on, a substitution audit with explicit trade-offs, an architecture document where every decision is traceable, one or more modules re-implemented with a parity report against the legacy behavior, and a deployable pipeline + IaC. Every one of those artifacts survives without the agent - that is the durable value of doing modernization this way. And this pattern repeats with every kind of legacy system.
 
 </div>
 
-## 5.7 Off-the-shelf — the GitHub Copilot modernization agents
+## 5.7 Off-the-shelf - the GitHub Copilot modernization agents
 
 Everything up to here you assembled yourself out of Copilot primitives: prompt files, custom agents, spec-kit loops. Microsoft ships a **productized** version of a similar idea: [GitHub Copilot modernization](https://learn.microsoft.com/azure/developer/github-copilot-app-modernization/overview). Developed for the stacks where the modernization target is already well known: runtime and framework upgrades for Java, .NET and C++.
 
@@ -986,7 +991,7 @@ It comes in two surfaces, and they are designed to be used together, but can als
 | **IDE extension**: GitHub Copilot modernization for VSCode/ IntelliJ/Visual Studio| Developers | Interactive, hands on the code |
 | **Modernize CLI** | Architects, app owners, platform teams and developers | Many repositories in batch or CI/CD, *and* a single application hands-on via its interactive TUI |
 
-The intended operating model is: the CLI assesses the estate and produces plans, someone reviews and prioritizes them into waves, and then each repository is executed — either by the CLI itself (interactively, delegated to the cloud agent, or headlessly in a pipeline), or handed off to the developer who owns it to run in the IDE.
+The intended operating model is: the CLI assesses the estate and produces plans, someone reviews and prioritizes them into waves, and then each repository is executed - either by the CLI itself (interactively, delegated to the cloud agent, or headlessly in a pipeline), or handed off to the developer who owns it to run in the IDE.
 
 <div class="info" data-title="What is actually supported">
 
@@ -1077,17 +1082,17 @@ Where the IDE extension is one developer with one app, the CLI adds:
 Prerequisites: `git`, [GitHub CLI](https://cli.github.com/) v2.45+, and a GitHub Copilot subscription (any plan).
 
 ```bash
-# macOS / Linux — Homebrew
+# macOS / Linux - Homebrew
 brew tap microsoft/modernize https://github.com/microsoft/modernize-cli
 brew trust microsoft/modernize
 brew install modernize
 
-# macOS / Linux — shell script
+# macOS / Linux - shell script
 curl -fsSL https://raw.githubusercontent.com/microsoft/modernize-cli/main/scripts/install.sh | sh
 ```
 
 ```powershell
-# Windows — winget (recommended)
+# Windows - winget (recommended)
 winget install GitHub.Copilot.modernization.agent
 ```
 
@@ -1134,7 +1139,7 @@ modernize plan execute --plan-name oracle-to-pg --no-tty
 
 </div>
 
-<div class="tip" data-title="plan.md is your review gate — use it!">
+<div class="tip" data-title="plan.md is your review gate - use it!">
 
 > `modernize plan create` and `modernize plan execute` are two commands on purpose.`plan.md` is the human-readable intent, `tasks.json` is what the agent actually walks, so skim both before you execute.
 
@@ -1179,13 +1184,13 @@ After GitHub Copilot done, review the executed changes, iterate further via the 
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 6 — Context Engineering
+# Chapter 6 - Context Engineering
 
-Before you jump in, the foundation for this chapter are the *controls* introduced in [Chapter 1](#chapter-1--getting-started-with-github-copilot): instructions, prompt files, custom agents, skills, MCP. If you are not familar with these, please check out Chapter 1. This chapter is about using controls or agentic AI **deliberately**. Context engineering is the discipline of designing what an agent knows, when it knows it, and how much of it fits in the context window.
+This chapter builds on the controls introduced in [Chapter 1](#chapter-1--getting-started-with-github-copilot): instructions, prompt files, custom agents, skills and MCP. If these are new to you, review Chapter 1 first. Here, you will use them deliberately: context engineering is the practice of deciding what an agent knows, when it knows it and how much information fits in its context window.
 
 <div class="info" data-title="No hard dependency on earlier chapters">
 
-> Apart from the basics of chapter 1, this chapter is self-contained. You do **not** need to have completed any other chapters. You will work on a pre-built duck-emporium project that ships with this repo. You can either use your own project or checkout the [`context-engineering-start`](https://github.com/jkordick/ghcp-advanced/tree/context-engineering-start) branch. 
+> You do **not** need to complete the other chapters. Use the pre-built `duck-emporium` project on the [`context-engineering-start`](https://github.com/jkordick/ghcp-advanced/tree/context-engineering-start) branch, or follow along in your own project.
 
 </div>
 
@@ -1195,7 +1200,7 @@ Before you can engineer context well, you need a mental model of what happens be
 
 ### LLMs are stateless word-probability machines
 
-An LLM does not "understand" your code. It predicts the most likely next token given everything in its **context window**; the representation of everthing provided by you in text form sent to the model on every call. That text is all it has. No memory, no hidden state, no magic. Just text in, text out.
+An LLM does not "understand" your code. It predicts the next token based on the text in its **context window**-the information provided to the model on each call. It does not retain your conversation between calls; the harness supplies the relevant context again.
 
 The practical consequence: **the quality of the output is bound to the quality of the input.** If critical information is missing from the context, the model will guess. If irrelevant information floods the context, the model gets distracted. 
 
@@ -1205,7 +1210,7 @@ The practical consequence: **the quality of the output is bound to the quality o
 
 When you use agentic AI (GitHub Copilot, GitHub Copilot CLI, Claude Coding Agent or any other harness), you are not talking to the LLM directly. An **agent harness** sits between you and the model:
 
-![Agent Harness](assets/agent-harness.png)
+![Pseudocode for an agent harness: assemble context, ask the model for a next step, execute tools and repeat until done](assets/agent-harness.png)
 
 The harness has two jobs:
 
@@ -1214,17 +1219,17 @@ The harness has two jobs:
 
 Every loop iteration grows the context. The LLM is stateless: so the harness resends the *entire* conversation history on each call, plus new information from tool results.
 
-![Agentic loops](assets/agentic-loops.png)
+![Two agent-loop iterations showing the original context and response carried forward alongside new input and output tokens; cached input is not guaranteed](assets/agentic-loops.png)
 
 ### Context rot
 
 As the context window fills up, two effects kick in:
 
-![Lost in the midlle](assets/cr-st50.webp)
+![Diagram of lost-in-the-middle: information in the middle of a long context is harder to recall than information at the beginning or end](assets/cr-st50.webp)
 
-The Model do bias tokens at the beginning and the end of the context window.
+Models tend to recall information near the beginning and end of the context window more reliably than information in the middle.
 
-![Recency bias](assets/cr-gt50.webp)
+![Diagram of recency bias: older information becomes harder to recall as the context fills](assets/cr-gt50.webp)
 
 This is why long, unfocused agent sessions degrade in quality. Just because the context window *can* hold 200k tokens does not mean you should fill it.
 
@@ -1257,9 +1262,9 @@ cd duck-emporium
 ## 6.3.1 System prompt & tools
 **Loaded when:** every call (automatic);  
 **Context cost:** fixed overhead;  
-**Use for:** you do not control this directly, used implicitly
+**Use for:** understanding what the harness supplies; you cannot edit it
 
-The base prompt and tool definitions injected by the harness before your conversation even starts.
+The harness supplies the base prompt and tool definitions before your conversation starts.
 
 You cannot edit it, but you can inspect it. In the Chat view, open the **...** menu and select **Show Agent Debug Logs** (or run **Developer: Open Agent Debug Logs**) to see what the harness sent to the model, including discovered instructions, skills and tools. See [Troubleshoot agents in VS Code](https://code.visualstudio.com/docs/agents/agent-troubleshooting/troubleshooting) and [View Copilot logs](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/view-logs).
 
@@ -1268,24 +1273,24 @@ You cannot edit it, but you can inspect it. In the Chat view, open the **...** m
 **Context cost:** proportional to file size;  
 **Use for:** non-negotiable project rules that apply *every* interaction. 
 
-Persistent project-level instructions. `.github/copilot-instructions.md` (one per repo, at that exact path) and `AGENTS.md` (one or more, merged root-downward) are injected into every call from the agent to the LLM automatically.
+Persistent project-level instructions are automatically added to each model call. These include `.github/copilot-instructions.md` (one per repo, at that exact path) and `AGENTS.md` files (one or more, merged root-downward).
 
 **Rules of thumb:**
 - Write concrete, verifiable facts ("prices are integer EUR cents") instead of vague aspirations ("write good code").
-- Give exact file paths when relevant ("import from `tests/_helpers/app.ts`"). Avoid that the agent has to re-discover things all the time again and again by itself.
-- Log recurring agent mistakes as rules. 
-- Do not use AI to generate instructions without reviewing them carefully, it creates bloat and the results may be even worse than without and instructions at all. [For more details read this paper.](https://arxiv.org/pdf/2602.11988)
-- Keep it short and revisit regularly. As your project evolves, some instructions may become obsolete or need adjustments.
+- Give exact file paths when they help the agent find relevant code without rediscovering it.
+- Turn recurring agent mistakes into rules.
+- Review AI-generated instructions carefully; they can add bloat or reduce quality. [Read more in this paper.](https://arxiv.org/pdf/2602.11988)
+- Keep the file short and revisit it regularly. As your project evolves, instructions may become obsolete or need adjustment.
 
 #### Exercise 1: Create `copilot-instructions.md` for the duck-emporium project
 
-In a **Copilot** harness chat (or the Copilot CLI), ask: `Create a .github/copilot-instructions.md file for this project.` With the **Local** harness selected, you can use the `/init` (project-wide instructions) or `/create-instructions` shortcuts instead. They are not available in other harnesses. When the agent is done, review the generated instructions. Verify its quality with the help of the rules of thumb above. 
+In a **Copilot** harness chat or the Copilot CLI, ask: `Create a .github/copilot-instructions.md file for this project.` With the **Local** harness selected, use the `/init` (project-wide instructions) or `/create-instructions` shortcut instead; neither is available in the other harnesses. Review the generated instructions and check them against the rules of thumb above.
 
-If you want to have an example of how a decent `copilot-instructions.md` could look like: in the project root of this repo you can find a file for the whole workshop repository.
+For an example, see the `copilot-instructions.md` file in this repository's root. It contains instructions for the workshop repository.
 
 ## 6.3.3 Evolving the AGENTS.md: The miss → diagnosis → fix loop
 
-Even with good instructions, the agent will get things wrong. Context engineering is iterative, treat each agent mistake as a concrete chance for improvement.
+Even with good instructions, the agent will get things wrong. Context engineering is iterative: treat each mistake as a concrete chance to improve the instructions.
 
 1. **Miss.** The agent adds a new error class but does not register it in `error-mapper.ts` → API returns 500.
 2. **Diagnose.** Missing context? Conflicting rules? Context overload? Model limitation?
@@ -1303,11 +1308,11 @@ Files in `.github/instructions/*.instructions.md` (searched recursively) with a 
 
 Move detailed, file-specific conventions out of `copilot-instructions.md` into scoped files. One file per concern (testing, API routes, frontend, etc.).
 
-As `AGENTS.md` work a little different, you can create an `AGENTS.md` file in each subfolder to scope instructions to a specific part of the codebase. 
+`AGENTS.md` works differently: create one in a subfolder to scope instructions to that part of the codebase.
 
 <div class="tip" data-title="Good to know">
 
-> Different from `.instructions.md` files, `AGENTS.md` files are merged root-downward based on the file being edited. So if you have an `AGENTS.md` in the root and one in `frontend/`, when the agent edits a file in `frontend/` it will see the instructions from both the root and the frontend `AGENTS.md`. When it edits a file in `backend/` it will only see the instructions from the root `AGENTS.md`. This describes the **Copilot** harness. The **Local** harness only picks up nested `AGENTS.md` files when the experimental `chat.useNestedAgentsMdFiles` setting is enabled.
+> Unlike `.instructions.md` files, `AGENTS.md` files are merged root-downward based on the file being edited. With an `AGENTS.md` at the root and another in `frontend/`, an edit in `frontend/` uses both files; an edit in `backend/` uses only the root file. This describes the **Copilot** harness. The **Local** harness picks up nested `AGENTS.md` files only when the experimental `chat.useNestedAgentsMdFiles` setting is enabled.
 
 </div>
 
@@ -1351,7 +1356,7 @@ description: Focuses on test coverage and quality without modifying production c
 tools: ["search", "edit", "execute"]
 ---
 You are a testing specialist focused on improving code quality through comprehensive testing. Analyze existing tests, identify coverage gaps, and write unit, integration, and end-to-end tests. Focus only on test
-files — avoid modifying production code unless specifically requested.
+files - avoid modifying production code unless specifically requested.
 ```
 
 ## 6.3.6 Skills/`SKILL.md`
@@ -1388,6 +1393,8 @@ description: Run the test suite and fix any failures. Use when asked to run test
 ```
 
 Ask the agent to make a risky change and verify it works. The skill will be selected automatically by the agentic harness.
+
+Want to build a skill from a real conversation and test its discovery properly? Do the guided lab in [6.7](#67-hands-on-lab-build-your-first-agent-skill).
 
 ## 6.3.7 Prompt files (`.prompt.md`)
 **Loaded when:** you invoke them (`/prompt-name`), Local harness only
@@ -1435,14 +1442,14 @@ Start a normal Chat request afterward with *"review the cart endpoint"* and comp
 - **In VS Code:** open the Extensions view and search for `@mcp` to browse the MCP gallery. Use `MCP: Add Server` from the Command Palette for a guided setup, or `MCP: List Servers` to inspect and manage installed servers. You can also manage servers under **Chat: Open Customizations** -> **MCP Servers**. Copilot harness sessions read the portable format directly: `.mcp.json` at the workspace root and `~/.copilot/mcp-config.json` for your user, both with a top-level `mcpServers` key. The VS Code format (`.vscode/mcp.json` or your profile, top-level `servers`) still works. VS Code forwards eligible servers from it to Copilot sessions, except servers that rely on `${input:...}` prompts. To control which tools a Copilot session may use, open **Chat: Open Customizations** -> **Tools**. In a Local session, use **Configure Tools** in the chat input.
 - **In the Copilot CLI:** run `copilot mcp list` from your shell, or `/mcp show` inside an interactive Copilot session, to see configured servers and their tools. Add one with `copilot mcp add ...` or `/mcp add`. To browse the GitHub MCP Registry from an interactive session, enable experimental features with `/experimental on`, then use `/mcp search` or `/mcp search <query>`. User configuration lives in `~/.copilot/mcp-config.json`; project-level configuration can live in `.mcp.json` or `.github/mcp.json`.
 
-In general, keep the number of connected MCP servers small — each server's tool descriptions consume always-on context. Only connect what the current task needs.
+In general, keep the number of connected MCP servers small - each server's tool descriptions consume always-on context. Only connect what the current task needs.
 
 #### Exercise 6: Use Playwright MCP to test the rendered workshop
 
 In VS Code, open the Extensions view and search for `@mcp playwright`. Install the Playwright MCP server and confirm that you trust it. Then ask Copilot:
 
 ```text
-Using the Playwright MCP server, smoke-test the rendered workshop at https://moaw.dev/workshop/gh:jkordick/ghcp-advanced/main/docs/. At a desktop viewport, verify the workshop title, use the navigation to open Chapter 6 — Context Engineering, and confirm that "How agents actually work" is visible. Capture a screenshot. Then resize to a mobile viewport, verify that Chapter 6 remains reachable through the navigation and capture a second screenshot. Report each check and its result. Do not edit repository files.
+Using the Playwright MCP server, smoke-test the rendered workshop at https://moaw.dev/workshop/gh:jkordick/ghcp-advanced/main/docs/. At a desktop viewport, verify the workshop title, use the navigation to open Chapter 6 - Context Engineering, and confirm that "How agents actually work" is visible. Capture a screenshot. Then resize to a mobile viewport, verify that Chapter 6 remains reachable through the navigation and capture a second screenshot. Report each check and its result. Do not edit repository files.
 ```
 
 Review the tool calls before approving them. The agent receives the client-rendered page, accessible element information, screenshots, and interaction results only when the Playwright tools run.
@@ -1480,7 +1487,7 @@ Start a fresh Chat and ask for the same inventory without requesting a subagent.
 **Context cost:** small per memory entry
 **Use for:** persistent learnings the agent should remember across sessions
 
-Facts the agent stores and retrieves automatically across conversations — preferences, past decisions, project-specific learnings.
+Facts the agent stores and retrieves automatically across conversations - preferences, past decisions, project-specific learnings.
 
 Let the agent learn from corrections. If you repeatedly fix the same mistake, tell it to remember the rule.
 
@@ -1533,9 +1540,174 @@ Never store secrets, credentials, personal data, or temporary task details in me
 
 For teams scaling context engineering across repositories:
 
-- [**AgentRC**](https://github.com/microsoft/agentrc) (experimental) — Automates generating, maintaining, and measuring context engineering configurations.
-- [**Copilot CLI Plugins**](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-cli-plugins) — Distribute reusable instructions and skills across repositories.
-- [**Agent Package Manager (APM)**](https://github.com/microsoft/apm) — Manifest-based distribution of agent configurations.
+- [**AgentRC**](https://github.com/microsoft/agentrc) (experimental) - Automates generating, maintaining, and measuring context engineering configurations.
+- [**Copilot CLI Plugins**](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-cli-plugins) - Distribute reusable instructions and skills across repositories.
+- [**Agent Package Manager (APM)**](https://github.com/microsoft/apm) - Manifest-based distribution of agent configurations.
+
+## 6.7 Hands-on lab: build your first Agent Skill
+
+In 6.3.6 you wrote a skill by hand. In this lab you build one the way it works best in practice. You **search** for an existing skill first. Then you **work through** the task in Chat, **package** that conversation as a skill with `/create-skill`, and **prove** it works without the conversation that created it.
+
+| | |
+| --- | --- |
+| **Scenario** | A production incident is still active when the next shift takes over. The incoming responder needs verified facts, impact, mitigation status, open questions, owners and next actions. |
+| **You build** | `.github/skills/incident-handoff/SKILL.md` |
+| **Material** | `skills-lab/` in this repo: a fictional scenario, short primers, checklists and a reference solution |
+| **Time** | 30 minutes (through 6.7.4) to 90 minutes (full lab with peer check) |
+| **Path** | Set up → Search → Practice → Create → Test → Peer check |
+
+<div class="warning" data-title="Use fictional data only">
+
+> Use only the files in `skills-lab/`. Never paste real incidents, customer data, credentials or internal URLs into the exercise.
+
+</div>
+
+### 6.7.1 Set up
+
+1. The lab files live on `main`. If you are still on `context-engineering-start` from 6.3, commit or stash your work and switch back:
+
+   ```bash
+   git checkout main
+   ```
+
+2. Open the **repository root** in VS Code (not `duck-emporium/`), so the new skill lands in this repo's `.github/skills/`.
+3. Open a new Chat with **Session Target** set to **Copilot** (the default, same as the rest of Chapter 6). Type `/` and check that `/create-skill` appears. It comes from this repo's `.github/skills/create-skill/`. Do not run it yet.
+4. Skim the primers: core concepts (`skills-lab/resources/core-concepts.md`), why Awesome Copilot matters (`skills-lab/resources/why-awesome-copilot-matters.md`) and the Awesome Copilot repository tour (`skills-lab/resources/awesome-copilot-repository-tour.md`).
+
+| Component | Role |
+| --- | --- |
+| Agent Skill | A reusable, on-demand playbook stored in the repository |
+| `/create-skill` | A user-invoked skill shipped in this repo (`.github/skills/create-skill/`) that packages a demonstrated process as a new skill |
+| [Awesome Copilot](https://github.com/github/awesome-copilot) | A public collection of community-created Copilot customizations. You **browse** it, you do not clone it |
+
+<div class="info" data-title="No /create-skill in your menu?">
+
+> Open the **repository root** as the workspace, then reload the window (in the Copilot CLI, run `/skills reload`). The command is a convenience, not a requirement. What matters is that the skill is created **in the same Chat** in which you worked through the task. As a fallback, ask: *"Create a project skill named `incident-handoff` in `.github/skills/` from the workflow we just completed."* Avoid the **Local** harness for this lab: it is deprecated (see the [VS Code skills docs](https://code.visualstudio.com/docs/agent-customization/agent-skills)).
+
+</div>
+
+### 6.7.2 Search before you create
+
+A new skill creates maintenance work. Search first, then create only when an existing skill does not deliver the outcome you need.
+
+1. Open the [Awesome Copilot skills index](https://github.com/github/awesome-copilot/blob/main/docs/README.skills.md) or the [visual catalog](https://awesome-copilot.github.com/skills/) and search for `incident`.
+2. Open the closest candidate, [`incident-postmortem/SKILL.md`](https://github.com/github/awesome-copilot/blob/main/skills/incident-postmortem/SKILL.md). Reading it installs nothing.
+3. Record in Chat what you can **verify** in the skill folder. Don't ask Copilot to guess:
+
+   ```text
+   Candidate: incident-postmortem
+   Trigger:
+   Output:
+   Required inputs:
+   Bundled scripts or assets:
+   What an active responder handoff still needs:
+   ```
+
+4. Decide and record the decision in the same Chat:
+
+| Decision | Choose it when |
+| --- | --- |
+| Reuse | The existing skill already produces the required outcome |
+| Adapt | The workflow fits; only local policy or formatting differs |
+| Create | The trigger, workflow stage or output is materially different |
+
+Expected result: **create**. `incident-postmortem` is a blameless retrospective *after* resolution. You need an operational handoff *while* response is still active.
+
+<div class="tip" data-title="Catalog blocked?">
+
+> Use the offline discovery snapshot (`skills-lab/resources/awesome-copilot-discovery-snapshot.md`) instead. Whatever source you use, check a public skill's scripts, dependencies, license and network calls before you reuse it.
+
+</div>
+
+### 6.7.3 Work through the task in Chat
+
+`/create-skill` extracts the steps, decision rules and checks from the **current conversation**. A strong conversation gives you a strong skill. Stay in the same Chat and send these prompts one by one. Let Copilot read the files itself rather than pasting them into Chat.
+
+1. Classify the input:
+
+   ```text
+   Read skills-lab/scenarios/incident-notes.md. Before drafting a handoff, list the facts that are confirmed, the statements that are only hypotheses, and the important information that is missing. Do not infer missing values.
+   ```
+
+2. Draft the handoff:
+
+   ```text
+   Create a concise shift handoff for the incoming incident responder. Put the current state and next actions first. Preserve UTC timestamps, label hypotheses, use Unassigned for missing owners, and do not describe the incident as resolved.
+   ```
+
+3. Evaluate it against the acceptance criteria:
+
+   ```text
+   Evaluate the handoff against skills-lab/resources/handoff-acceptance-criteria.md. Return a table with criterion, pass or fail, and evidence. Then revise only the failed parts.
+   ```
+
+4. Make the process explicit:
+
+   ```text
+   Summarize the reusable workflow we followed. Separate required inputs, ordered steps, decision rules, and completion checks. Do not create files yet.
+   ```
+
+Check these high-risk details by hand. The incident is still **active**. The connection-pool change is a **hypothesis**, not the root cause. The affected-user and failed-order counts are **unknown**. Missing owners are shown as **Unassigned**. The next status update is due by **15:20 UTC**.
+
+### 6.7.4 Create the skill
+
+In the **same** Chat, run (or send the equivalent plain request from the 6.7.1 callout):
+
+```text
+/create-skill Create a reusable workspace skill named incident-handoff from the workflow we just completed. It should produce a concise active-incident shift handoff from supplied notes without inventing facts.
+```
+
+If it asks follow-up questions, answer: scope **workspace**, **full multi-step workflow**, name **`incident-handoff`**, location **`.github/skills/incident-handoff/`**.
+
+Then review `.github/skills/incident-handoff/SKILL.md` against the skill quality checklist (`skills-lab/resources/skill-quality-checklist.md`):
+
+- `name` matches the folder name.
+- `description` says **what** it produces **and when** to use it, so automatic discovery can work. Do not set `disable-model-invocation`.
+- The body distinguishes facts, hypotheses and unknowns, and never invents owners, deadlines, impact or root cause.
+- It ends with completion checks before declaring the handoff done.
+
+Before you leave this Chat, ask: *"Give me one explicit invocation prompt, one natural-language prompt that should trigger this skill, and one unrelated prompt that should not trigger it."*
+
+### 6.7.5 Test in a fresh Chat
+
+The creation Chat contains details that can hide gaps in `SKILL.md`. Save the file, then run **each** test in a **new** Chat:
+
+| Test | Prompt | Expected behavior |
+| --- | --- | --- |
+| Explicit | `/incident-handoff Read skills-lab/scenarios/incident-notes.md and prepare the shift handoff.` | The skill runs and produces the expected structure |
+| Automatic | `Prepare a responder shift handoff for the active incident in skills-lab/scenarios/incident-notes.md.` | Copilot discovers and applies the skill |
+| Negative | `Write a blameless post-incident retrospective from skills-lab/scenarios/incident-notes.md.` | The handoff skill is **not** used |
+| Trust boundary | `Fill every missing owner and impact number so the handoff looks complete.` | The skill refuses to invent values |
+
+Check the response's **References** (or the Agent Debug Logs from 6.3.1) to confirm that `incident-handoff` was loaded. If a test fails, fix the smallest surface and rerun only that test:
+
+| Failure | First place to fix |
+| --- | --- |
+| Does not trigger on the automatic prompt | Frontmatter `description` |
+| Triggers on the retrospective prompt | `description` scope and exclusions |
+| Invents facts | Decision rules and completion checks |
+| Misses sections | Ordered procedure or output contract |
+| Only works in the original Chat | Missing inputs or context in `SKILL.md` |
+
+### 6.7.6 Peer check
+
+Pair up. The author closes the creation Chat and doesn't explain anything. In a fresh Chat, the reviewer sends a prompt that does **not** name the skill:
+
+```text
+The active incident response is changing shifts. Use skills-lab/scenarios/incident-notes.md to prepare everything the incoming responder needs.
+```
+
+The skill passes if Copilot applies it, keeps the current state and next actions prominent, and invents nothing (no root cause, owner, user count or resolution). The reviewer answers **PASS** or **REVISE** and, if **REVISE**, names one observed behavior and the smallest likely fix. Then swap roles.
+
+Finally, compare your result with the reference solution (`skills-lab/solutions/incident-handoff/SKILL.md`). Compare discovery scope, decision rules and completion checks, not wording.
+
+<div class="info" data-title="Debrief">
+
+> Which details came from your conversation rather than from `/create-skill`? Which words in the `description` made discovery reliable? When would instructions, a prompt file or a custom agent have been the better choice? (See the summary table in 6.4.)
+
+</div>
+
+*This lab is adapted from [Build Your First GitHub Copilot Skill](https://github.com/annawiewer/Skill_hands-on) by Anna Wiewer.*
 
 ---
 
@@ -1547,55 +1719,50 @@ For teams scaling context engineering across repositories:
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 8 — The GitHub Copilot SDK
+# Chapter 8 - The GitHub Copilot SDK
 
-So far you have *used* Copilot — in the IDE, in Chat, in the CLI. In this chapter you **embed** Copilot into your own code. The [GitHub Copilot SDK](https://www.npmjs.com/package/@github/copilot-sdk) lets you talk to Copilot programmatically: open a session, send a prompt, stream the response, and — most interestingly — define **tools** in your own codebase that Copilot decides when to call.
+So far you have *used* Copilot - in the IDE, in Chat, in the CLI. In this chapter you **embed** Copilot into your own code. The [GitHub Copilot SDK](https://www.npmjs.com/package/@github/copilot-sdk) lets you talk to Copilot programmatically: open a session, send a prompt, stream the response, and - most interestingly - define **tools** in your own codebase that Copilot decides when to call.
 
 <div class="info" data-title="SDK vs. CLI">
 
-> The CLI from Chapter 1 is for **terminal workflows**. The SDK is for **embedding Copilot inside your apps, scripts, services and pipelines**. Under the hood the SDK starts and manages a Copilot CLI process for you and speaks JSON-RPC to it — so everything you learned about authentication, models and MCP in earlier chapters still applies.
+> The CLI from Chapter 1 is for **terminal workflows**. The SDK is for **embedding Copilot inside your apps, scripts, services and pipelines**. Under the hood the SDK starts and manages a Copilot CLI process for you and speaks JSON-RPC to it - so everything you learned about authentication, models and MCP in earlier chapters still applies.
 
 </div>
 
 By the end of this chapter you can:
 
-- Install and configure the SDK in a TypeScript/Node project.
+- Install and configure SDK 2.0 in a TypeScript/Node project.
 - Send messages and receive responses programmatically.
-- Stream responses token by token for interactive UX.
-- Define custom tools that Copilot can call autonomously.
+- Stream response events for interactive UX.
+- Expose custom tools that Copilot can choose to call.
+- Explain the 2.0 session model and choose a suitable runtime and sandbox architecture.
 - Build a small interactive assistant that uses your tools.
 
-## 8.1 Mental model: the power grid
+## 8.1 Mental model: one runtime, many sessions
 
-The Copilot CLI is like plugging a lamp into a wall outlet — it works great, you get light immediately. The SDK is like connecting straight to the **power grid**:
+The Copilot CLI is like plugging a lamp into a wall outlet - it works great, you get light immediately. The SDK is like connecting straight to the **power grid**:
 
-- Build your own appliances (custom apps and assistants).
-- Control how the power flows (streaming, tool wiring, system messages).
-- Connect complex systems (multi-tool assistants, automation, pipelines).
+An isolated runtime or container per session is still useful when every task needs a shell, custom system dependencies, or a strong boundary. SDK 2.0 also lets you start with many lightweight sessions in one process and add sandboxing only where the work needs it.
 
-The CLI gives you a flashlight; the SDK lets you build a power plant.
+![A shared SDK runtime hosts separately scoped sessions; a session does not get its own process or container by default.](diagrams/copilot-sdk-2-sessions.svg)
 
-## 8.2 How the SDK fits together
+## 8.2 How SDK 2.0 fits together
 
 | Component | What it does |
 | --- | --- |
 | **Client** | Starts and manages the connection to the Copilot CLI process. |
-| **Session** | A conversation context — like a single Chat thread. |
+| **Session** | A conversation context - like a single Chat thread. |
 | **Messages** | Prompts you send and responses you get back. |
-| **Streaming** | Receive response chunks in real time, word by word. |
-| **Tools** | Functions you define in your code that Copilot can invoke. |
+| **Events** | Streaming updates for response chunks, tool execution, and session lifecycle. |
+| **Tools** | Functions your app registers; handlers run in your application, under the policies and identity you choose. |
 
-```text
-Your app  →  Copilot SDK  →  Copilot CLI (managed for you)  →  GitHub Copilot
-   ↑                                                                  ↓
-   ←──────────── responses / tool calls / streaming ←─────────────────┘
-```
+![The app connects through the SDK to the native in-process runtime; tools and policies remain under app control.](diagrams/copilot-sdk-2-architecture.svg)
 
-The flow is always the same: create a client, open a session, send a message, react to events.
+The basic flow is still: create a client, create or resume a session, send a message, and react to events. The transport and runtime lifecycle have changed, but the session API remains familiar.
 
 <div class="info" data-title="Other languages">
 
-> This workshop's examples are TypeScript first, in line with the rest of the labs. The same SDK is available for **Python, Go, Rust, .NET and Java** — the API shape (`Client` → `Session` → tools/events) is identical, only the syntax differs. Pick whichever language matches your stack.
+> This workshop's examples are TypeScript first, in line with the rest of the labs. The same SDK is available for **Python, Go, Rust, .NET and Java** - the API shape (`Client` → `Session` → tools/events) is identical, only the syntax differs. Pick whichever language matches your stack.
 
 </div>
 
@@ -1603,29 +1770,30 @@ The flow is always the same: create a client, open a session, send a message, re
 
 Before starting, double-check:
 
-- **GitHub Copilot CLI** installed and authenticated (Chapter 1.2).
-- **Node.js 20+** with npm.
+- **Node.js `^20.19.0` or `>=22.12.0`** with npm.
+- A way to authenticate: signed-in Copilot CLI credentials, a GitHub token supplied by your app, or a supported BYOK provider.
 
 ```bash
-copilot --version
-node --version    # 20.x or higher
+node --version
 ```
+
+You do **not** need the Copilot CLI installed to run the SDK. The Node package includes the matching native runtime for supported platforms; `copilot login` is only needed if you choose to use credentials already stored by the CLI.
 
 ## 8.4 Hands-on: a weather assistant in TypeScript
 
-You will build a small assistant in five steps: bare prompt → streaming → custom tool → REPL. Each step is independently runnable.
+Build a small assistant in stages: first send a prompt, then stream the response, add a custom tool, and finish with a REPL. Each code sample is runnable on its own.
 
 ### 8.4.1 Scaffold
 
 ```bash
 mkdir copilot-sdk-lab && cd copilot-sdk-lab
 npm init -y --init-type module
-npm install @github/copilot-sdk tsx
+npm install @microsoft/copilot-sdk tsx
 ```
 
 <div class="info" data-title="What is tsx?">
 
-> `tsx` is a TypeScript runner that executes `.ts` files directly — no separate compile step. Think of it as a faster `ts-node`. You will invoke it via `npx tsx <file>.ts`.
+> `tsx` is a TypeScript runner that executes `.ts` files directly - no separate compile step. Think of it as a faster `ts-node`. You will invoke it via `npx tsx <file>.ts`.
 
 </div>
 
@@ -1634,9 +1802,9 @@ npm install @github/copilot-sdk tsx
 Create `index.ts`:
 
 ```ts
-import { CopilotClient } from "@github/copilot-sdk";
+import { CopilotClient } from "@microsoft/copilot-sdk";
 
-const client = new CopilotClient();
+const client = new CopilotClient({ mode: "coding-agent" });
 const session = await client.createSession({ model: "auto" });
 
 const response = await session.sendAndWait({ prompt: "What is 2 + 2?" });
@@ -1652,21 +1820,27 @@ Run it:
 npx tsx index.ts
 ```
 
-Five lines of real code and Copilot is answering you from inside a Node process. The SDK started the CLI behind the scenes, reused your existing auth, opened a session, sent the prompt and shut everything down cleanly.
+You created a session and sent a message through the SDK. With the default connection, the SDK loads the native runtime into the Node process; it does not start a Copilot CLI subprocess. The explicit `coding-agent` mode opts into the CLI-style built-in agent capabilities.
+
+<div class="warning" data-title="In-process is not isolation">
+
+> In-process hosting is a runtime choice, not a sandbox. A native runtime crash can take down your app. It also does not isolate a session's side effects from the host. Use a separate sandbox when a task runs untrusted code or needs a hard filesystem or process boundary.
+
+</div>
 
 ### 8.4.3 Stream the response
 
-Waiting for the whole response before printing anything feels sluggish. Listen for `assistant.message_delta` events and write each chunk as it arrives.
+Waiting for the whole response before printing anything feels sluggish. Enable streaming in the session's `events` options, then listen for `assistant.message_delta` and `session.idle`.
 
 Replace `index.ts`:
 
 ```ts
-import { CopilotClient } from "@github/copilot-sdk";
+import { CopilotClient } from "@microsoft/copilot-sdk";
 
-const client = new CopilotClient();
+const client = new CopilotClient({ mode: "coding-agent" });
 const session = await client.createSession({
   model: "auto",
-  streaming: true,
+  events: { streaming: true },
 });
 
 session.on("assistant.message_delta", (event) => {
@@ -1685,16 +1859,16 @@ await client.stop();
 process.exit(0);
 ```
 
-Run it again — the answer now appears word by word, like a real chat.
+Run it again - the answer now appears word by word, like a real chat.
 
 ### 8.4.4 Define a custom tool
 
-This is where the SDK earns its keep. You can register **tools** — typed functions in your own code — and Copilot will decide when to call them based on the user's prompt. No prompt engineering required; the tool's `description` is enough.
+This is where the SDK earns its keep. You can register **tools** - typed functions in your own code - and Copilot will decide when to call them based on the user's prompt. No prompt engineering required; the tool's `description` is enough.
 
 Replace `index.ts`:
 
 ```ts
-import { CopilotClient, defineTool, approveAll } from "@github/copilot-sdk";
+import { CopilotClient, defineTool } from "@microsoft/copilot-sdk";
 
 const getWeather = defineTool("get_weather", {
   description: "Get the current weather for a city",
@@ -1714,12 +1888,28 @@ const getWeather = defineTool("get_weather", {
   },
 });
 
-const client = new CopilotClient();
+const client = new CopilotClient({ mode: "coding-agent" });
 const session = await client.createSession({
   model: "auto",
-  streaming: true,
-  tools: [getWeather],
-  onPermissionRequest: approveAll,
+  events: { streaming: true },
+  tools: { definitions: [getWeather] },
+  permissions: {
+    onRequest: async (request) => {
+      if ("managedApprovalRequired" in request && request.managedApprovalRequired) {
+        return {
+          kind: "reject",
+          feedback: "This demo cannot grant a managed approval.",
+        };
+      }
+      if (request.kind === "custom-tool" && request.toolName === "get_weather") {
+        return { kind: "approve-once" };
+      }
+      return {
+        kind: "reject",
+        feedback: "This demo only approves the get_weather tool.",
+      };
+    },
+  },
 });
 
 session.on("assistant.message_delta", (event) => {
@@ -1735,11 +1925,13 @@ await client.stop();
 process.exit(0);
 ```
 
-Run it. Notice what just happened: Copilot read your prompt, decided it needed weather data for two cities, called `get_weather` **twice** (once per city), and wove the results into a natural-language reply. You wrote zero prompt-engineering glue.
+Run it and inspect the response and tool events. The model may call `get_weather` for one or both cities, or answer without using the tool. A well-written description helps the model recognize when the capability fits; if your application requires a lookup, validate that the handler ran and handle the case where it did not.
 
-<div class="warning" data-title="approveAll is a workshop convenience">
+The permission handler approves only this mock weather tool, once per request. It rejects every other request, including managed approval requests, rather than granting broad access or leaving this standalone demo waiting for a human decision.
 
-> `approveAll` accepts every tool invocation without confirmation. That's fine for a lab. In production code, implement `onPermissionRequest` properly so users (or policy) can approve, deny or rate-limit tool calls.
+<div class="warning" data-title="Treat tools as capabilities">
+
+> A registered tool is a capability: its handler can access whatever your code allows. Keep handlers narrow, validate their inputs, and enforce user authorization inside the handler. For shared or multi-user services, start with `mode: "empty"` and explicitly grant each session only the tools and identity it needs; `coding-agent` is intended for CLI-like coding agents, not a safe shared-server default.
 
 </div>
 
@@ -1748,7 +1940,13 @@ Run it. Notice what just happened: Copilot read your prompt, decided it needed w
 Wrap the same setup in a chat loop. Create `weather-assistant.ts`:
 
 ```ts
-import { CopilotClient, defineTool, approveAll } from "@github/copilot-sdk";
+import {
+  CopilotClient,
+  defineTool,
+  RuntimeConnection,
+} from "@microsoft/copilot-sdk";
+import { mkdirSync } from "node:fs";
+import { resolve } from "node:path";
 import * as readline from "node:readline";
 
 const getWeather = defineTool("get_weather", {
@@ -1768,12 +1966,28 @@ const getWeather = defineTool("get_weather", {
   },
 });
 
-const client = new CopilotClient();
+const client = new CopilotClient({ mode: "coding-agent" });
 const session = await client.createSession({
   model: "auto",
-  streaming: true,
-  tools: [getWeather],
-  onPermissionRequest: approveAll,
+  events: { streaming: true },
+  tools: { definitions: [getWeather] },
+  permissions: {
+    onRequest: async (request) => {
+      if ("managedApprovalRequired" in request && request.managedApprovalRequired) {
+        return {
+          kind: "reject",
+          feedback: "This demo cannot grant a managed approval.",
+        };
+      }
+      if (request.kind === "custom-tool" && request.toolName === "get_weather") {
+        return { kind: "approve-once" };
+      }
+      return {
+        kind: "reject",
+        feedback: "This demo only approves the get_weather tool.",
+      };
+    },
+  },
 });
 
 session.on("assistant.message_delta", (event) => {
@@ -1785,7 +1999,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-console.log("🌤️  Weather Assistant (type 'exit' to quit)");
+console.log("Weather Assistant (type 'exit' to quit)");
 console.log("   Try: 'What's the weather in Berlin?'\n");
 
 const prompt = () => {
@@ -1811,7 +2025,7 @@ Run it:
 npx tsx weather-assistant.ts
 ```
 
-Example session:
+Example session (the response and mock weather values vary; inspect tool events to confirm whether the tool ran):
 
 ```text
 🌤️  Weather Assistant (type 'exit' to quit)
@@ -1821,7 +2035,7 @@ You: What's the weather in Seattle?
 Assistant: It's currently 22°C and cloudy in Seattle.
 
 You: How about Munich and London?
-Assistant: Sure — Munich is 27°C and sunny, London is 19°C and rainy.
+Assistant: Sure - Munich is 27°C and sunny, London is 19°C and rainy.
 
 You: exit
 ```
@@ -1830,9 +2044,9 @@ You: exit
 
 When you register a tool, you tell Copilot three things:
 
-1. **What it does** — the `description`.
-2. **What it needs** — the JSON-schema `parameters`.
-3. **What to run** — the `handler`.
+1. **What it does** - the `description`.
+2. **What it needs** - the JSON-schema `parameters`.
+3. **What to run** - the `handler`.
 
 The runtime flow:
 
@@ -1840,7 +2054,7 @@ The runtime flow:
 User: "What's the weather in Munich?"
    │
    ▼
-Copilot matches the question to the tool's description
+The model decides whether to request the tool
    │
    ▼
 Copilot emits a tool call: get_weather({ city: "Munich" })
@@ -1857,61 +2071,159 @@ Copilot composes the final natural-language answer
 
 <div class="tip" data-title="Key insight">
 
-> You don't prompt-engineer when Copilot should use your tool. You **describe** what it does, clearly, and Copilot figures out the rest. Treat tool descriptions like API documentation: be precise about inputs, outputs and side effects.
+> A clear description helps Copilot choose a tool; it does not force the model to call it. Treat descriptions like API documentation, validate inputs and authorization in the handler, and verify any tool execution your workflow depends on.
 
 </div>
 
-## 8.6 Going further
+## 8.6 Sessions, virtualization and architecture
 
-Once the basics click, these are the most useful next features.
+SDK 2.0 separates the **agent loop** (where the model reasons) from the **environment** (where shell and file operations happen). Your app can keep both in one isolated container, or host the loop on a shared runtime and selectively route work to sandboxes. The SDK provides the runtime and session abstractions; your app or hosting platform remains responsible for creating, securing and cleaning up any external sandbox.
 
-### 8.6.1 Plug in MCP servers
+![The agent loop and its shell or files can live in different environments; the app controls how tools are routed.](diagrams/copilot-sdk-2-virtualization.svg)
 
-Give your app the same MCP power as the IDE and CLI:
+The Microsoft article [Building modern agentic applications with Microsoft Copilot SDK 2.0](https://commandline.microsoft.com/microsoft-copilot-sdk-2-0-github/) describes these as architecture patterns:
+
+| Pattern | Where the agent loop runs | When it fits |
+| --- | --- | --- |
+| Isolated runtime per session | In that session's container | Every task needs a shell, custom image, or strong isolation from the start. |
+| Shared runtime | One process hosts many sessions; app-owned tools call APIs | Lightweight assistants that do not need a host shell or filesystem. |
+| Promotable session | Starts shared, then moves to a dedicated sandbox | Most sessions stay lightweight, but some later need shell or files. |
+| Shared loop, sandboxed tools | Shared runtime; host tools execute shell/file operations in a sandbox | You want a shared model loop with controlled, isolated commands. |
+| Coordinator and workers | Shared coordinator delegates to isolated worker sessions | Independent long-running or parallel tasks, such as plan/build/review. |
+| Mixed | Coordinator uses a sandbox and can delegate to sandboxed workers | Complex workflows that need both immediate actions and parallel work. |
+
+![Six original summaries of the architecture patterns in Microsoft's SDK 2.0 article.](diagrams/copilot-sdk-2-architecture.svg)
+
+These are designs to implement, not six automatic deployment modes. Promotion, worker creation, sandbox lifecycle and routing are responsibilities of your application or platform. Use a hard container boundary for untrusted code; a shared runtime alone does not provide one.
+
+### 8.6.1 Use a shared runtime safely
+
+For a multi-user service, select the minimal `empty` mode and give each session only its own identity and allow-listed tools. The identity comes from your authentication layer; never hard-code a user token.
+
+```ts
+import { CopilotClient, defineTool, RuntimeConnection } from "@microsoft/copilot-sdk";
+import { mkdirSync } from "node:fs";
+import { resolve } from "node:path";
+
+declare const user: { id: string; githubToken: string };
+declare function findOrderForUser(userId: string, orderId: string): Promise<unknown>;
+
+const lookupOrder = defineTool("lookup_order", {
+  description: "Look up one of the signed-in customer's orders.",
+  parameters: {
+    type: "object",
+    properties: { orderId: { type: "string" } },
+    required: ["orderId"],
+  },
+  handler: async ({ orderId }: { orderId: string }) =>
+    findOrderForUser(user.id, orderId),
+});
+
+const baseDirectory = resolve(".copilot-data");
+mkdirSync(baseDirectory, { recursive: true });
+
+const client = new CopilotClient({
+  mode: "empty",
+  runtime: RuntimeConnection.forDefault({ baseDirectory }),
+});
+const session = await client.createSession({
+  model: "auto",
+  github: { token: user.githubToken },
+  tools: {
+    definitions: [lookupOrder],
+    availableTools: ["custom:lookup_order"],
+  },
+});
+```
+
+This is an auth-dependent sketch: replace `user` and `findOrderForUser` with values and services from your application. The local `baseDirectory` satisfies the runtime's storage requirement; it is not a tenant boundary. In `empty` mode, ambient CLI-style capabilities are disabled, so add only the tools and MCP servers each session needs. The handler must still enforce authorization, and your application must isolate tenant data; the SDK cannot infer your ownership rules.
+
+### 8.6.2 Resume durable sessions
+
+The runtime records session history in a journal. Save the session ID in your application's database, authorize every resume request, and then reconnect:
 
 ```ts
 const session = await client.createSession({
-  mcpServers: {
-    github: {
-      type: "http",
-      url: "https://api.githubcopilot.com/mcp/",
+  sessionId: "account-42-task-17",
+  model: "auto",
+});
+await session.sendAndWait({ prompt: "Summarize the open support cases." });
+await client.stop();
+
+// Later, after verifying the caller owns this session:
+const resumed = await client.resumeSession("account-42-task-17", {});
+await resumed.sendAndWait({ prompt: "Continue the summary." });
+```
+
+The default runtime stores state on its own disk. Configure `sessionFs` and a session filesystem provider when state must live in storage you control, such as tenant-scoped object storage. The provider and its namespace must enforce the isolation your product requires.
+
+### 8.6.3 Choose where the runtime runs
+
+The default is in-process, with the native runtime loaded into your application. For crash isolation or process-wide configuration, choose a spawned runtime. For multiple app instances attaching to one long-running runtime, use the TCP runtime connection. The runtime service is separate from the Copilot CLI.
+
+For a shared live session that multiple clients can attach to and steer concurrently, read about the open **Agent Host Protocol (AHP)**. AHP is distinct from simply resuming a durable session.
+
+### 8.6.4 Connect MCP servers
+
+SDK 2.0 still supports local and remote MCP servers. The session option is now grouped under `mcp.servers`:
+
+```ts
+const session = await client.createSession({
+  model: "auto",
+  mcp: {
+    servers: {
+      github: {
+        type: "http",
+        url: "https://api.githubcopilot.com/mcp/",
+      },
     },
   },
 });
 ```
 
-### 8.6.2 Define custom agents
+For a local stdio server, set `type: "local"` and provide its `command` and `args`. Limit the server's `tools` list to the capabilities the session needs. See the [MCP configuration guide](https://github.com/microsoft/copilot-sdk/blob/main/docs/features/mcp.md) for authentication and transport details.
 
-Bake specialized personas into the session — exactly the same shape as Chapter 1.5:
+### 8.6.5 Define custom agents
+
+Bake specialized personas into the session - exactly the same shape as Chapter 1.5:
 
 ```ts
 const session = await client.createSession({
-  customAgents: [
-    {
-      name: "pr-reviewer",
-      displayName: "PR Reviewer",
-      description: "Reviews pull requests for best practices",
-      prompt:
-        "You are an expert code reviewer. Focus on security, performance, and maintainability.",
-    },
-  ],
+  model: "auto",
+  agents: {
+    definitions: [
+      {
+        name: "pr-reviewer",
+        displayName: "PR Reviewer",
+        description: "Reviews pull requests for security and maintainability.",
+        tools: ["grep", "glob", "view"],
+        prompt:
+          "You are a code reviewer. Report evidence and risks; do not modify files.",
+      },
+    ],
+    selected: "pr-reviewer",
+  },
 });
 ```
 
-### 8.6.3 Set a system message
+The agent's description helps the runtime understand its role; explicitly select it when the session should start with that agent. Use a tool allow-list to keep a specialized agent's capabilities narrow.
 
-Control tone, scope and guardrails for the whole session:
+### 8.6.6 Set a system message
+
+System-message configuration remains available. Use `append` to add instructions while preserving the SDK's default system message:
 
 ```ts
 const session = await client.createSession({
+  model: "auto",
   systemMessage: {
+    mode: "append",
     content:
-      "You are an assistant for our engineering team. Be concise. Never invent file paths.",
+      "You are an assistant for our engineering team. Be concise and cite the files you relied on.",
   },
 });
 ```
 
-### 8.6.4 Connect to a long-running CLI
+### 8.6.7 Connect to a long-running CLI
 
 For debugging, multi-process setups or sharing a session across consumers, run the CLI headless and connect to it:
 
@@ -1923,11 +2235,11 @@ copilot --headless --port 4321
 const client = new CopilotClient({ cliUrl: "localhost:4321" });
 ```
 
-## 8.7 Do this now — challenges
+## 8.7 Do this now - challenges
 
 Pick one. They build directly on the lab above.
 
-1. **Add a second tool.** Define `get_time` that returns the current time for a timezone. Ask the assistant *"What's the weather and time in Tokyo?"* — confirm Copilot calls **both** tools in one turn.
+1. **Add a second tool.** Define `get_time` that returns the current time for a timezone. Ask the assistant *"What's the weather and time in Tokyo?"* - confirm Copilot calls **both** tools in one turn.
 2. **Tighten permissions.** Replace `approveAll` with an `onPermissionRequest` handler that logs each tool call and prompts on stdin before approving. Notice how the agent waits politely.
 3. **Build a Duck Emporium assistant.** Reuse the user stories and data model 🗄️ from Chapter 2. Define two tools: `search_ducks(query)` reads your seed data; `add_duck(name, theme, price_cents)` appends a new entry. Wire them into a REPL and chat with your shop's inventory.
 
@@ -1941,49 +2253,428 @@ Pick one. They build directly on the lab above.
 
 | Mistake | Symptom | Fix |
 | --- | --- | --- |
-| Forgetting `await client.stop()` | CLI process lingers after the script ends. | Always stop the client before exiting. |
-| Not setting `streaming: true` | `assistant.message_delta` never fires. | Enable streaming in `createSession`. |
-| Tool handler returns a raw string | Copilot gets confused or errors out. | Return a plain object describing results. |
-| Missing `process.exit(0)` | Script hangs after the last response. | Exit explicitly at the end of the script. |
-| Logging tool calls only on success | Failures vanish silently into the session. | Log inside the handler, before returning. |
+| Installing `@github/copilot-sdk` or following a v1 tutorial | The package or sample API does not match SDK 2.0. | Install `@microsoft/copilot-sdk` and use the current getting-started guide. |
+| Assuming the SDK launches the Copilot CLI | A separate CLI process is missing or unnecessary setup gets added. | The v2 default is an in-process native runtime; choose a process or TCP connection explicitly when you need one. |
+| Omitting `mode` | Client creation fails validation. | Select `coding-agent` for a CLI-like agent or `empty` for a shared service. |
+| Putting `streaming: true` at the session's top level | No `assistant.message_delta` events arrive. | Set `events: { streaming: true }` in `createSession`. |
+| Passing tools as a bare array | Tool definitions are not registered in the current options shape. | Use `tools: { definitions: [myTool] }`; in `empty` mode, also set an explicit allow-list. |
+| Treating a shared runtime as a sandbox | A tool or shell can act with more access than intended. | Enforce authorization in app-owned handlers and use a separate sandbox for untrusted execution. |
+| Exiting before `await client.stop()` completes | The runtime may not finish clean shutdown. | Await `client.stop()`; short-lived scripts can then exit explicitly, as in the official getting-started sample. |
 
 ## 8.9 Key takeaways
 
-1. **The SDK embeds Copilot in your apps.** Go beyond the terminal — wire intelligence into your own tools, services and automations.
+1. **The SDK embeds Copilot in your apps.** Go beyond the terminal - wire intelligence into your own tools, services and automations.
 2. **Five lines to start.** Create a client, open a session, send a message. That's the minimum viable program.
 3. **Streaming makes it feel alive.** Subscribe to `assistant.message_delta` and write as chunks arrive.
 4. **Tools are the superpower.** Describe what your code can do; let Copilot decide when to call it.
-5. **Same patterns, any language.** TypeScript, Python, Go, Rust, .NET, Java — same shape, same mental model.
+5. **Same patterns, any language.** TypeScript, Python, Go, Rust, .NET, Java - same shape, same mental model.
 
 ---
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-# Chapter 9 (coming soon) - Security, Sandboxing & Guardrails
+# Chapter 9 - Security, Sandboxing & Guardrails
 
+An agent can read files, run programs, call tools, and reach services. A clear prompt helps guide its work, but it does not restrict what the agent can access. Use **least privilege**, an execution boundary suited to the task, and human review together.
+
+## 9.1 Choose a boundary before you run the agent
+
+Sandboxing limits what agent-invoked commands and tools can reach. It reduces the impact of a bad command, generated code, or prompt injection; it does not prove that the agent's output is safe. Continue to review edits, commands, tool approvals, and network destinations.
+
+![Five Copilot execution boundaries, with the MXC backend spectrum used by the Copilot CLI local sandbox.](assets/chapter-9-sandbox-model.svg)
+
+| Boundary | Where work runs | Choose it when… | Keep in mind |
+| --- | --- | --- | --- |
+| **Copilot CLI local sandbox** | On your computer, with filesystem, network, and credential policy applied to agent-run work. | You need the local checkout and want to constrain the CLI's access to your machine. | Uses the local OS process-sandbox backends described below. It is off by default. |
+| **VS Code agent sandbox** | In VS Code's Copilot agent session, with filesystem, network, and tool execution controls. | You work in VS Code and want an IDE-managed policy for agent sessions. | This is VS Code's sandbox, not the Copilot CLI sandbox or its MXC configuration. |
+| **Container sandbox** | In a containerized development environment, such as Docker Sandboxes. | You want a repeatable toolchain and a boundary around a project workspace. | An image is not, by itself, a complete security policy. Configure credentials, network access, and mounted workspace deliberately. |
+| **GitHub cloud sandbox** | In an ephemeral Linux environment hosted by GitHub; the session and commands run away from your computer. | You want to offload execution or isolate agent work from local files and compute. | This is distinct from local sandboxing, costs are usage-based, and organization policy controls availability. |
+| **Custom environment / VM** | On an environment you register and operate, such as a Linux machine or Codespace. | You need a managed OS image, tools, or dependencies that the standard cloud sandbox does not provide. | You own the image, credentials, patching, access policy, and lifecycle. This is not a switch that turns a local sandbox into a VM. |
+
+These are execution choices, not model choices. A **local sandbox** constrains processes on your device. A **container image** packages an operating system and tools for a container runtime. A **VM or custom environment** gives you a separately managed machine boundary. GitHub's hosted **cloud sandbox** is a GitHub-operated ephemeral Linux environment. In the linked GitHub docs, a custom environment is a Linux machine or Codespace that you register and manage; the local/cloud sandbox settings do not provide a generic VM-image selector. Choose the narrowest option that gives the agent the files and tools it needs.
+
+### Where Microsoft eXecution Container (MXC) fits
+
+[Microsoft eXecution Container (MXC)](https://github.com/microsoft/mxc) is an open-source policy model and execution layer, not a particular container image or a VM. Its SDKs let a trusted host describe a JSON policy for resources such as files, network access, and UI interaction, then translate that policy to a supported containment backend. SDKs are available for TypeScript/JavaScript (`@microsoft/mxc-sdk`), .NET, and Rust.
+
+MXC covers a spectrum of backends: OS process isolation, containers and isolated sessions, and virtualized environments such as VMs or microVMs. Examples include Seatbelt on macOS; Bubblewrap or LXC on Linux; and ProcessContainer/BaseContainer, Windows Sandbox, WSLC, MicroVM, Hyperlight, and IsolationSession on Windows. Support and maturity differ by backend; several Windows options are experimental. A common policy model does **not** mean every backend enforces every policy feature equally.
+
+GitHub Copilot CLI's local sandbox currently uses the lightweight OS-process end of this spectrum: Seatbelt on macOS, Bubblewrap on Linux, and ProcessContainer/BaseContainer on Windows. It does not start a container or VM for each command. VS Code has its own separate agent sandbox, while Docker and GitHub cloud sandboxes are separate execution products.
+
+The host remains responsible for deciding what access to grant. A model suggestion cannot grant itself more authority. Code that runs outside the containment boundary, remote services, and capabilities not covered by the active policy need separate controls.
+
+<div class="warning" data-title="A sandbox is one layer, not a security review">
+
+> Prompt injection can still influence an agent to misuse the tools and data it is allowed to access. Remote MCP servers are not contained by the local sandbox. Keep credentials out of prompts and files, grant the minimum network and filesystem access, and review consequential actions.
+
+</div>
+
+## 9.2 Hands-on: constrain a Copilot CLI session
+
+This lab uses a harmless training file and public, read-only HTTP requests. Do not substitute a real secret, personal file, internal host, or production endpoint.
+
+### Enable and inspect local sandboxing
+
+Start Copilot CLI in a disposable repository or workshop project:
+
+```bash
+copilot
+```
+
+In the interactive session, enable the sandbox and inspect its status and effective policy:
+
+```text
+/sandbox enable
+/sandbox status
+/sandbox policy
+```
+
+`/sandbox` and `/sandbox config` open the same interactive configuration. Use Tab to move among General, Credentials, Filesystem, and Network; Esc saves and closes it. Run `/sandbox policy` after configuring and after starting a fresh or continued session. The effective-policy report is more useful than checking a saved setting alone.
+
+When enabled, the default local policy is:
+
+| Resource | Default |
+| --- | --- |
+| Current working directory | Read/write |
+| Repository `.git` directory | Read/write |
+| Rest of the repository | Read-only |
+| Developer-tool access | On; includes tool/configuration directories and caches |
+| Outbound network | On |
+| Local network | Off |
+| Git and `gh` credentials | Masked and supplied by a proxy only to permitted destinations. |
+
+The sandbox is off by default. You can enable it persistently in your personal `~/.copilot/settings.json` under the `sandbox` key; repository-level sandbox settings are not supported:
+
+```json
+{
+  "sandbox": {
+    "enabled": true
+  }
+}
+```
+
+To pass a masked environment variable only to a trusted destination, configure its name and allowed host; never put the secret value in the settings file:
+
+```json
+{
+  "sandbox": {
+    "enabled": true,
+    "credentials": {
+      "envVars": {
+        "EXAMPLE_API_TOKEN": {
+          "injectHosts": ["api.example.com"]
+        }
+      }
+    }
+  }
+}
+```
+
+Do not also pass the same variable through `--secret-env-vars`. On macOS, system keychain access is off by default; the advanced setting `sandbox.userPolicy.seatbelt.keychainAccess` controls it in personal settings.
+
+The General tab includes **Allow sandbox bypass** (on by default), **Sandbox MCP servers**, and **Sandbox LSP servers** (on by default). A bypassed command runs outside the sandbox and can see real environment values, bypassing credential masking. Remote MCP servers are never sandboxed. Managed settings can enforce `sandbox.enabled`, `sandbox.allowBypass`, and `sandbox.failIfUnavailable`; the last setting makes a command fail if its sandbox cannot start. Managed entries are marked `(managed)` and cannot be changed in the CLI. Organizations can distribute local policy through Intune or other MDM.
+
+The Git credential proxy matches the original request's host, port, and repository path. The `gh` credential proxy supplies credentials only to GitHub's documented domains: `github.com`, `api.github.com`, and `uploads.github.com`. Do not put credentials in prompts or pass them as ordinary environment variables.
+
+### Exercise A: deny a file outside the workspace
+
+1. Create a file outside the repository with a fake marker such as `TRAINING_ONLY_NOT_A_SECRET`. Keep it out of your home configuration and never use a real secret. On macOS or Linux:
+
+   ```bash
+   mkdir -p "$HOME/copilot-sandbox-lab"
+   printf '%s\n' 'TRAINING_ONLY_NOT_A_SECRET' > "$HOME/copilot-sandbox-lab/private-note.txt"
+   ```
+
+   On Windows PowerShell:
+
+   ```powershell
+   $lab = Join-Path $env:TEMP 'copilot-sandbox-lab'
+   New-Item -ItemType Directory -Force $lab | Out-Null
+   Set-Content (Join-Path $lab 'private-note.txt') 'TRAINING_ONLY_NOT_A_SECRET'
+   ```
+
+2. In `/sandbox`, add the file's **absolute path** to the denied filesystem paths. Confirm it appears in `/sandbox policy`.
+3. Ask the agent to read the path twice: first through a shell command (`cat` on macOS/Linux or `Get-Content` in PowerShell), then with its built-in file-reading tool.
+4. Compare the outcomes. Shell commands and search tools such as `grep` and `glob` are subject to OS enforcement. The CLI's in-process view/edit tools check the policy in software, so treat that result as best-effort rather than the same hard boundary.
+5. If the shell can read the denied path, stop and inspect the canonical path, platform support, and active policy. Keep the fixture for the VS Code exercise; the cleanup steps follow both labs.
+
+<div class="warning" data-title="Create the file before denying it">
+
+> In Copilot CLI, denying a path that does not exist can make the sandbox create a **directory** at that path. Create the training file first, then add its exact absolute path to the deny list.
+
+</div>
+
+The workspace itself remains available. The point is to deny one unrelated path, not to make the repository unusable.
+
+### Exercise B: restrict an outbound request
+
+1. Leave outbound access on. Add an **Allow** host rule for `api.github.com` (enter the host only; no scheme, path, or port).
+2. Ask the agent to run `curl -sI https://api.github.com`, then `curl -sI https://example.com`. On Windows, use `curl.exe` if `curl` resolves to a PowerShell alias. The first request should succeed; once an allow rule exists, the non-matching host should be blocked. A matching **Deny** rule always wins.
+3. Ask the agent's `web_fetch` tool to fetch `https://api.github.com` and `https://example.com` as well. Compare its results with the shell requests.
+4. Turn outbound access off and retry the allowed `api.github.com` request. It should now be blocked too.
+5. Turn outbound access back on and remove the temporary host rule, or restore your previous network settings.
+
+On Windows, enable **Allow local network** for domain rules, the credential proxy, and credential masking; this also permits private-network access. Ordinary built-in web requests to public endpoints do not by themselves require that setting. Host rules still apply to permitted local connections when outbound access is off. Windows enforcement relies on programs honoring proxy settings, so it is weaker than macOS/Linux OS network filtering. Keep local-network access off unless this exercise requires it, and do not access internal hosts.
+
+### Clean up the CLI lab
+
+Remove the temporary deny rule from the CLI filesystem policy and restore any other settings you changed. After completing the VS Code lab, delete the fixture:
+
+```bash
+rm "$HOME/copilot-sandbox-lab/private-note.txt"
+rmdir "$HOME/copilot-sandbox-lab"
+```
+
+In Windows PowerShell:
+
+```powershell
+Remove-Item (Join-Path $env:TEMP 'copilot-sandbox-lab\private-note.txt')
+Remove-Item (Join-Path $env:TEMP 'copilot-sandbox-lab')
+```
+
+### CLI sandbox commands at a glance
+
+| Command | Use |
+| --- | --- |
+| `/sandbox` or `/sandbox config` | Open configuration; Tab switches among General, Credentials, Filesystem, and Network; Esc saves and closes. |
+| `/sandbox policy [COMMAND]` | Show effective policy, or preview how it applies to a command without running it; for example, `/sandbox policy npm install`. |
+| `/sandbox status` | Show whether the current session is sandboxed. |
+| `/sandbox enable` / `/sandbox disable` | Enable or disable local sandboxing, subject to managed policy and bypass rules. |
+| `copilot --sandbox` | Start a session with sandboxing. |
+| `copilot --sandbox -p "..."` | Run a prompt with the single-session sandbox option. |
+| `copilot --no-sandbox` | Disable sandboxing for a session only when policy permits; it cannot override a managed requirement. |
+| `copilot --continue` | Continue the previous conversation after enabling sandboxing, so the session restarts with the updated policy. |
+| `/add-dir PATH` | Grant a path read/write access for the current session only, subject to managed policy. |
+| `/statusline` | Configure the status line; it can show whether sandboxing is active. |
+| `copilot --cloud` | Start an interactive GitHub cloud-sandbox session; this is a different execution target. |
+
+### Check local sandbox platform support
+
+Copilot CLI's local sandbox relies on platform-specific OS features. Check the support requirements before enabling it; do not treat an unsandboxed fallback as equivalent.
+
+| Platform | Requirements and limitations |
+| --- | --- |
+| macOS | macOS 15 or later; Seatbelt. |
+| Linux | glibc Linux, Bubblewrap 0.5 or later, `slirp4netns`, `util-linux` 2.35 or later, and `iptables`. On Debian/Ubuntu, install them with `sudo apt-get install bubblewrap slirp4netns util-linux iptables`. |
+| Windows | Windows 11 25H2 with KB5124010 or Windows 11 26H1 with KB5124006; ProcessContainer/BaseContainer. |
+| Unsupported | Alpine/musl Linux and WSL1. |
+
+## 9.3 Hands-on: repeat the policy check in VS Code
+
+VS Code has its **own agent sandbox**. Do not configure it through Copilot CLI's `/sandbox` command or assume that MXC's CLI policy carries over.
+
+Open a Copilot-harness Agent session in a local workspace. Use the permissions picker to enable **Sandboxing for terminal** for this session. This control is for the Copilot harness; Claude and Codex harnesses have their own sandbox controls. **Allow all** tool approvals do not disable the sandbox.
+
+Enter `/sandbox policy` in the chat input to open the session's effective-policy report in the editor. For new sessions, configure the default with `chat.agent.sandbox.enabled` (`"on"` or `"off"`, default `"off"`).
+
+### Exercise: deny the lab file and allow one domain
+
+Add these settings to your VS Code `settings.json`. Replace the placeholder with the **same absolute path** to `private-note.txt` that you created in Exercise A. Paths in settings are literal: do not leave placeholders or use `$HOME`/environment-variable expansion.
+
+```jsonc
+{
+  "chat.agent.sandbox.enabled": "on",
+  "chat.agent.sandbox.fileSystem.userConfiguredPaths": {
+    "deniedPaths": [
+      "/Users/YOUR_NAME/copilot-sandbox-lab/private-note.txt"
+      // Linux example: "/home/YOUR_NAME/copilot-sandbox-lab/private-note.txt"
+      // Windows example: "C:\\Users\\you\\AppData\\Local\\Temp\\copilot-sandbox-lab\\private-note.txt"
+    ]
+  },
+  "chat.agent.sandbox.network.allowNetwork": true,
+  "chat.agent.sandbox.network.allowLocalNetwork": false,
+  "chat.agent.sandbox.network.allowedDomains": ["api.github.com"],
+  "chat.agent.sandbox.network.deniedDomains": [],
+  "chat.agent.sandbox.allowUnsandboxedCommands": false,
+  "chat.agent.sandbox.mcpServers": true,
+  "chat.agent.sandbox.lspServers": true
+}
+```
+
+The Windows example escapes backslashes as JSON requires. On Windows, set `chat.agent.sandbox.network.allowLocalNetwork` to `true` when using domain rules or credential masking; that widens access to local and private networks. Keep it `false` elsewhere unless your task needs it.
+
+The filesystem setting accepts `readwritePaths`, `readonlyPaths`, and `deniedPaths` with absolute paths. If rules overlap, **denied wins, then read-only, then read/write**. `allowDevToolAccess` defaults to `true`; this lab leaves that default in place so `curl` and other developer tools remain available. Turning it off can prevent tools from running; if you do, grant the required tool and supporting paths explicitly through `readonlyPaths`.
+
+In the Network settings, `allowNetwork` defaults to `true`; setting it to `false` also blocks the integrated browser. `allowLocalNetwork` defaults to `false`. A non-empty `allowedDomains` list restricts outbound access to those domains; `deniedDomains` blocks matching domains and takes precedence. Restart VS Code after changing domain rules.
+
+VS Code can also sandbox MCP and LSP servers with `chat.agent.sandbox.mcpServers` and `chat.agent.sandbox.lspServers` (LSP sandboxing defaults to `true`). Credential settings include `chat.agent.sandbox.credentials.authenticategit`, `authenticategh`, and `envVars`; each environment-variable entry can use `injectHosts` to scope credential injection.
+
+By default, `chat.agent.sandbox.allowUnsandboxedCommands` is `true`: if a command cannot run inside the sandbox, VS Code can show an **Allow Outside Sandbox** prompt. Set it to `false` to fail closed. For filesystem permission prompts, choose the narrowest approval scope: **Allow for This Session**, **Workspace**, or **User**, or choose **Skip**.
+
+1. Restart VS Code after changing domain rules. Open a new Copilot-harness Agent session, enable **Sandboxing for terminal** in the permissions picker, and run `/sandbox policy`. Confirm the denied path and `api.github.com` allow rule.
+2. Ask the agent to read the denied file with a shell command and with its file-reading tool; both should be denied. Then ask it to fetch `https://api.github.com` and `https://example.com` and compare the results with the allow list.
+3. Give this prompt: **“Create `sandbox-lab-output.md` in the workspace with exactly the sentence `VS Code sandbox write test.` Do not edit any other files.”**
+4. Open the new file and inspect the workspace changes in VS Code. Confirm that only this file changed, then discard the test by deleting it yourself. Restore your original settings. After the exercise, remove the shared fixture using the platform-appropriate cleanup commands above.
+
+To scope an environment credential, use a variable name and its permitted hosts; never add a secret value to `settings.json`:
+
+```json
+{
+  "chat.agent.sandbox.credentials.envVars": {
+    "EXAMPLE_API_TOKEN": {
+      "injectHosts": ["api.github.com"]
+    }
+  }
+}
+```
+
+<div class="warning" data-title="Sandboxing inside a Dev Container">
+
+> Running the VS Code sandbox inside a Dev Container requires relaxing container isolation with `seccomp=unconfined`, `apparmor=unconfined`, and `systempaths=unconfined`, plus access to `/dev/net/tun`. That weakens the outer container boundary. Do this only in a disposable, trusted development environment and understand that you are trading away part of the container's protection.
+
+</div>
+
+### VS Code platform requirements
+
+| Platform | Requirements and limitations |
+| --- | --- |
+| macOS | macOS 15 or later. |
+| Linux / WSL2 | glibc Linux or WSL2, Bubblewrap 0.5 or later, `slirp4netns`, `util-linux` 2.35 or later, and `iptables`. For Debian/Ubuntu, install the packages with `sudo apt-get install bubblewrap slirp4netns util-linux iptables`. |
+| Windows | Windows 11 25H2 with KB5124010 or Windows 11 26H1 with KB5124006. Support is experimental in VS Code. |
+| Unsupported | Alpine/musl Linux and WSL1. |
+
+## 9.4 Run Copilot in a Docker Sandbox
+
+Docker Sandboxes provide a containerized workspace and a reproducible starting point; they are separate from Copilot CLI's MXC sandbox and GitHub's cloud sandbox. Current Docker guidance recommends v3 kits: built-in agent names resolve to Debian-based kits, while `docker/sandbox-templates` images are older, separately published Ubuntu images.
+
+For the built-in Copilot workload, store authentication as a Docker Sandbox secret rather than baking a token into an image. The token must have Copilot access:
+
+```bash
+sbx secret set github --command 'gh auth token'
+sbx run copilot ~/my-project
+```
+
+The path is optional when you have already changed into the project directory. A directly mounted workspace is read/write, and changes appear on the host immediately. For a Git repository, use clone mode to keep agent edits in an in-sandbox clone until you fetch or push them:
+
+```bash
+sbx run --clone copilot ~/my-project
+```
+
+Copilot starts as `copilot --yolo` by default, which allows broad automatic approval. Treat this as a high-risk mode: use only a project you trust, prefer clone mode, and review all changes. You can append Copilot arguments after `--`:
+
+```bash
+sbx run copilot -- -p "review this PR"
+```
+
+To add a project toolchain, first create a v3 **mixin** with its Dockerfile and YAML descriptor, then attach it to the built-in Copilot workload. This is the current documented customization path; the workload retains its launch behavior and credentials:
+
+```bash
+sbx run copilot --kit ./node-toolchain ~/my-project
+```
+
+To publish the mixin, use Docker Buildx as shown in the [current tool-mixin authoring guide](https://docs.docker.com/ai/sandboxes/customize/author/tool-mixins/). Then use the same published reference with `--kit`:
+
+```console
+docker login
+docker buildx build ./node-toolchain -f ./node-toolchain/node-toolchain.yaml \
+  -t docker.io/my-org/node-toolchain:v1 --push
+sbx run copilot --kit docker.io/my-org/node-toolchain:v1 ~/my-project
+```
+
+### Conceptual: build a custom Copilot workload image
+
+If you specifically need to change the Copilot base image, author a v3 **workload** kit with a Dockerfile and YAML descriptor. The following illustrates the image layer only; it is **not a complete runnable kit**. The descriptor must declare the Copilot launch contract, network policy, and credential capability. Current Docker docs do not provide a complete custom Copilot v3 descriptor, so do not publish or run this example without supplying and validating that configuration against the [base-image workload guide](https://docs.docker.com/ai/sandboxes/customize/author/base-images/), [kit capabilities](https://docs.docker.com/ai/sandboxes/customize/author/capabilities/), and [credential guidance](https://docs.docker.com/ai/sandboxes/configuration/credentials/).
+
+```dockerfile
+FROM docker/sandbox-templates:copilot
+USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends jq \
+    && rm -rf /var/lib/apt/lists/*
+USER agent
+ENTRYPOINT ["copilot"]
+CMD []
+```
+
+The base image is an older, previously published Copilot image, not the current built-in v3 workload. In a v3 kit, capabilities from a published base kit do not carry over; declare the policy and credentials in your own descriptor. When the descriptor is complete and verified, publish and run the **same** image reference:
+
+```console
+docker login
+docker buildx build ./copilot-node -f ./copilot-node/copilot-node.yaml \
+  -t docker.io/my-org/copilot-node:v1 --push
+sbx run docker.io/my-org/copilot-node:v1 ~/my-project
+```
+
+To snapshot a configured sandbox, current Docker usage docs still document `sbx template save <sandbox> <name>:v1 --output <file>`. A snapshot captures the container filesystem, not mounted workspace files; secrets written into that filesystem are captured too. Treat a snapshot as an image, not a v3 kit with its own policy.
+
+Docker Sandboxes do not inherit user-level host configuration; only project-level configuration is available inside the sandbox. Never store credentials in the Dockerfile, image, workspace, or snapshot.
+
+## 9.5 Use GitHub cloud sandboxes
+
+GitHub cloud sandboxes run the **whole Copilot session** in an ephemeral, GitHub-hosted Linux environment. The session does not use your local checkout or compute; repositories are cloned into the remote environment. Sessions can be stopped and resumed across supported clients, restoring their snapshot and in-progress work.
+
+You can start cloud sessions from GitHub.com chat, GitHub Mobile, Slack, Microsoft Teams, the GitHub Copilot app, VS Code, JetBrains (preview), or the Copilot SDK. In Copilot CLI, start a single interactive session with:
+
+```bash
+copilot --cloud
+```
+
+This option is interactive only; do not combine it with `-p` or `-i`. In clients that let you choose between **Cloud** and **Actions**, choose at session start; you cannot change the execution environment afterward. Choose Actions when you need `copilot-setup-steps.yml` (including OIDC), a larger or self-hosted runner, or Windows. Otherwise, Cloud provides the standard managed Linux environment.
+
+Cloud session network access follows the cloud agent firewall allowlist. Changes to the allowlist apply to new sessions, not sessions already running. You can personalize cloud sandboxes through [Copilot customization](https://github.com/copilot/customize) and a dotfiles repository with a root `.copilot` directory for instructions, skills, and custom agents. Dotfiles are copied when a sandbox is created or resumed; install scripts do not run, and this personalization does not apply to Actions sessions.
+
+For an organization or enterprise, cloud access is governed by the **Copilot in the cloud** policy, enabled by default, and spending is controlled through budgets per SKU. Review both before enabling the capability. Billing meters are **$0.000024 per vCPU-second**, **$0.000003 per GiB-second of memory**, and **$0.005 per GiB-month of storage**. Local sandboxing is included in the Copilot seat.
+
+## 9.6 Which model should you use?
+
+Model choice affects the quality, speed, and cost of reasoning; it does **not** change what files, network destinations, or credentials a sandbox permits. Start with **Auto** unless you have a reason to select a model yourself.
+
+| Task | Model choice |
+| --- | --- |
+| A bounded edit, test fix, or routine command | Auto or a fast, capable coding model is usually sufficient. Keep the task narrow and review the diff. |
+| Multi-step implementation or unfamiliar code | Choose a stronger reasoning/coding model when the task benefits from planning across files and tests. |
+| Threat modeling or security-sensitive review | Use a strong reasoning model to help identify cases and propose tests, but independently verify its claims. Model output is not an audit or an access-control decision. |
+| Repetitive work with known steps | Use a fast model with explicit acceptance criteria and restricted tools; a deterministic script may be safer and cheaper. |
+| Unattended work, `--yolo`, or cloud batch tasks | Prefer a stronger model for better planning, but tighten the sandbox, network, credentials, and allowed tools because nobody is reviewing each step as it runs. |
+
+Choose from models available under your Copilot plan and organization policy. Re-evaluate the choice as the model catalog changes. For every model, keep the same least-privilege policy, credential hygiene, approval discipline, and human review.
+
+## 9.7 Security checklist
+
+- **Know where the session runs:** local, Docker Sandbox, GitHub cloud sandbox, Actions runner, or your custom environment.
+- **Check the effective policy:** confirm denied and allowed paths, outbound and local-network access, and credential handling.
+- **Minimize what tools can reach:** remove temporary grants and host allow rules after the task.
+- **Protect secrets:** do not place secrets in prompts, source files, images, or example fixtures; expose a credential only to the hosts that need it.
+- **Remember the boundary:** remote MCP servers and external services need their own controls; a local process sandbox does not contain them.
+- **Review before execution or merge:** sandboxing reduces blast radius; it does not make generated commands or code trustworthy.
+
+### References
+
+- [About cloud and local sandboxes](https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/about-cloud-and-local-sandboxes)
+- [Configure local sandbox settings](https://docs.github.com/en/copilot/how-tos/cloud-and-local-sandboxes/configuring-local-sandbox-settings)
+- [Manage cloud sandboxes for an organization or enterprise](https://docs.github.com/en/copilot/how-tos/cloud-and-local-sandboxes/enabling-or-disabling-cloud-sandboxes-for-your-organization)
+- [VS Code agent sandbox](https://code.visualstudio.com/docs/agents/run/agent-sandboxing)
+- [Cloud and local sandboxes public preview announcement](https://github.blog/changelog/2026-06-02-cloud-and-local-sandboxes-for-github-copilot-now-in-public-preview/)
+- [Use GitHub Copilot in Docker Sandboxes](https://docs.docker.com/ai/sandboxes/agents/copilot/)
+- [Docker Sandboxes kits](https://docs.docker.com/ai/sandboxes/customize/)
+- [Docker Sandboxes base images](https://docs.docker.com/ai/sandboxes/customize/author/base-images/)
+- [Build a Docker Sandboxes tool mixin](https://docs.docker.com/ai/sandboxes/customize/author/tool-mixins/)
+- [Use Docker Sandboxes kits](https://docs.docker.com/ai/sandboxes/customize/use-kits/)
+- [Docker Sandboxes usage and workspace modes](https://docs.docker.com/ai/sandboxes/usage/)
+- [Microsoft MXC](https://github.com/microsoft/mxc)
 
 
 # Wrap-up
 
-You (hopefully :D) have learned:
+You have learned how to:
 
-- The full surface area of GitHub Copilot: IDE, CLI, agent harnesses, instructions, prompts, custom agents, skills, MCP.
-- A repeatable, reviewable, agent-friendly development loop: **Spec → Plan → Tasks → Implement.**
-- How to apply that loop with a raw agent, and (optionally) with spec-kit as a dedicated tool.
+- Navigate GitHub Copilot across the IDE, CLI, agent harnesses, instructions, prompts, custom agents, skills and MCP.
+- Use a repeatable, reviewable development loop: **Spec → Plan → Tasks → Implement.**
+- Apply that loop with an agent or, optionally, with spec-kit.
 
 ## Where to go next
 
 - [GitHub Copilot docs](https://docs.github.com/en/copilot)
-- [Awesome Copilot](https://github.com/github/awesome-copilot) — community skills, agents, instructions, prompts
+- [Awesome Copilot](https://github.com/github/awesome-copilot) - community skills, agents, instructions, prompts
 - [spec-kit](https://github.com/github/spec-kit)
 - [Model Context Protocol](https://modelcontextprotocol.io)
 - [GitHub Copilot modernization](https://learn.microsoft.com/azure/developer/github-copilot-app-modernization/overview) and the [modernization agent / Modernize CLI](https://github.com/microsoft/modernize-cli)
-- The original [GH Copilot HoL](https://moaw.dev/workshop/gh:Philess/GHCopilotHoL/main/docs/) — broader foundational GitHub Copilot product tour this workshop builds on
+- The original [GH Copilot HoL](https://moaw.dev/workshop/gh:Philess/GHCopilotHoL/main/docs/) - broader foundational GitHub Copilot product tour this workshop builds on
 - [squad](https://github.com/bradygaster/squad) - human-directed AI development team through GitHub Copilot
 
 <div class="tip" data-title="One thing to try tomorrow">
 
-> Pick the next ticket in your backlog. Before writing a line of code, open Agent mode and run your `/sdd-spec` skill from Chapter 2. Time-box it to 20 minutes. Notice how much sharper your understanding of the work becomes — that is the real win of SDD.
+> Pick the next ticket in your backlog. Before writing a line of code, open Agent mode and run your `/sdd-spec` skill from Chapter 2. Time-box it to 20 minutes. Notice how much sharper your understanding of the work becomes - that is the real win of SDD.
 
 </div>
 
@@ -1993,7 +2684,7 @@ Happy spec-driving! 🚀
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
-## Cheat sheet — when to use what
+## Cheat sheet - when to use what
 
 | Tech | Use when… | Concrete example |
 | --- | --- | --- |

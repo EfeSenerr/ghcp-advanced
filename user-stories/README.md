@@ -2,17 +2,17 @@
 
 > "*Where every bug meets its match.*"
 
-This folder contains the user stories for the hands-on exercise in [Chapter 2](../docs/workshop.md#chapter-2--spec-driven-development-the-main-course) of the workshop. You will use them as **raw input** for Spec-Driven Development — the whole point is that user stories are *not yet specs*. Your job, together with your agentic AI, is to turn them into specs, plans, tasks and code.
+This folder contains the user stories for the hands-on exercise in [Chapter 2](../docs/workshop.md#chapter-2--spec-driven-development-the-main-course) of the workshop. You will use them as **raw input** for Spec-Driven Development - the whole point is that user stories are *not yet specs*. Your job, together with your agentic AI, is to turn them into specs, plans, tasks and code.
 
 ## The product
 
 **The Rubber Duck Emporium** is a (definitely real, totally legitimate) online shop that sells specialty rubber ducks for every conceivable problem in life. Flagship lines include:
 
-- 🪲 **Debugging Ducks** — stare at your code with judgmental glass eyes
-- 🧙 **Philosopher Ducks** — Socrates Duck only answers in questions
-- 🏴‍☠️ **Maritime Ducks** — pirate, captain, kraken-survivor editions
-- 🧘 **Wellness Ducks** — for when your code *and* your soul need help
-- 🎩 **Limited Editions** — Edgar Allan Poe Duck ("Quoth the duck, nevermore")
+- 🪲 **Debugging Ducks** - stare at your code with judgmental glass eyes
+- 🧙 **Philosopher Ducks** - Socrates Duck only answers in questions
+- 🏴‍☠️ **Maritime Ducks** - pirate, captain, kraken-survivor editions
+- 🧘 **Wellness Ducks** - for when your code *and* your soul need help
+- 🎩 **Limited Editions** - Edgar Allan Poe Duck ("Quoth the duck, nevermore")
 
 ## Personas
 
@@ -23,7 +23,7 @@ This folder contains the user stories for the hands-on exercise in [Chapter 2](.
 
 ## Constraints (apply to ALL stories)
 
-- **Stack:** TypeScript, Node 20+, ES modules. Express is the recommended framework — but Fastify, Hono, or even raw `node:http` work too.
+- **Stack:** TypeScript, Node 20+, ES modules. Express is the recommended framework - but Fastify, Hono, or even raw `node:http` work too.
 - **Storage:** A local JSON file or SQLite is fine. No cloud services required.
 - **Auth:** A single shared admin password from an env var for Dr. Mallard. No real user accounts for Quincy.
 - **Payment:** **Mocked.** Never integrate a real payment provider in this workshop.

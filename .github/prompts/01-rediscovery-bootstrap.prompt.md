@@ -1,9 +1,9 @@
 ---
 agent: 'cobol-archaeologist'
-description: Phase 1 — Bootstrap rediscovery. Scan the repo, produce a high-level map and a curated AGENTS.md.
+description: Phase 1 - Bootstrap rediscovery. Scan the repo, produce a high-level map and a curated AGENTS.md.
 ---
 
-Bootstrap the rediscovery of this legacy IBM COBOL application. No business rules, data model or integrations yet — just orientation.
+Bootstrap the rediscovery of this legacy IBM COBOL application. No business rules, data model or integrations yet - just orientation.
 
 Do the following and stop:
 

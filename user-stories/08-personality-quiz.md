@@ -1,4 +1,4 @@
-# Story 8 — "Which duck are you?" personality quiz
+# Story 8 - "Which duck are you?" personality quiz
 
 **ID:** `personality-quiz`
 **Persona:** Quincy Quacker (customer)
