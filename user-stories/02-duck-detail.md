@@ -1,4 +1,4 @@
-# Story 2 — View a duck's detail page
+# Story 2 - View a duck's detail page
 
 **ID:** `duck-detail`
 **Persona:** Quincy Quacker (customer)

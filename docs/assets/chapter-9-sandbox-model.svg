@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="500" viewBox="0 0 1360 500" role="img" aria-labelledby="title description">
+  <title id="title">Copilot execution boundaries and MXC backends</title>
+  <desc id="description">Five execution boundaries: Copilot CLI local sandbox, VS Code's separate agent sandbox, Docker Sandbox, GitHub cloud sandbox, and a self-managed VM or custom environment. MXC spans process, container or session, and virtualized backends; Copilot CLI local sandbox uses the process-level end.</desc>
+  <defs>
+    <style>
+      .title { font: 700 25px Arial, sans-serif; fill: #1f2328; }
+      .heading { font: 700 17px Arial, sans-serif; fill: #1f2328; }
+      .body { font: 14px Arial, sans-serif; fill: #24292f; }
+      .note { font: 13px Arial, sans-serif; fill: #57606a; }
+      .box { stroke: #afb8c1; stroke-width: 1.5; rx: 12; }
+    </style>
+  </defs>
+  <rect width="1360" height="500" fill="#ffffff"/>
+  <text x="40" y="46" class="title">Choose the execution boundary, then apply least privilege</text>
+
+  <rect x="40" y="82" width="1280" height="62" rx="12" fill="#ddf4ff" stroke="#54aeff" stroke-width="1.5"/>
+  <text x="680" y="108" class="heading" text-anchor="middle">Copilot agent session</text>
+  <text x="680" y="130" class="body" text-anchor="middle">prompts • generated commands • tools • workspace edits</text>
+
+  <path d="M680 144 V164 M160 164 H1200 M160 164 V184 M420 164 V184 M680 164 V184 M940 164 V184 M1200 164 V184" fill="none" stroke="#57606a" stroke-width="2"/>
+
+  <rect class="box" x="40" y="184" width="240" height="180" fill="#f6f8fa"/>
+  <text x="160" y="216" class="heading" text-anchor="middle">CLI local sandbox</text>
+  <text x="160" y="246" class="body" text-anchor="middle">Copilot CLI + MXC</text>
+  <text x="160" y="274" class="body" text-anchor="middle">OS process backend</text>
+  <text x="160" y="314" class="note" text-anchor="middle">On your device</text>
+  <text x="160" y="338" class="note" text-anchor="middle">Filesystem / network policy</text>
+
+  <rect class="box" x="300" y="184" width="240" height="180" fill="#fbefff"/>
+  <text x="420" y="216" class="heading" text-anchor="middle">VS Code sandbox</text>
+  <text x="420" y="246" class="body" text-anchor="middle">IDE-managed policy</text>
+  <text x="420" y="274" class="body" text-anchor="middle">Copilot harness</text>
+  <text x="420" y="314" class="note" text-anchor="middle">Separate from CLI</text>
+  <text x="420" y="338" class="note" text-anchor="middle">Session / workspace controls</text>
+
+  <rect class="box" x="560" y="184" width="240" height="180" fill="#fff8c5"/>
+  <text x="680" y="216" class="heading" text-anchor="middle">Docker Sandbox</text>
+  <text x="680" y="246" class="body" text-anchor="middle">Copilot template</text>
+  <text x="680" y="274" class="body" text-anchor="middle">Image + workspace</text>
+  <text x="680" y="314" class="note" text-anchor="middle">You configure the image</text>
+  <text x="680" y="338" class="note" text-anchor="middle">and sandbox permissions</text>
+
+  <rect class="box" x="820" y="184" width="240" height="180" fill="#dafbe1"/>
+  <text x="940" y="216" class="heading" text-anchor="middle">GitHub cloud</text>
+  <text x="940" y="246" class="body" text-anchor="middle">Ephemeral Linux session</text>
+  <text x="940" y="274" class="body" text-anchor="middle">Hosted by GitHub</text>
+  <text x="940" y="314" class="note" text-anchor="middle">Remote from your device</text>
+  <text x="940" y="338" class="note" text-anchor="middle">Usage + org policy apply</text>
+
+  <rect class="box" x="1080" y="184" width="240" height="180" fill="#fbefff"/>
+  <text x="1200" y="216" class="heading" text-anchor="middle">Custom VM / host</text>
+  <text x="1200" y="246" class="body" text-anchor="middle">Linux machine / Codespace</text>
+  <text x="1200" y="274" class="body" text-anchor="middle">You own its image</text>
+  <text x="1200" y="314" class="note" text-anchor="middle">Tools, access, patching,</text>
+  <text x="1200" y="338" class="note" text-anchor="middle">and lifecycle</text>
+
+  <rect x="40" y="390" width="1280" height="70" rx="10" fill="#f6f8fa" stroke="#afb8c1" stroke-width="1.5"/>
+  <text x="680" y="418" class="heading" text-anchor="middle">MXC backend spectrum: OS process → container / session → VM / microVM</text>
+  <text x="680" y="442" class="note" text-anchor="middle">Copilot CLI local sandbox uses the process-level end; it does not start a container or VM per command.</text>
+</svg>

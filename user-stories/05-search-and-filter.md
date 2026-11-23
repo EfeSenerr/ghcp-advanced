@@ -1,4 +1,4 @@
-# Story 5 — Search and filter the catalog
+# Story 5 - Search and filter the catalog
 
 **ID:** `search-and-filter`
 **Persona:** Quincy Quacker (customer)
@@ -17,7 +17,7 @@
 - Filter by one or more categories.
 - Filter by minimum and/or maximum price (either bound is optional).
 - Filters compose (free text AND category AND price all apply together).
-- An empty result set renders a friendly empty state ("No duck matches your existential criteria.") — not a blank page.
+- An empty result set renders a friendly empty state ("No duck matches your existential criteria.") - not a blank page.
 
 ## Out of scope
 

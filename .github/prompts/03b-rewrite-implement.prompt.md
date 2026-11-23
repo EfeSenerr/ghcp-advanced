@@ -1,6 +1,6 @@
 ---
 agent: 'module-rewriter'
-description: Phase 3b — Implement ONE slice of the module rewrite. Tests first, smallest change, verify parity.
+description: Phase 3b - Implement ONE slice of the module rewrite. Tests first, smallest change, verify parity.
 ---
 
 Implement one slice of the module rewrite. A slice is a group of acceptance tests small enough to review in a single sitting. Ask which slice if it is not obvious.

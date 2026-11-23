@@ -1,4 +1,4 @@
-# Story 6 — Curator adds a new duck
+# Story 6 - Curator adds a new duck
 
 **ID:** `curator-add-duck`
 **Persona:** Dr. Mallard (Duck Curator / admin)

@@ -1,10 +1,10 @@
 # ghcp-advanced
 
-**An advanced GitHub Copilot tutorial focused on Spec-Driven Development (SDD).**
+**A workflow-centered GitHub Copilot workshop that combines an introduction to Copilot surfaces and customization with hands-on practice in Spec-Driven Development, app modernization, context engineering and the Copilot SDK.**
 
 This is a [MoaW](https://moaw.dev) workshop. The best way to read it is rendered:
 
-👉 **[Open the workshop on MoaW](https://moaw.dev/workshop/gh:jkordick/ghcp-advanced/main/docs/)**
+👉 **[Open the workshop on MoaW](https://moaw.dev/workshop/gh:artspe/ghcp-advanced/main/docs/)**
 
 Or read the raw markdown: [`docs/workshop.md`](docs/workshop.md).
 
@@ -17,7 +17,7 @@ Or read the raw markdown: [`docs/workshop.md`](docs/workshop.md).
 5. **App modernization**: a dedicated chapter on how to use GitHub Copilot to modernize legacy apps, with two hands-on tracks (spec-kit-driven and GitHub Copilot-native custom agents + prompts), plus the off-the-shelf GitHub Copilot modernization agents (VS Code extension and the Modernize CLI).
 6. **Context Engineering**: Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules, and skills to a pre-built project.
 7. (soon) **Agentic Workflows**
-8. **The GitHub Copilot SDK**: Embed Copilot directly into your own apps — open sessions, stream responses, and let Copilot call custom tools you define in TypeScript/Node.
+8. **The GitHub Copilot SDK**: Embed Copilot directly into your own apps - open sessions, stream responses, and let Copilot call custom tools you define in TypeScript/Node.
 9. **Security, Sandboxing and Guardrails**: How to use Copilot safely in your organization, and how to build your own guardrails for your own agentic AI.
 
 ## Pre-reqs
@@ -31,14 +31,14 @@ See [the Pre-requisites section of the workshop](docs/workshop.md#pre-requisites
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).
 
 ## Credits
 
 Inspired by the excellent [GitHub Copilot HoL by @Philess](https://moaw.dev/workshop/gh:Philess/GHCopilotHoL/main/docs/).
 
 
-### Julia's to do list
+### Artur's to do list
 - optional: before creating the spec, ask GHCP to break down the user-stories into reasonable sized github issues, and then generate the spec based on the issues; would need github access + github mcp
 - add squad section
-- save the world
+- add agentic workflows section

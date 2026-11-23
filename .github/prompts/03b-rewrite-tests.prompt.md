@@ -1,9 +1,9 @@
 ---
 agent: 'module-rewriter'
-description: Phase 3b — Derive behavior-preserving acceptance tests for ONE module before any rewrite.
+description: Phase 3b - Derive behavior-preserving acceptance tests for ONE module before any rewrite.
 ---
 
-Derive acceptance tests for **one** module — the same module you intend to rewrite next. Ask which one if it is not obvious.
+Derive acceptance tests for **one** module - the same module you intend to rewrite next. Ask which one if it is not obvious.
 
 Sources:
 

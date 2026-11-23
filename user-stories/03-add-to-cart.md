@@ -1,4 +1,4 @@
-# Story 3 — Add ducks to a cart
+# Story 3 - Add ducks to a cart
 
 **ID:** `add-to-cart`
 **Persona:** Quincy Quacker (customer)

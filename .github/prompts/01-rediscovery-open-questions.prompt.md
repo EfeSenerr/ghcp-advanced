@@ -1,9 +1,9 @@
 ---
 agent: 'cobol-archaeologist'
-description: Phase 1 — Sweep the rediscovery artifacts for gaps, guesses and unresolved behavior.
+description: Phase 1 - Sweep the rediscovery artifacts for gaps, guesses and unresolved behavior.
 ---
 
-Sweep everything under `docs/modernization/01-rediscovery/` for things that need a human answer. Do **not** re-read the legacy code — this is an audit of the artifacts you have already produced.
+Sweep everything under `docs/modernization/01-rediscovery/` for things that need a human answer. Do **not** re-read the legacy code - this is an audit of the artifacts you have already produced.
 
 Look for:
 
