@@ -76,7 +76,7 @@ You need the following before starting:
 | GitHub CLI | [Install](https://cli.github.com/) |
 | GitHub Copilot CLI | [Install](https://github.com/github/copilot-cli) |
 | A terminal | Any modern shell (bash, zsh, pwsh) |
-| A fork of this repo | [Fork `jkordick/ghcp-advanced`](https://github.com/jkordick/ghcp-advanced/fork) and clone your fork locally - you will need the `user-stories/`, `.github/skills/` and `.github/copilot-instructions.md` files for the hands-on exercises |
+| A fork of this repo | [Fork `EfeSenerr/ghcp-advanced`](https://github.com/EfeSenerr/ghcp-advanced/fork) and clone your fork locally - you will need the `user-stories/`, `.github/skills/` and `.github/copilot-instructions.md` files for the hands-on exercises |
 
 ![The repository's Fork menu, with Create a new fork highlighted](assets/fork.png)
 
@@ -190,7 +190,7 @@ Two things to keep in mind for both `copilot-instructions.md` and `AGENTS.md`:
 1) the information in them should be relevant in *every* context the agent will operate in (because every interaction will load them), and
 2) write them so they are verifiable. Avoid vague statements like *"write good code"* or *"follow best practices"*. Stick to rules that can be checked by a CI job (e.g. "tests must be runnable via `pytest`"); plus concrete paths to files and folders the agent should or should not touch.
 
-This repo ships with one [`.github/copilot-instructions.md`](https://github.com/jkordick/ghcp-advanced/blob/main/.github/copilot-instructions.md). Feel free to open and read it. Notice it is short, declarative and project-scoped.
+This repo ships with one [`.github/copilot-instructions.md`](https://github.com/EfeSenerr/ghcp-advanced/blob/main/.github/copilot-instructions.md). Feel free to open and read it. Notice it is short, declarative and project-scoped.
 
 <div class="info" data-title="Harness differences">
 
@@ -271,7 +271,7 @@ Skills are folders with a `SKILL.md` file plus optional scripts, templates and e
 
 To create one in VS Code, run **Chat: Open Customizations** -> **Skills** -> **New Skill**. In any harness you can also just ask the agent: *"Create a project skill named `test-changes` in `.github/skills/` that …"*. With **Local** selected, `/create-skill` and `/skills` are built-in shortcuts. The Copilot harness has no built-in `/create-skill`, so this repo ships its own as a project skill (see below). You can also install skills from **Browse** in the Agent Customizations editor (Customization Marketplace, preview; not available in Local sessions) or with `gh skill`.
 
-This repo ships with four example skills in [`.github/skills/`](https://github.com/jkordick/ghcp-advanced/tree/main/.github/skills):
+This repo ships with four example skills in [`.github/skills/`](https://github.com/EfeSenerr/ghcp-advanced/tree/main/.github/skills):
 
 | Skill | What it does |
 | --- | --- |
@@ -280,7 +280,7 @@ This repo ships with four example skills in [`.github/skills/`](https://github.c
 | `convert-svg-to-png` | Wraps a shell script that converts SVG → PNG using whichever tool is available. Shows how a skill can include **scripts** alongside instructions. |
 | `create-skill` | Turns the workflow in the current conversation into a new `SKILL.md`. User-invoked only (`disable-model-invocation: true`), so it works like `/create-skill` in every harness. Used in the 2.7 lab. |
 
-Open [`.github/skills/run-tests/SKILL.md`](https://github.com/jkordick/ghcp-advanced/tree/main/.github/skills/run-tests/SKILL.md) to see a minimal example.
+Open [`.github/skills/run-tests/SKILL.md`](https://github.com/EfeSenerr/ghcp-advanced/tree/main/.github/skills/run-tests/SKILL.md) to see a minimal example.
 
 Copilot auto-loads a matching skill when it detects a relevant task, or you invoke it explicitly with `/run-tests`. Skills are an [open standard](https://agentskills.io/) - they work across VS Code (Copilot, Local, and with matching folders Claude and Codex), the Copilot CLI, the GitHub Copilot app and other skills-compatible agents.
 
@@ -403,7 +403,7 @@ This chapter builds on the controls introduced in [Chapter 1](#chapter-1---getti
 
 <div class="info" data-title="No hard dependency on earlier chapters">
 
-> You do **not** need to complete the other chapters. The exercises use `duck-emporium`, the Rubber Duck Emporium shop you will build yourself with SDD in Chapter 3. Here you start from a pre-built version on the [`context-engineering-start`](https://github.com/jkordick/ghcp-advanced/tree/context-engineering-start) branch, or follow along in your own project.
+> You do **not** need to complete the other chapters. The exercises use `duck-emporium`, the Rubber Duck Emporium shop you will build yourself with SDD in Chapter 3. Here you start from a pre-built version on the [`context-engineering-start`](https://github.com/EfeSenerr/ghcp-advanced/tree/context-engineering-start) branch, or follow along in your own project.
 
 </div>
 
@@ -469,8 +469,10 @@ Chapter 1 covered each of these controls individually. Now we apply them as **co
 
 ```bash
 git checkout context-engineering-start
-cd duck-emporium
+code duck-emporium
 ```
+
+Open **`duck-emporium/` on its own** as the VS Code workspace, not your fork's root. VS Code discovers `.github/copilot-instructions.md`, `.github/instructions/`, `.github/agents/` and `.github/skills/` only at the root of a workspace folder, so every file you create in this chapter must live in `duck-emporium/.github/`. In the Copilot CLI, run `copilot` from inside `duck-emporium/`.
 
 ## 2.3.1 System prompt & tools
 **Loaded when:** every call (automatic);  
@@ -497,9 +499,9 @@ Persistent project-level instructions are automatically added to each model call
 
 #### Exercise 1: Create `copilot-instructions.md` for the duck-emporium project
 
-In a **Copilot** harness chat or the Copilot CLI, ask: `Create a .github/copilot-instructions.md file for this project.` With the **Local** harness selected, use the `/init` (project-wide instructions) or `/create-instructions` shortcut instead; neither is available in the other harnesses. Review the generated instructions and check them against the rules of thumb above.
+In a **Copilot** harness chat or the Copilot CLI, ask: `Create a .github/copilot-instructions.md file for this project.` It should land in `duck-emporium/.github/copilot-instructions.md`. With the **Local** harness selected, use the `/init` (project-wide instructions) or `/create-instructions` shortcut instead; neither is available in the other harnesses. Review the generated instructions and check them against the rules of thumb above.
 
-For an example, see the `copilot-instructions.md` file in this repository's root. It contains instructions for the workshop repository.
+For an example, see the [`copilot-instructions.md`](https://github.com/EfeSenerr/ghcp-advanced/blob/main/.github/copilot-instructions.md) on this repository's `main` branch. It contains instructions for the workshop repository itself.
 
 ## 2.3.3 Evolving the AGENTS.md: The miss → diagnosis → fix loop
 
@@ -662,7 +664,7 @@ In general, keep the number of connected MCP servers small - each server's tool 
 In VS Code, open the Extensions view and search for `@mcp playwright`. Install the Playwright MCP server and confirm that you trust it. Then ask Copilot:
 
 ```text
-Using the Playwright MCP server, smoke-test the rendered workshop at https://moaw.dev/workshop/gh:jkordick/ghcp-advanced/main/docs/. At a desktop viewport, verify the workshop title, use the navigation to open Chapter 2 - Context Engineering, and confirm that "How agents actually work" is visible. Capture a screenshot. Then resize to a mobile viewport, verify that Chapter 2 remains reachable through the navigation and capture a second screenshot. Report each check and its result. Do not edit repository files.
+Using the Playwright MCP server, smoke-test the rendered workshop at https://moaw.dev/workshop/gh:EfeSenerr/ghcp-advanced/main/docs/. At a desktop viewport, verify the workshop title, use the navigation to open Chapter 2 - Context Engineering, and confirm that "How agents actually work" is visible. Capture a screenshot. Then resize to a mobile viewport, verify that Chapter 2 remains reachable through the navigation and capture a second screenshot. Report each check and its result. Do not edit repository files.
 ```
 
 Review the tool calls before approving them. The agent receives the client-rendered page, accessible element information, screenshots, and interaction results only when the Playwright tools run.
@@ -780,7 +782,7 @@ In 2.3.6 you wrote a skill by hand. In this lab you build one the way it works b
 1. The lab files live on `main`. If you are still on `context-engineering-start` from 2.3, commit your work there (you reuse it in Chapter 3) and switch back:
 
    ```bash
-   git add duck-emporium
+   git add -A
    git commit -m "chapter 2: context engineering"
    git checkout main
    ```
@@ -976,7 +978,7 @@ You gain three things:
 
 You will build a small e-commerce application for **The Rubber Duck Emporium** - a shop that sells specialty rubber ducks for every possible occasion: Debugging Ducks, Philosopher Ducks, Maritime Ducks, Wellness Ducks, and Limited Editions.
 
-The user stories live in the [`user-stories/`](https://github.com/jkordick/ghcp-advanced/tree/main/user-stories) folder of this repo. **Read** [**`user-stories/README.md`**](https://github.com/jkordick/ghcp-advanced/blob/main/user-stories/README.md) **first** - it describes the product, personas (Quincy Quacker the customer, Dr. Mallard the curator), shared constraints, and the dependency graph between stories.
+The user stories live in the [`user-stories/`](https://github.com/EfeSenerr/ghcp-advanced/tree/main/user-stories) folder of this repo. **Read** [**`user-stories/README.md`**](https://github.com/EfeSenerr/ghcp-advanced/blob/main/user-stories/README.md) **first** - it describes the product, personas (Quincy Quacker the customer, Dr. Mallard the curator), shared constraints, and the dependency graph between stories.
 
 There are 9 stories. A realistic ~90-120 minute run completes the full application.
 
@@ -1487,7 +1489,7 @@ Then run `/speckit-plan`, `/speckit-tasks`, `/speckit-implement` to design the r
 
 This track provides the same four phases as a pre-built kit of **custom agents** (personas) and **prompt files** (actions). It uses an IBM COBOL application - [Bank-of-Z](https://github.com/IBM/Bank-of-Z) - so you can see how the approach applies beyond Java.
 
-**Get the kit.** The agents and prompts live on the [`app-mod-ghcp-native-start`](https://github.com/jkordick/ghcp-advanced/tree/app-mod-ghcp-native-start) branch of this repo, under `.github/agents/` and `.github/prompts/`. Fork & clone [Bank-of-Z](https://github.com/IBM/Bank-of-Z), open it in VS Code (or `cd` into it), then copy the `.github/agents` and `.github/prompts` folders from that branch into the cloned repository.
+**Get the kit.** The agents and prompts live on the [`app-mod-ghcp-native-start`](https://github.com/EfeSenerr/ghcp-advanced/tree/app-mod-ghcp-native-start) branch of this repo, under `.github/agents/` and `.github/prompts/`. Fork & clone [Bank-of-Z](https://github.com/IBM/Bank-of-Z), open it in VS Code (or `cd` into it), then copy the `.github/agents` and `.github/prompts` folders from that branch into the cloned repository.
 
 **How the prompts and agents work together.** The `.github/agents/*.agent.md` files are the **personas** - each one is a custom agent with a scoped mission, ownership and tool access (e.g. `cobol-archaeologist` is read-only, `module-rewriter` can edit and run tests). The `.github/prompts/*.prompt.md` files are the **actions** - small, single-purpose commands you invoke from Chat. Each prompt has an `agent:` in its frontmatter, so running the prompt automatically switches Copilot into the right persona for the job.
 
