@@ -29,6 +29,25 @@ Or read the raw markdown: [`docs/workshop.md`](docs/workshop.md).
 
 See [the Pre-requisites section of the workshop](docs/workshop.md#pre-requisites) for more details.
 
+## Running Duck Emporium locally
+
+Use Node.js 20.12 or newer. From the repository root:
+
+```powershell
+cd .\duck-emporium
+npm ci
+Copy-Item .env.example .env
+```
+
+Set a non-empty `ADMIN_SECRET` in `.env`, then run `npm run dev` (or
+`npm start` without automatic restarts). Open http://localhost:3000/.
+Do not overwrite an existing `.env`; dependency installation is only needed
+for initial setup or when dependencies change.
+
+The app automatically loads `.env` from the working directory before validating
+configuration. Existing environment variables take precedence. A missing `.env`
+is allowed when the required variables are supplied by the environment.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

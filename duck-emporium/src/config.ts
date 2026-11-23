@@ -1,4 +1,13 @@
+import { loadEnvFile } from "node:process";
 import { z } from "zod";
+
+try {
+  loadEnvFile();
+} catch (error) {
+  if (!(error instanceof Error && "code" in error && error.code === "ENOENT")) {
+    throw error;
+  }
+}
 
 const envSchema = z.object({
   ADMIN_SECRET: z
