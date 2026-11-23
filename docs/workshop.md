@@ -433,6 +433,8 @@ There are 9 stories. A realistic ~90-120 minute run completes the full applicati
 
 ### 2.2.1 Scaffold
 
+On macOS or Linux:
+
 ```bash
 mkdir duck-emporium && cd duck-emporium
 npm init -y
@@ -440,6 +442,20 @@ npm i -D typescript tsx vitest @types/node
 npx tsc --init
 mkdir -p src specs
 git init && git add -A && git commit -m "scaffold project"
+```
+
+On Windows PowerShell:
+
+```powershell
+New-Item -ItemType Directory duck-emporium | Out-Null
+Set-Location duck-emporium
+npm init -y
+npm i -D typescript tsx vitest @types/node
+npx tsc --init
+New-Item -ItemType Directory src, specs | Out-Null
+git init
+git add -A
+git commit -m "scaffold project"
 ```
 
 Add a minimal `AGENTS.md` in the `duck-emporium/` folder:
@@ -1132,6 +1148,16 @@ modernize upgrade "Java 21" --delegate cloud
 modernize plan execute --plan-name oracle-to-pg --no-tty
 ```
 
+In Windows PowerShell, continue lines with a backtick instead of `\`:
+
+```powershell
+modernize assess `
+  --source ./billing-service `
+  --source ./customer-api `
+  --source https://github.com/org/legacy-batch.git `
+  --issue-url https://github.com/org/repo/issues/123
+```
+
 <div class="warning" data-title="Cloud delegation has prerequisites">
 
 > To use `--delegate cloud` the repo(s) needs to have **github.com** URLs, and the cloud coding agent has to be enabled in each repository. Additionally the modernization MCP server has to be configured, and enough access for the agent to push a branch or fork. 
@@ -1785,8 +1811,19 @@ Build a small assistant in stages: first send a prompt, then stream the response
 
 ### 8.4.1 Scaffold
 
+On macOS or Linux:
+
 ```bash
 mkdir copilot-sdk-lab && cd copilot-sdk-lab
+npm init -y --init-type module
+npm install @microsoft/copilot-sdk tsx
+```
+
+On Windows PowerShell:
+
+```powershell
+New-Item -ItemType Directory copilot-sdk-lab | Out-Null
+Set-Location copilot-sdk-lab
 npm init -y --init-type module
 npm install @microsoft/copilot-sdk tsx
 ```
@@ -2566,8 +2603,7 @@ To publish the mixin, use Docker Buildx as shown in the [current tool-mixin auth
 
 ```console
 docker login
-docker buildx build ./node-toolchain -f ./node-toolchain/node-toolchain.yaml \
-  -t docker.io/my-org/node-toolchain:v1 --push
+docker buildx build ./node-toolchain -f ./node-toolchain/node-toolchain.yaml -t docker.io/my-org/node-toolchain:v1 --push
 sbx run copilot --kit docker.io/my-org/node-toolchain:v1 ~/my-project
 ```
 
@@ -2590,8 +2626,7 @@ The base image is an older, previously published Copilot image, not the current 
 
 ```console
 docker login
-docker buildx build ./copilot-node -f ./copilot-node/copilot-node.yaml \
-  -t docker.io/my-org/copilot-node:v1 --push
+docker buildx build ./copilot-node -f ./copilot-node/copilot-node.yaml -t docker.io/my-org/copilot-node:v1 --push
 sbx run docker.io/my-org/copilot-node:v1 ~/my-project
 ```
 
