@@ -397,6 +397,8 @@ You now have the full toolbox. The rest of the workshop is about **using it**.
 
 # Chapter 2 - Context Engineering
 
+You start where most teams start: with an **existing** codebase. The Rubber Duck Emporium shop is already built, but Copilot knows nothing about it. In this chapter you give the agent the right context. In Chapter 3 you build the same shop from scratch and take that context with you.
+
 This chapter builds on the controls introduced in [Chapter 1](#chapter-1---getting-started-with-github-copilot): instructions, prompt files, custom agents, skills and MCP. If these are new to you, review Chapter 1 first. Here, you will use them deliberately: context engineering is the practice of deciding what an agent knows, when it knows it and how much information fits in its context window.
 
 <div class="info" data-title="No hard dependency on earlier chapters">
@@ -775,9 +777,11 @@ In 2.3.6 you wrote a skill by hand. In this lab you build one the way it works b
 
 ### 2.7.1 Set up
 
-1. The lab files live on `main`. If you are still on `context-engineering-start` from 2.3, commit or stash your work and switch back:
+1. The lab files live on `main`. If you are still on `context-engineering-start` from 2.3, commit your work there (you reuse it in Chapter 3) and switch back:
 
    ```bash
+   git add duck-emporium
+   git commit -m "chapter 2: context engineering"
    git checkout main
    ```
 
@@ -920,11 +924,27 @@ Finally, compare your result with the reference solution (`skills-lab/solutions/
 
 *This lab is adapted from [Build Your First GitHub Copilot Skill](https://github.com/annawiewer/Skill_hands-on) by Anna Wiewer.*
 
+## 2.8 What you take with you
+
+Not everything you built in this chapter belongs in a new project. **Generic** customizations travel. **Project-specific** ones describe this finished codebase and would mislead the agent in an empty one.
+
+| You created | In Chapter 3 |
+| --- | --- |
+| `run-and-fix-tests` skill (2.3.6) | **Copy it.** It backs up `/sdd-implement` |
+| `test-specialist` agent (2.3.5) | **Copy it** (optional) |
+| `copilot-instructions.md` (2.3.2) | **Don't copy.** It describes the finished app. Apply the same rules of thumb to the new `AGENTS.md` |
+| `testing.instructions.md` (2.3.4) | **Don't copy.** It refers to helpers that don't exist yet. Write your own once story 1's plan fixes the test layout, using the miss → diagnosis → fix loop (2.3.3) |
+| Skills lab (2.7) | You now know how to package a workflow as a skill. Chapter 3 does exactly that with the four SDD steps |
+
+Make sure your Chapter 2 work is committed on `context-engineering-start` (see 2.7.1). Chapter 3 copies it from there.
+
 ---
 
 <style>:root{--text-base-size:17px}html{font-size:var(--text-base-size)}.container{max-width:1200px!important}</style>
 
 # Chapter 3 - Spec-Driven Development 
+
+In Chapter 2 you made sure the agent knows **what your project is**. That doesn't stop it guessing **what you want**. Even with perfect instructions, a vague request still produces vibe coding. SDD adds the missing piece: a reviewed spec before any code. In this chapter you build the Rubber Duck Emporium from scratch and take your Chapter 2 context with you.
 
 ## 3.1 Why spec-driven?
 
@@ -962,7 +982,7 @@ There are 9 stories. A realistic ~90-120 minute run completes the full applicati
 
 ### 3.2.1 Scaffold
 
-If you are still on the `context-engineering-start` branch from Chapter 2, commit or stash your work and run `git checkout main` first. That branch already contains a `duck-emporium/` folder.
+If you are still on the `context-engineering-start` branch from Chapter 2, commit your work and run `git checkout main` first (see 2.7.1). That branch already contains a `duck-emporium/` folder.
 
 On macOS or Linux:
 
@@ -1002,6 +1022,21 @@ Add a minimal `AGENTS.md` in the `duck-emporium/` folder:
 - Follow the workflow in `.github/skills/sdd-*/SKILL.md`.
 - Payments are MOCKED. Never integrate a real payment provider.
 ```
+
+This `AGENTS.md` follows the rules of thumb from 2.3.2: short, concrete and verifiable. Grow it with the miss → diagnosis → fix loop (2.3.3) as the project takes shape.
+
+#### Carry over your Chapter 2 context
+
+Copy the generic customizations from 2.8 into the new project. Run this from your fork's root (it works in bash and PowerShell; leave out paths you didn't create):
+
+```bash
+cd ..
+git restore --source context-engineering-start --worktree -- duck-emporium/.github/skills/run-and-fix-tests duck-emporium/.github/agents/test-specialist.agent.md
+cd duck-emporium
+npm pkg set "scripts.test=vitest run"
+```
+
+`git restore --worktree` only writes the files. It doesn't stage anything in your fork. The `npm pkg set` line gives `run-and-fix-tests` a working `npm test`. If you skipped Chapter 2, skip this step.
 
 ### 3.2.2 Add the SDD skills
 
