@@ -1328,6 +1328,18 @@ Rules:
   out-of-scope list, then report what is done and what is missing.
 ```
 
+<div class="tip" data-title="Option A: reuse your specs">
+
+> Squad does not read your SDD artifacts on its own. If you finished Stories 1-8 yourself, add this line to the prompt so the team builds on the decisions you already made:
+>
+> ```text
+> - Read AGENTS.md and the specs in specs/ first and follow their decisions.
+> ```
+>
+> The starter in Option B has no specs - its README is the source of truth instead.
+
+</div>
+
 Expect the lead to come back with a plan. Push back if it adds a framework, a build step or new API routes - the same discipline as reviewing a `plan.md` in the SDD loop. Approve, then let the team work. Commit after each completed piece of work.
 
 ### 3.4.5 Check the result
