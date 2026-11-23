@@ -1964,7 +1964,7 @@ The Copilot CLI is like plugging a lamp into a wall outlet - it works great, you
 
 An isolated runtime or container per session is still useful when every task needs a shell, custom system dependencies, or a strong boundary. SDK 2.0 also lets you start with many lightweight sessions in one process and add sandboxing only where the work needs it.
 
-![A shared SDK runtime hosts separately scoped sessions; a session does not get its own process or container by default.](diagrams/copilot-sdk-2-sessions.svg)
+![A shared SDK runtime hosts separately scoped sessions; a session does not get its own process or container by default.](assets/copilot-sdk-2-sessions.svg)
 
 ## 8.2 How SDK 2.0 fits together
 
@@ -1976,7 +1976,7 @@ An isolated runtime or container per session is still useful when every task nee
 | **Events** | Streaming updates for response chunks, tool execution, and session lifecycle. |
 | **Tools** | Functions your app registers; handlers run in your application, under the policies and identity you choose. |
 
-![The app connects through the SDK to the native in-process runtime; tools and policies remain under app control.](diagrams/copilot-sdk-2-architecture.svg)
+![The app connects through the SDK to the native in-process runtime; tools and policies remain under app control.](assets/copilot-sdk-2-architecture.svg)
 
 The basic flow is still: create a client, create or resume a session, send a message, and react to events. The transport and runtime lifecycle have changed, but the session API remains familiar.
 
@@ -2310,7 +2310,7 @@ Copilot composes the final natural-language answer
 
 SDK 2.0 separates the **agent loop** (where the model reasons) from the **environment** (where shell and file operations happen). Your app can keep both in one isolated container, or host the loop on a shared runtime and selectively route work to sandboxes. The SDK provides the runtime and session abstractions; your app or hosting platform remains responsible for creating, securing and cleaning up any external sandbox.
 
-![The agent loop and its shell or files can live in different environments; the app controls how tools are routed.](diagrams/copilot-sdk-2-virtualization.svg)
+![The agent loop and its shell or files can live in different environments; the app controls how tools are routed.](assets/copilot-sdk-2-virtualization.svg)
 
 The Microsoft article [Building modern agentic applications with Microsoft Copilot SDK 2.0](https://commandline.microsoft.com/microsoft-copilot-sdk-2-0-github/) describes these as architecture patterns:
 
@@ -2323,7 +2323,7 @@ The Microsoft article [Building modern agentic applications with Microsoft Copil
 | Coordinator and workers | Shared coordinator delegates to isolated worker sessions | Independent long-running or parallel tasks, such as plan/build/review. |
 | Mixed | Coordinator uses a sandbox and can delegate to sandboxed workers | Complex workflows that need both immediate actions and parallel work. |
 
-![Six original summaries of the architecture patterns in Microsoft's SDK 2.0 article.](diagrams/copilot-sdk-2-architecture.svg)
+![Six original summaries of the architecture patterns in Microsoft's SDK 2.0 article.](assets/copilot-sdk-2-architecture.svg)
 
 These are designs to implement, not six automatic deployment modes. Promotion, worker creation, sandbox lifecycle and routing are responsibilities of your application or platform. Use a hard container boundary for untrusted code; a shared runtime alone does not provide one.
 
