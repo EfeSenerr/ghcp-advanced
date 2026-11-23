@@ -269,15 +269,16 @@ Skills are folders with a `SKILL.md` file plus optional scripts, templates and e
 | Project (committed) | `.github/skills/<name>/SKILL.md` | `.agents/skills/`, `.claude/skills/` |
 | Personal | `~/.copilot/skills/<name>/SKILL.md` | `~/.agents/skills/`, `~/.claude/skills/` |
 
-To create one in VS Code, run **Chat: Open Customizations** -> **Skills** -> **New Skill**. In any harness you can also just ask the agent: *"Create a project skill named `test-changes` in `.github/skills/` that …"*. With **Local** selected, `/create-skill` and `/skills` are available as shortcuts. You can also install skills from **Browse** in the Agent Customizations editor (Customization Marketplace, preview; not available in Local sessions) or with `gh skill`.
+To create one in VS Code, run **Chat: Open Customizations** -> **Skills** -> **New Skill**. In any harness you can also just ask the agent: *"Create a project skill named `test-changes` in `.github/skills/` that …"*. With **Local** selected, `/create-skill` and `/skills` are built-in shortcuts. The Copilot harness has no built-in `/create-skill`, so this repo ships its own as a project skill (see below). You can also install skills from **Browse** in the Agent Customizations editor (Customization Marketplace, preview; not available in Local sessions) or with `gh skill`.
 
-This repo ships with three example skills in [`.github/skills/`](https://github.com/jkordick/ghcp-advanced/tree/main/.github/skills):
+This repo ships with four example skills in [`.github/skills/`](https://github.com/jkordick/ghcp-advanced/tree/main/.github/skills):
 
 | Skill | What it does |
 | --- | --- |
 | `run-tests` | Runs `npm test`, reads failures, fixes the code (not the test), re-runs until green. |
 | `lint-and-typecheck` | Runs `tsc --noEmit` then `eslint`, fixes issues in the right order. |
 | `convert-svg-to-png` | Wraps a shell script that converts SVG → PNG using whichever tool is available. Shows how a skill can include **scripts** alongside instructions. |
+| `create-skill` | Turns the workflow in the current conversation into a new `SKILL.md`. User-invoked only (`disable-model-invocation: true`), so it works like `/create-skill` in every harness. Used in the 6.7 lab. |
 
 Open [`.github/skills/run-tests/SKILL.md`](https://github.com/jkordick/ghcp-advanced/tree/main/.github/skills/run-tests/SKILL.md) to see a minimal example.
 
@@ -1570,18 +1571,18 @@ In 6.3.6 you wrote a skill by hand. In this lab you build one the way it works b
    ```
 
 2. Open the **repository root** in VS Code (not `duck-emporium/`), so the new skill lands in this repo's `.github/skills/`.
-3. Open a new Chat with **Session Target** set to **Copilot** (the default, same as the rest of Chapter 6). Type `/` and check whether `/create-skill` appears. Do not run it yet.
+3. Open a new Chat with **Session Target** set to **Copilot** (the default, same as the rest of Chapter 6). Type `/` and check that `/create-skill` appears. It comes from this repo's `.github/skills/create-skill/`. Do not run it yet.
 4. Skim the primers: core concepts (`skills-lab/resources/core-concepts.md`), why Awesome Copilot matters (`skills-lab/resources/why-awesome-copilot-matters.md`) and the Awesome Copilot repository tour (`skills-lab/resources/awesome-copilot-repository-tour.md`).
 
 | Component | Role |
 | --- | --- |
 | Agent Skill | A reusable, on-demand playbook stored in the repository |
-| `/create-skill` | A built-in Chat workflow that packages a demonstrated process as a skill |
+| `/create-skill` | A user-invoked skill shipped in this repo (`.github/skills/create-skill/`) that packages a demonstrated process as a new skill |
 | [Awesome Copilot](https://github.com/github/awesome-copilot) | A public collection of community-created Copilot customizations. You **browse** it, you do not clone it |
 
 <div class="info" data-title="No /create-skill in your menu?">
 
-> The command is a convenience, not a requirement. What matters is that the skill is created **in the same Chat** in which you worked through the task. If `/create-skill` isn't offered in your harness or the Copilot CLI, ask instead: *"Create a project skill named `incident-handoff` in `.github/skills/` from the workflow we just completed."* Everything else in the lab stays the same. Avoid the **Local** harness for this lab: it is deprecated (see the [VS Code skills docs](https://code.visualstudio.com/docs/agent-customization/agent-skills)).
+> Open the **repository root** as the workspace, then reload the window (in the Copilot CLI, run `/skills reload`). The command is a convenience, not a requirement. What matters is that the skill is created **in the same Chat** in which you worked through the task. As a fallback, ask: *"Create a project skill named `incident-handoff` in `.github/skills/` from the workflow we just completed."* Avoid the **Local** harness for this lab: it is deprecated (see the [VS Code skills docs](https://code.visualstudio.com/docs/agent-customization/agent-skills)).
 
 </div>
 
