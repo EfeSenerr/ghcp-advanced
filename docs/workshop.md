@@ -28,7 +28,7 @@ Welcome! This workshop takes you from Copilot fundamentals to hands-on engineeri
 2. **Context Engineering** - Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules and skills to a pre-built project, plus a hands-on lab where you build, test and peer-review your own Agent Skill.
 3. **Spec-Driven Development (SDD)** - Learn how to make specifications and guide what GitHub Copilot builds, end to end on a small TypeScript/Node feature.
 4. **[spec-kit](https://github.com/github/spec-kit)** - Use spec-driven development conveniently with most agentic coding tools.
-5. **[Squad](https://github.com/bradygaster/squad)** *(coming soon)* - Use the open-source framework for orchestrating multi-agent development teams.
+5. **[Squad](https://github.com/github/squad)** *(coming soon)* - Use the open-source framework for orchestrating multi-agent development teams.
 6. **App modernization** - Use GitHub Copilot to modernize legacy apps, with two hands-on tracks (spec-kit-driven and GitHub Copilot-native custom agents + prompts), plus the off-the-shelf GitHub Copilot modernization agents (VS Code extension and the Modernize CLI).
 7. **Agentic Workflows** *(coming soon)*.
 8. **The GitHub Copilot SDK** - Embed Copilot directly into your own apps: open sessions, stream responses and let Copilot call custom tools you define in TypeScript/Node.
@@ -1217,13 +1217,13 @@ Use `Shift+Tab` to switch into plan mode if you want to talk through a decision 
 
 ## 3.4 Bonus: build Story 9 with Squad
 
-So far one agent has worked through the stories with you, one skill at a time. For the last story you hand the work to a **team of agents**. [Squad](https://github.com/bradygaster/squad) is an open-source tool that sets up a team of specialist agents for GitHub Copilot - for example a lead, a frontend developer, a tester and a reviewer. Each member runs in its own context, reads only its own charter and history, and writes what it learned back into a `.squad/` folder in your repo. That is context engineering again: instead of one long chat that fills up, every specialist gets a small, focused context.
+So far one agent has worked through the stories with you, one skill at a time. For the last story you hand the work to a **team of agents**. [Squad](https://github.com/github/squad) is an open-source tool that sets up a team of specialist agents for GitHub Copilot - for example a lead, a frontend developer, a tester and a reviewer. Each member runs in its own context, reads only its own charter and history, and writes what it learned back into a `.squad/` folder in your repo. That is context engineering again: instead of one long chat that fills up, every specialist gets a small, focused context.
 
 Your task: let Squad implement [Story 9 - Web frontend](https://github.com/EfeSenerr/ghcp-advanced/blob/main/user-stories/09-web-frontend.md) on top of the API you already have. You stay the human in charge: you approve the team, the plan and the result.
 
-<div class="info" data-title="Squad is a third-party, open-source tool">
+<div class="info" data-title="Squad is open source">
 
-> Squad is maintained by Brady Gaster, not by GitHub. It runs on top of GitHub Copilot and uses your Copilot requests. Check your organization's policy before you install it on a work machine.
+> Squad lives in [`github/squad`](https://github.com/github/squad) and is under active development, so commands may change between versions. It runs on top of GitHub Copilot and uses your Copilot requests. Check your organization's policy before you install it on a work machine.
 
 </div>
 
@@ -1271,7 +1271,7 @@ Install the Squad CLI with one of these:
 | macOS (Homebrew) | `brew install --cask bradygaster/squad/squad` |
 | Windows (WinGet) | `winget install --id bradygaster.Squad --exact` |
 
-If you are on Node.js 20, use Homebrew, WinGet or the [standalone install](https://bradygaster.github.io/squad/docs/features/standalone-install/) - they bundle their own Node.js. The duck app itself still runs on Node.js 20+.
+If you are on Node.js 20, use Homebrew, WinGet or the [standalone install](https://github.github.com/squad/docs/features/standalone-install/) - they bundle their own Node.js. The duck app itself still runs on Node.js 20+.
 
 Then, inside your project folder (`duck-emporium/` or `duck-emporium-squad/`):
 
@@ -1429,7 +1429,7 @@ Compare what spec-kit does and what it generates against the hand-rolled `sdd-*`
 
 # Chapter 5 (coming soon) - Squad
 
-A dedicated chapter on [squad](https://github.com/bradygaster/squad): an open-source framework for orchestrating multi-agent development teams on top of GitHub Copilot is planned for an upcoming version of this workshop.
+A dedicated chapter on [squad](https://github.com/github/squad): an open-source framework for orchestrating multi-agent development teams on top of GitHub Copilot is planned for an upcoming version of this workshop.
 
 ---
 
@@ -2887,7 +2887,7 @@ You have learned how to:
 - [Model Context Protocol](https://modelcontextprotocol.io)
 - [GitHub Copilot modernization](https://learn.microsoft.com/azure/developer/github-copilot-app-modernization/overview) and the [modernization agent / Modernize CLI](https://github.com/microsoft/modernize-cli)
 - The original [GH Copilot HoL](https://moaw.dev/workshop/gh:Philess/GHCopilotHoL/main/docs/) - broader foundational GitHub Copilot product tour this workshop builds on
-- [squad](https://github.com/bradygaster/squad) - human-directed AI development team through GitHub Copilot
+- [squad](https://github.com/github/squad) - human-directed AI development team through GitHub Copilot
 
 <div class="tip" data-title="One thing to try tomorrow">
 
