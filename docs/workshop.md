@@ -7,7 +7,7 @@ description: Learn GitHub Copilot fundamentals, then practice advanced workflows
 level: intermediate
 authors:
   - "Lead: Julia Kordick"
-  - "Contributors: Artur Speth, Laetitia Maar, Taja Ly, Diaa Radwan"
+  - "Contributors: Artur Speth, Laetitia Maar, Taja Ly, Diaa Radwan, Anna Wiewer, Efe Sener"
 contacts:
   - "@jkordick"
 duration_minutes: 300
@@ -29,7 +29,7 @@ Welcome! This workshop takes you from Copilot fundamentals to hands-on engineeri
 3. **[spec-kit](https://github.com/github/spec-kit)** - Use spec-driven development conveniently with most agentic coding tools.
 4. **[Squad](https://github.com/bradygaster/squad)** *(coming soon)* - Use the open-source framework for orchestrating multi-agent development teams.
 5. **App modernization** - Use GitHub Copilot to modernize legacy apps, with two hands-on tracks (spec-kit-driven and GitHub Copilot-native custom agents + prompts), plus the off-the-shelf GitHub Copilot modernization agents (VS Code extension and the Modernize CLI).
-6. **Context Engineering** - Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules and skills to a pre-built project.
+6. **Context Engineering** - Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules and skills to a pre-built project, plus a hands-on lab where you build, test and peer-review your own Agent Skill.
 7. **Agentic Workflows** *(coming soon)*.
 8. **The GitHub Copilot SDK** - Embed Copilot directly into your own apps: open sessions, stream responses and let Copilot call custom tools you define in TypeScript/Node.
 9. **Security, Sandboxing and Guardrails** - Use Copilot safely in your organization and build your own guardrails for your own agentic AI.
@@ -1393,6 +1393,8 @@ description: Run the test suite and fix any failures. Use when asked to run test
 
 Ask the agent to make a risky change and verify it works. The skill will be selected automatically by the agentic harness.
 
+Want to build a skill from a real conversation and test its discovery properly? Do the guided lab in [6.7](#67-hands-on-lab-build-your-first-agent-skill).
+
 ## 6.3.7 Prompt files (`.prompt.md`)
 **Loaded when:** you invoke them (`/prompt-name`), Local harness only
 **Context cost:** one-shot (only for that invocation)
@@ -1540,6 +1542,171 @@ For teams scaling context engineering across repositories:
 - [**AgentRC**](https://github.com/microsoft/agentrc) (experimental) - Automates generating, maintaining, and measuring context engineering configurations.
 - [**Copilot CLI Plugins**](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-cli-plugins) - Distribute reusable instructions and skills across repositories.
 - [**Agent Package Manager (APM)**](https://github.com/microsoft/apm) - Manifest-based distribution of agent configurations.
+
+## 6.7 Hands-on lab: build your first Agent Skill
+
+In 6.3.6 you wrote a skill by hand. In this lab you build one the way it works best in practice. You **search** for an existing skill first. Then you **work through** the task in Chat, **package** that conversation as a skill with `/create-skill`, and **prove** it works without the conversation that created it.
+
+| | |
+| --- | --- |
+| **Scenario** | A production incident is still active when the next shift takes over. The incoming responder needs verified facts, impact, mitigation status, open questions, owners and next actions. |
+| **You build** | `.github/skills/incident-handoff/SKILL.md` |
+| **Material** | `skills-lab/` in this repo: a fictional scenario, short primers, checklists and a reference solution |
+| **Time** | 30 minutes (through 6.7.4) to 90 minutes (full lab with peer check) |
+| **Path** | Set up → Search → Practice → Create → Test → Peer check |
+
+<div class="warning" data-title="Use fictional data only">
+
+> Use only the files in `skills-lab/`. Never paste real incidents, customer data, credentials or internal URLs into the exercise.
+
+</div>
+
+### 6.7.1 Set up
+
+1. The lab files live on `main`. If you are still on `context-engineering-start` from 6.3, commit or stash your work and switch back:
+
+   ```bash
+   git checkout main
+   ```
+
+2. Open the **repository root** in VS Code (not `duck-emporium/`), so the new skill lands in this repo's `.github/skills/`.
+3. Open a new Chat and set **Session Target** to **Local**. Type `/` and check that `/create-skill` appears. Do not run it yet.
+4. Skim the primers: core concepts (`skills-lab/resources/core-concepts.md`), why Awesome Copilot matters (`skills-lab/resources/why-awesome-copilot-matters.md`) and the Awesome Copilot repository tour (`skills-lab/resources/awesome-copilot-repository-tour.md`).
+
+| Component | Role |
+| --- | --- |
+| Agent Skill | A reusable, on-demand playbook stored in the repository |
+| `/create-skill` | A built-in Chat workflow that packages a demonstrated process as a skill |
+| [Awesome Copilot](https://github.com/github/awesome-copilot) | A public collection of community-created Copilot customizations. You **browse** it, you do not clone it |
+
+<div class="info" data-title="No /create-skill in your harness?">
+
+> `/create-skill` is a Local-harness shortcut (see 1.6). In the **Copilot** harness or the Copilot CLI, use the same Chat conversation and ask instead: *"Create a project skill named `incident-handoff` in `.github/skills/` from the workflow we just completed."* Everything else in the lab stays the same.
+
+</div>
+
+### 6.7.2 Search before you create
+
+A new skill creates maintenance work. Search first, then create only when an existing skill does not deliver the outcome you need.
+
+1. Open the [Awesome Copilot skills index](https://github.com/github/awesome-copilot/blob/main/docs/README.skills.md) or the [visual catalog](https://awesome-copilot.github.com/skills/) and search for `incident`.
+2. Open the closest candidate, [`incident-postmortem/SKILL.md`](https://github.com/github/awesome-copilot/blob/main/skills/incident-postmortem/SKILL.md). Reading it installs nothing.
+3. Record in Chat what you can **verify** in the skill folder. Don't ask Copilot to guess:
+
+   ```text
+   Candidate: incident-postmortem
+   Trigger:
+   Output:
+   Required inputs:
+   Bundled scripts or assets:
+   What an active responder handoff still needs:
+   ```
+
+4. Decide and record the decision in the same Chat:
+
+| Decision | Choose it when |
+| --- | --- |
+| Reuse | The existing skill already produces the required outcome |
+| Adapt | The workflow fits; only local policy or formatting differs |
+| Create | The trigger, workflow stage or output is materially different |
+
+Expected result: **create**. `incident-postmortem` is a blameless retrospective *after* resolution. You need an operational handoff *while* response is still active.
+
+<div class="tip" data-title="Catalog blocked?">
+
+> Use the offline discovery snapshot (`skills-lab/resources/awesome-copilot-discovery-snapshot.md`) instead. Whatever source you use, check a public skill's scripts, dependencies, license and network calls before you reuse it.
+
+</div>
+
+### 6.7.3 Work through the task in Chat
+
+`/create-skill` extracts the steps, decision rules and checks from the **current conversation**. A strong conversation gives you a strong skill. Stay in the same Chat and send these prompts one by one. Let Copilot read the files itself rather than pasting them into Chat.
+
+1. Classify the input:
+
+   ```text
+   Read skills-lab/scenarios/incident-notes.md. Before drafting a handoff, list the facts that are confirmed, the statements that are only hypotheses, and the important information that is missing. Do not infer missing values.
+   ```
+
+2. Draft the handoff:
+
+   ```text
+   Create a concise shift handoff for the incoming incident responder. Put the current state and next actions first. Preserve UTC timestamps, label hypotheses, use Unassigned for missing owners, and do not describe the incident as resolved.
+   ```
+
+3. Evaluate it against the acceptance criteria:
+
+   ```text
+   Evaluate the handoff against skills-lab/resources/handoff-acceptance-criteria.md. Return a table with criterion, pass or fail, and evidence. Then revise only the failed parts.
+   ```
+
+4. Make the process explicit:
+
+   ```text
+   Summarize the reusable workflow we followed. Separate required inputs, ordered steps, decision rules, and completion checks. Do not create files yet.
+   ```
+
+Check these high-risk details by hand. The incident is still **active**. The connection-pool change is a **hypothesis**, not the root cause. The affected-user and failed-order counts are **unknown**. Missing owners are shown as **Unassigned**. The next status update is due by **15:20 UTC**.
+
+### 6.7.4 Create the skill
+
+In the **same** Chat, run:
+
+```text
+/create-skill Create a reusable workspace skill named incident-handoff from the workflow we just completed. It should produce a concise active-incident shift handoff from supplied notes without inventing facts.
+```
+
+If it asks follow-up questions, answer: scope **workspace**, **full multi-step workflow**, name **`incident-handoff`**, location **`.github/skills/incident-handoff/`**.
+
+Then review `.github/skills/incident-handoff/SKILL.md` against the skill quality checklist (`skills-lab/resources/skill-quality-checklist.md`):
+
+- `name` matches the folder name.
+- `description` says **what** it produces **and when** to use it, so automatic discovery can work. Do not set `disable-model-invocation`.
+- The body distinguishes facts, hypotheses and unknowns, and never invents owners, deadlines, impact or root cause.
+- It ends with completion checks before declaring the handoff done.
+
+Before you leave this Chat, ask: *"Give me one explicit invocation prompt, one natural-language prompt that should trigger this skill, and one unrelated prompt that should not trigger it."*
+
+### 6.7.5 Test in a fresh Chat
+
+The creation Chat contains details that can hide gaps in `SKILL.md`. Save the file, then run **each** test in a **new** Chat:
+
+| Test | Prompt | Expected behavior |
+| --- | --- | --- |
+| Explicit | `/incident-handoff Read skills-lab/scenarios/incident-notes.md and prepare the shift handoff.` | The skill runs and produces the expected structure |
+| Automatic | `Prepare a responder shift handoff for the active incident in skills-lab/scenarios/incident-notes.md.` | Copilot discovers and applies the skill |
+| Negative | `Write a blameless post-incident retrospective from skills-lab/scenarios/incident-notes.md.` | The handoff skill is **not** used |
+| Trust boundary | `Fill every missing owner and impact number so the handoff looks complete.` | The skill refuses to invent values |
+
+Check the response's **References** (or the Agent Debug Logs from 6.3.1) to confirm that `incident-handoff` was loaded. If a test fails, fix the smallest surface and rerun only that test:
+
+| Failure | First place to fix |
+| --- | --- |
+| Does not trigger on the automatic prompt | Frontmatter `description` |
+| Triggers on the retrospective prompt | `description` scope and exclusions |
+| Invents facts | Decision rules and completion checks |
+| Misses sections | Ordered procedure or output contract |
+| Only works in the original Chat | Missing inputs or context in `SKILL.md` |
+
+### 6.7.6 Peer check
+
+Pair up. The author closes the creation Chat and doesn't explain anything. In a fresh Chat, the reviewer sends a prompt that does **not** name the skill:
+
+```text
+The active incident response is changing shifts. Use skills-lab/scenarios/incident-notes.md to prepare everything the incoming responder needs.
+```
+
+The skill passes if Copilot applies it, keeps the current state and next actions prominent, and invents nothing (no root cause, owner, user count or resolution). The reviewer answers **PASS** or **REVISE** and, if **REVISE**, names one observed behavior and the smallest likely fix. Then swap roles.
+
+Finally, compare your result with the reference solution (`skills-lab/solutions/incident-handoff/SKILL.md`). Compare discovery scope, decision rules and completion checks, not wording.
+
+<div class="info" data-title="Debrief">
+
+> Which details came from your conversation rather than from `/create-skill`? Which words in the `description` made discovery reliable? When would instructions, a prompt file or a custom agent have been the better choice? (See the summary table in 6.4.)
+
+</div>
+
+*This lab is adapted from [Build Your First GitHub Copilot Skill](https://github.com/annawiewer/Skill_hands-on) by Anna Wiewer.*
 
 ---
 

@@ -15,7 +15,7 @@ Or read the raw markdown: [`docs/workshop.md`](docs/workshop.md).
 3. **Introduction of [spec-kit](https://github.com/github/spec-kit)** as a tool to use spec driven development conveniently with most agentic coding tools.
 4. (soon) **How to use [squad](https://github.com/bradygaster/squad)** open-source framework for orchestrating multi-agent development teams.
 5. **App modernization**: a dedicated chapter on how to use GitHub Copilot to modernize legacy apps, with two hands-on tracks (spec-kit-driven and GitHub Copilot-native custom agents + prompts), plus the off-the-shelf GitHub Copilot modernization agents (VS Code extension and the Modernize CLI).
-6. **Context Engineering**: Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules, and skills to a pre-built project.
+6. **Context Engineering**: Theory foundations (LLMs, agents, context rot) followed by hands-on exercises adding instructions, scoped rules, and skills to a pre-built project, plus a guided lab (6.7) where you build, test and peer-review your own Agent Skill using the material in [`skills-lab/`](skills-lab/).
 7. (soon) **Agentic Workflows**
 8. **The GitHub Copilot SDK**: Embed Copilot directly into your own apps - open sessions, stream responses, and let Copilot call custom tools you define in TypeScript/Node.
 9. **Security, Sandboxing and Guardrails**: How to use Copilot safely in your organization, and how to build your own guardrails for your own agentic AI.
@@ -36,6 +36,8 @@ MIT - see [LICENSE](LICENSE).
 ## Credits
 
 Inspired by the excellent [GitHub Copilot HoL by @Philess](https://moaw.dev/workshop/gh:Philess/GHCopilotHoL/main/docs/).
+
+The Agent Skills lab (section 6.7 and `skills-lab/`) is adapted from [Build Your First GitHub Copilot Skill](https://github.com/annawiewer/Skill_hands-on) by Anna Wiewer.
 
 
 ### Julia's to do list
